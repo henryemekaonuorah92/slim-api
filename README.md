@@ -7,6 +7,7 @@
 
 #### TODO
 - [ ] prepare readme
+- [ ] docs / wiki
 - [ ] travis / codecov
 - [ ] add more functions / aliases
 - [ ] add more tests
