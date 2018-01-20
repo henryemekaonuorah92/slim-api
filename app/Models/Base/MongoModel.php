@@ -42,7 +42,7 @@ class MongoModel
      */
     public function __construct()
     {
-        $this->container = AppContainer::getInstance()->getContainer();
+        $this->container = AppContainer::getContainer();
         $this->mongoManager = $this->container->get(MongoManager::MONGO_DI);
         $config = $this->container[MongoManager::MONGO_CONFIG_CONNECTION][$this->connectionNAme];
         $databaseName = $config['database'];

@@ -1,22 +1,8 @@
 <?php
-/**
- * @return Closure
- */
-$container['config'] = function () use ($container) {
-    $settings = $container['settings'];
-
-    $func = function ($key, $defaultValue = null) use ($settings) {
-        return $settings[$key] ?? $defaultValue;
-    };
-
-    return $func;
-};
 /** @var \Slim\Container $container slim container */
-/** @var () $getConfig */
-$getConfig = $container['config'];
 
-$container['logger'] = function () use ($getConfig) {
-    $config = $getConfig('logger');
+$container['logger'] = function () {
+    $config = \App\AppContainer::config('logger');
     $logger = new \Monolog\Logger($config['name']);
     $file = new \Monolog\Handler\RotatingFileHandler($config['path'], $config['level']);
     $logger->pushHandler($file);
@@ -24,12 +10,11 @@ $container['logger'] = function () use ($getConfig) {
     return $logger;
 };
 
-$container['errorHandler'] = function (\Slim\Container $container) use ($getConfig) {
+$container['errorHandler'] = function (\Slim\Container $container) {
 
     return function (\Slim\Http\Request $request, \Slim\Http\Response $response, $exception) use ($container) {
 
-        $getConfig = $container['config'];
-        $config = $getConfig('logger');
+        $config = \App\AppContainer::config('logger');
 
         /** @var \Exception $exception */
         $traceData = [
@@ -42,10 +27,10 @@ $container['errorHandler'] = function (\Slim\Container $container) use ($getConf
         $err['status'] = 'error';
         $err['message'] = 'Something went wrong, please try again later';
 
-        if ($config['ERR_MSG']) {
+        if ($config['err_msg']) {
             $err['message'] = $exception->getMessage();
         }
-        if ($config['ERR_TRACE'] == '1') {
+        if ($config['err_trace'] == '1') {
             $traceData['message'] = $exception->getMessage();
             $err['trace'] = $traceData;
         }

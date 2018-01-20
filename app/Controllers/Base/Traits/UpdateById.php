@@ -24,6 +24,9 @@ trait UpdateById
         $this->request = $request;
         $this->response = $response;
 
+        $id = $args['id'] ?? null;
+
+        var_dump($request->getParsedBody());exit;
         $rs = $this->model->update(['created_by' => 'Mohamed'], ['$set' => ['y' => 3]]);
         return $rs;
 

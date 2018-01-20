@@ -1,10 +1,8 @@
 <?php
-/** @var () $getConfig */
 /** @var \Slim\Container $container slim container */
-$getConfig = $container['config'];
 
-$container['mongodb'] = function (\Slim\Container $container) use ($getConfig) {
-    $config = $getConfig('mongodb');
+$container['mongodb'] = function (\Slim\Container $container) {
+    $config = \App\AppContainer::config('mongodb');
 
     $connection = new \App\Util\Db\MongoManager($container);
     $connection->addConnection([
@@ -17,8 +15,8 @@ $container['mongodb'] = function (\Slim\Container $container) use ($getConfig) {
     return $connection->getConnection();
 };
 
-$container['mailer'] = function () use ($getConfig) {
-    $config = $getConfig('logger');
+$container['mailer'] = function () {
+    $config = \App\AppContainer::config('mailer');
 
     return \App\Util\Helpers\Mailer::fromArray([
         'host' => $config['SMTP_HOST'],

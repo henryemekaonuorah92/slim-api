@@ -3,6 +3,7 @@
 namespace App\Controllers\Base\Traits;
 
 use Meabed\Mongoose\Method;
+use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -24,7 +25,9 @@ trait GetById
         $this->request = $request;
         $this->response = $response;
 
-        $rs = $this->model->findOne(['created_by' => 'Mohamed']);
+        $id = $args['id'] ?? null;
+
+        $rs = $this->model->findOne(['_id' => new ObjectId($id)]);
         return $this->response->withJson($rs);
     }
 

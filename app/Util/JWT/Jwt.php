@@ -4,57 +4,116 @@ declare(strict_types=1);
 
 namespace App\Util\JWT;
 
+use App\AppContainer;
 use Psr\Http\Message\RequestInterface;
-use Slim\Http\Request;
-use Slim\Middleware\JwtAuthentication;
 
-class Jwt extends JwtAuthentication
+class Jwt
 {
-    const TOKEN_EXPIRY_SECONDS = 300;
-    const TOKEN_REGEXP = '[a-zA-Z0-9-_]+.[a-zA-Z0-9-_]+.[a-zA-Z0-9-_]+';
-    const LEEWAY_SECONDS = 15;
-
-    private $secretKey = '';
-    private $allowedAlgorithms = [];
-
-    public function fetchToken(RequestInterface $request)
+    /**
+     * @return null|string
+     */
+    public static function getSecret()
     {
-        $param = $this->getHeader();
-        /** @var Request $request */
-        $token = $request->getQueryParam($param);
-        if ($token) {
-            return $token;
-        }
-        return parent::fetchToken($request);
+        $jwtConfig = AppContainer::config('jwt');
+        return $jwtConfig['secret'] ?? null;
     }
 
-    public static function create(): Jwt
+    /**
+     * @return int
+     */
+    public static function getExpiresInSeconds()
     {
-        $secretKey = getenv('JWT_SECRET');
-        if (!$secretKey) {
-            throw new \InvalidArgumentException("No secret key provided.");
-        }
-        return new self($secretKey);
+        $jwtConfig = AppContainer::config('jwt');
+        return $jwtConfig['expire'] ?? 0;
     }
 
-    public function parseHeader(string $headerValue): \stdClass
+    /**
+     * @return int
+     */
+    public static function getLeeway()
     {
-        if (!preg_match('/^Bearer (' . self::TOKEN_REGEXP . ')$/', $headerValue, $matches)) {
-            throw new \InvalidArgumentException("Malformed header");
-        }
-        \Firebase\JWT\JWT::$leeway = $this->leeway;
-        return \Firebase\JWT\JWT::decode($matches[1], $this->secretKey, $this->allowedAlgorithms);
+        $jwtConfig = AppContainer::config('jwt');
+        return $jwtConfig['leeway'] ?? 0;
     }
 
-    public function generateToken($data, int $expirySeconds = self::TOKEN_EXPIRY_SECONDS): string
+    /**
+     * @return int
+     */
+    public static function getAlgorithm()
     {
+        $jwtConfig = AppContainer::config('jwt');
+        return $jwtConfig['algorithm'] ?? '';
+    }
+
+    public static function decodeJwtToken($token, $secret = null, $leeway = null, $algorithm = null)
+    {
+        $secret = $secret ?? static::getSecret();
+        $leeway = $leeway ?? static::getLeeway();
+        $algorithm = $algorithm ?? static::getAlgorithm();
+
+        \Firebase\JWT\JWT::$leeway = $leeway;
+        return \Firebase\JWT\JWT::decode($token, $secret, [$algorithm]);
+    }
+
+    /**
+     * @param $data
+     * @param null $expirySeconds
+     * @return array
+     */
+    public static function generateToken($data, $expirySeconds = null, $algorithm = null)
+    {
+        $expirySeconds = $expirySeconds ?? static::getExpiresInSeconds();
+        $secret = $secret ?? static::getSecret();
+        $algorithm = $algorithm ?? static::getAlgorithm();
+
         $now = time();
-        $payload = array(
-            "exp" => $now + $expirySeconds,
+        $exp = $now + $expirySeconds;
+        $payload = [
+            "exp" => $exp,
             "nbf" => $now,
             "data" => $data,
-        );
-        return \Firebase\JWT\JWT::encode($payload, $this->secretKey);
+        ];
+        $rs = [
+            'token' => \Firebase\JWT\JWT::encode($payload, $secret, $algorithm),
+            'expires' => $exp,
+        ];
+        return $rs;
     }
+
+    /**
+     * @param RequestInterface $request
+     * @return mixed
+     */
+    public static function fetchToken(RequestInterface $request)
+    {
+        $jwtConfig = AppContainer::config('jwt');
+        $queryParam = $jwtConfig['query'] ?? false;
+        $headerName = $jwtConfig['header'] ?? false;
+        $cookieName = $jwtConfig['cookie'] ?? false;
+        $token = null;
+
+        switch (true) {
+            case $queryParam:
+                $token = $request->getQueryParam($queryParam);
+            //break;
+            case $headerName:
+                if (!$token) {
+                    $headrVal = $request->getHeader('Authorization')[0] ?? '';
+                    $tokenArr = explode(' ', $headrVal);
+                    $token = $tokenArr[1] ?? null;
+                }
+            //break;
+            case $cookieName:
+                if (!$token) {
+                    $token = $request->getQueryParam($queryParam);
+                }
+            //break;
+            default:
+                break;
+        }
+
+        return $token;
+    }
+
 
 }
