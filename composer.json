@@ -1,6 +1,6 @@
 {
-  "name": "tajawal/app-boilerplate",
-  "license": "proprietary",
+  "name": "tajawal/slim-api",
+  "license": "MIT",
   "version": "1.0.0",
   "require": {
     "php": ">=7.0",
