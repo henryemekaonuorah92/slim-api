@@ -3,7 +3,12 @@
 declare(strict_types=1);
 
 namespace App\Util\JWT;
-class Jwt
+
+use Psr\Http\Message\RequestInterface;
+use Slim\Http\Request;
+use Slim\Middleware\JwtAuthentication;
+
+class Jwt extends JwtAuthentication
 {
     const TOKEN_EXPIRY_SECONDS = 300;
     const TOKEN_REGEXP = '[a-zA-Z0-9-_]+.[a-zA-Z0-9-_]+.[a-zA-Z0-9-_]+';
@@ -12,6 +17,17 @@ class Jwt
     private $secretKey = '';
     private $allowedAlgorithms = [];
 
+    public function fetchToken(RequestInterface $request)
+    {
+        $param = $this->getHeader();
+        /** @var Request $request */
+        $token = $request->getQueryParam($param);
+        if ($token) {
+            return $token;
+        }
+        return parent::fetchToken($request);
+    }
+
     public static function create(): Jwt
     {
         $secretKey = getenv('JWT_SECRET');
@@ -19,13 +35,6 @@ class Jwt
             throw new \InvalidArgumentException("No secret key provided.");
         }
         return new self($secretKey);
-    }
-
-    public function __construct(string $secretKey, array $allowedAlgorithms = array('HS256'), int $leeway = self::LEEWAY_SECONDS)
-    {
-        $this->secretKey = $secretKey;
-        $this->allowedAlgorithms = $allowedAlgorithms;
-        $this->leeway = $leeway;
     }
 
     public function parseHeader(string $headerValue): \stdClass

@@ -14,7 +14,6 @@
     "swiftmailer/swiftmailer": "~6",
     "monolog/monolog": "~1",
     "nesbot/carbon": "^1.22",
-    "firebase/php-jwt": "^5.0",
     "tuupola/slim-jwt-auth": "^2.3",
     "meabed/mongoose-php": "^1.0"
   },

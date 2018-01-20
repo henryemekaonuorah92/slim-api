@@ -1,4 +1,7 @@
 <?php
+/** @var () $getConfig */
+/** @var \Slim\Container $container slim container */
+$getConfig = $container['config'];
 
 $container['mongodb'] = function (\Slim\Container $container) use ($getConfig) {
     $config = $getConfig('mongodb');

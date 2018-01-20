@@ -1,6 +1,7 @@
 <?php
-$container = $app->getContainer();
-
+/**
+ * @return Closure
+ */
 $container['config'] = function () use ($container) {
     $settings = $container['settings'];
 
@@ -11,6 +12,7 @@ $container['config'] = function () use ($container) {
     return $func;
 };
 
+/** @var \Slim\Container $container slim container */
 /** @var () $getConfig */
 $getConfig = $container['config'];
 
@@ -38,16 +40,18 @@ $container['errorHandler'] = function (\Slim\Container $container) use ($getConf
         ];
         $container->get('logger')->addError($exception->getMessage(), $traceData);
 
-        $err['status'] = 'status';
+        $err['status'] = 'error';
         $err['message'] = 'Something went wrong, please try again later';
 
         if ($config['DEBUG'] == '1') {
             $err['message'] = $exception->getMessage();
             $err['trace'] = $traceData;
         }
-        $statusCode = array("100", "101", "200", "201", "202", "203", "204", "205", "206", "300", "301", "302", "303",
+        $statusCode = [
+            "100", "101", "200", "201", "202", "203", "204", "205", "206", "300", "301", "302", "303",
             "304", "305", "306", "307", "400", "401", "402", "403", "404", "405", "406", "407", "408", "409", "410",
-            "411", "412", "413", "414", "415", "416", "417", "500", "501", "502", "503", "504", "505");
+            "411", "412", "413", "414", "415", "416", "417", "500", "501", "502", "503", "504", "505"
+        ];
         $exCode = $exception->getCode();
         if (!in_array($exCode, $statusCode)) {
             $exCode = 500;

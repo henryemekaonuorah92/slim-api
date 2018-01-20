@@ -3,6 +3,12 @@ declare(strict_types=1);
 
 namespace App\Controllers\Base;
 
+use App\Controllers\Base\Traits\CountBy;
+use App\Controllers\Base\Traits\DeleteById;
+use App\Controllers\Base\Traits\GetAll;
+use App\Controllers\Base\Traits\GetById;
+use App\Controllers\Base\Traits\InsertOne;
+use App\Controllers\Base\Traits\UpdateById;
 use Meabed\Mongoose\Method;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
@@ -10,6 +16,7 @@ use Slim\Http\Response;
 
 class RestController
 {
+
 
     /** @var string */
     protected $modelClass = null;
@@ -21,14 +28,14 @@ class RestController
     protected $model = null;
 
     /** @var ContainerInterface */
-    protected $container = null;
+    public $container = null;
 
     /**
      * @var Response
      */
-    private $response;
+    public $response;
     /** @var Request */
-    private $request;
+    public $request;
 
     // constructor receives container instance
     public function __construct(ContainerInterface $container)
@@ -37,56 +44,16 @@ class RestController
         $this->request = $this->container['request'];
         $this->response = $this->container['response'];
 
-
         $this->model = new $this->modelClass();
     }
 
-    /**
-     * @return static
-     * @throws \Exception
-     */
-    public function getAll()
-    {
-        $rs = $this->model->find();
-        return $this->response->withJson($rs);
-    }
+    use GetAll;
+    use GetById;
+    use CountBy;
+    use InsertOne;
+    use UpdateById;
+    use DeleteById;
 
-    public function get()
-    {
-        $r = $this->model->findOne(['created_by' => 'Mohamed']);
-        var_dump($r);
-    }
-
-    /**
-     * @return array|\MongoDB\Driver\Cursor
-     * @throws \Exception
-     */
-    public function count()
-    {
-        $rs = $this->model->count();
-        return $this->response->withJson($rs);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function insert()
-    {
-        $rs = $this->model->insert($this->request->getParsedBody());
-        return $rs;
-    }
-
-    public function update()
-    {
-        $r = $this->model->update(['created_by' => 'Mohamed'], ['$set' => ['y' => 3]]);
-
-    }
-
-    public function delete()
-    {
-        $r = $this->model->deleteOne(['created_by' => 'Mohamed']);
-
-    }
 //
 //    /**
 //     * Return list of users

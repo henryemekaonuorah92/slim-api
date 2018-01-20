@@ -5,15 +5,17 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
     return $response;
 });
 
-$app->add(new \Slim\Middleware\JwtAuthentication([
+$app->add(new \App\Util\JWT\Jwt([
     "path" => "/api",
     'passthrough' => [
         '/api/user/register',
         '/api/user/login',
         '/api/ping'
     ],
-    'secret' => 'supersecretkeyyoushouldnotcommittogithub',
-    'error' => function ($request, $response, $arguments) {
+    "header" => "x-token",
+    "attribute" => "jwtUser",
+    'secret' => 'qwertyuiopasdfghjklzxcvbnm123456',
+    'error' => function (\Slim\Http\Request $request, \Slim\Http\Response $response, $arguments) {
         throw new Exception($arguments["message"], 401);
     }
 
