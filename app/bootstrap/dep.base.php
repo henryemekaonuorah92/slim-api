@@ -11,7 +11,6 @@ $container['config'] = function () use ($container) {
 
     return $func;
 };
-
 /** @var \Slim\Container $container slim container */
 /** @var () $getConfig */
 $getConfig = $container['config'];
@@ -43,8 +42,11 @@ $container['errorHandler'] = function (\Slim\Container $container) use ($getConf
         $err['status'] = 'error';
         $err['message'] = 'Something went wrong, please try again later';
 
-        if ($config['DEBUG'] == '1') {
+        if ($config['ERR_MSG']) {
             $err['message'] = $exception->getMessage();
+        }
+        if ($config['ERR_TRACE'] == '1') {
+            $traceData['message'] = $exception->getMessage();
             $err['trace'] = $traceData;
         }
         $statusCode = [

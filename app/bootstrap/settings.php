@@ -14,7 +14,8 @@ return [
 
         //Monolog settings
         'logger' => [
-            'DEBUG' => 1, // set to 0 in production
+            'ERR_TRACE' => 1, // allow trace in errors set to 0 in production
+            'ERR_MSG' => 0, // show error messages from exception in errors set to 0 in production
             'name' => 'app',
             'path' => __DIR__ . '/../_logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
