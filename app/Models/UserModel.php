@@ -29,9 +29,9 @@ class UserModel extends MongoModel
     /**
      * @return bool|string
      */
-    public function _beforeInsert()
+    public function _beforeSave()
     {
         $this->password = Password::hash($this->password);
-        return parent::_beforeInsert();
+        return parent::_beforeSave();
     }
 }

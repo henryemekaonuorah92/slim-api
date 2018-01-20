@@ -2,12 +2,13 @@
 
 namespace App\Controllers\Base\Traits;
 
+use App\Models\Base\MongoModel;
 use Meabed\Mongoose\Method;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Method $model
+ * @property Method|MongoModel $model
  * @package App\Controllers\Base\Traits
  */
 trait UpdateById
@@ -25,9 +26,9 @@ trait UpdateById
         $this->response = $response;
 
         $id = $args['id'] ?? null;
+        $updateData = $request->getParsedBody() ?? [];
 
-        var_dump($request->getParsedBody());exit;
-        $rs = $this->model->update(['created_by' => 'Mohamed'], ['$set' => ['y' => 3]]);
+        $rs = $this->model->updateDocById($id, $updateData);
         return $rs;
 
     }

@@ -2,13 +2,14 @@
 
 namespace App\Controllers\Base\Traits;
 
+use App\Models\Base\MongoModel;
 use Meabed\Mongoose\Method;
 use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Method $model
+ * @property Method|MongoModel $model
  * @package App\Controllers\Base\Traits
  */
 trait DeleteById

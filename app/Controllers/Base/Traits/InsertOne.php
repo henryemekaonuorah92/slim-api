@@ -2,12 +2,13 @@
 
 namespace App\Controllers\Base\Traits;
 
+use App\Models\Base\MongoModel;
 use Meabed\Mongoose\Method;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Method $model
+ * @property Method|MongoModel $model
  * @package App\Controllers\Base\Traits
  */
 trait InsertOne
@@ -24,7 +25,7 @@ trait InsertOne
         $this->request = $request;
         $this->response = $response;
 
-        $rs = $this->model->insert($this->request->getParsedBody());
+        $rs = $this->model->insertDoc($this->request->getParsedBody());
         return $rs;
     }
 }

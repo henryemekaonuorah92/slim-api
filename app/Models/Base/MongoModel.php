@@ -5,6 +5,7 @@ namespace App\Models\Base;
 use App\AppContainer;
 use App\Util\Db\MongoManager;
 use Meabed\Mongoose\Method;
+use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Driver\Manager;
 use Slim\Container;
@@ -59,65 +60,67 @@ class MongoModel
      */
     public function __call($name, $args)
     {
-        $shouldValidate = false;
-        $shouldBS = false;
-        $shouldBU = false;
-        $shouldBI = false;
-        $setData = false;
-        switch ($name) {
-            case 'insert':
-            case 'insertOne':
-                $this->data = $args[0] ?? [];
-                $shouldValidate = true;
-                $shouldBI = true;
-                $shouldBS = true;
-                $setData = true;
-                break;
-
-            case 'update':
-            case 'updateOne':
-            case 'updateMany':
-                $this->data = $args[0] ?? [];
-                $shouldValidate = true;
-                $shouldBU = true;
-                $shouldBS = true;
-                $setData = true;
-                break;
-
-            default:
-                break;
-        }
-
-        if ($shouldValidate) {
-            $this->_validate();
-        }
-
-        if ($shouldBU) {
-            $bU = $this->_beforeInsert();
-            if ($bU !== true) {
-                throw new \Exception($bU, 400);
-            }
-        }
-
-        if ($shouldBI) {
-            $bI = $this->_beforeInsert();
-            if ($bI !== true) {
-                throw new \Exception($bI, 400);
-            }
-        }
-
-        if ($shouldBS) {
-            $bS = $this->_beforeSave();
-            if ($bS !== true) {
-                throw new \Exception($bS, 400);
-            }
-        }
-        if ($setData) {
-            $args[0] = $this->data;
-        }
-
         $rs = call_user_func_array([$this->method, $name], $args);
         return $rs;
+    }
+
+    /**
+     * @param $data
+     * @return array|\MongoDB\Driver\WriteResult
+     * @throws \Exception
+     */
+    public function insertDoc($data)
+    {
+        $this->data = $data;
+        $this->checkBeforeInsert();
+        return $this->method->insert($this->data);
+    }
+
+    /**
+     * @param $id
+     * @param $data
+     * @return array|\MongoDB\Driver\WriteResult
+     * @throws \Exception
+     */
+    public function updateDocById($id, $data)
+    {
+        $this->data = $data;
+        $this->checkBeforeUpdate();
+        return $this->method->update(['_id' => new ObjectId($id)], ['$set' => $this->data]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function checkBeforeInsert()
+    {
+        $this->_validate();
+        $bI = $this->_beforeInsert();
+        if ($bI !== true) {
+            throw new \Exception($bI, 400);
+        }
+        $bS = $this->_beforeSave();
+        if ($bS !== true) {
+            throw new \Exception($bS, 400);
+        }
+
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function checkBeforeUpdate()
+    {
+        $this->_validate();
+        $bU = $this->_beforeUpdate();
+        if ($bU !== true) {
+            throw new \Exception($bU, 400);
+        }
+        $bS = $this->_beforeSave();
+        if ($bS !== true) {
+            throw new \Exception($bS, 400);
+        }
+
     }
 
     /**
@@ -157,6 +160,8 @@ class MongoModel
      */
     public function _beforeInsert()
     {
+        unset($this->data['_id']);
+        $this->created_at = new UTCDateTime();
         return true;
     }
 
@@ -165,6 +170,8 @@ class MongoModel
      */
     public function _beforeUpdate()
     {
+        unset($this->data['_id']);
+        unset($this->data['created_at']);
         return true;
     }
 
@@ -173,7 +180,6 @@ class MongoModel
      */
     public function _beforeSave()
     {
-        $this->created_at = $this->created_at ?? new UTCDateTime();
         $this->update_at = new UTCDateTime();
         return true;
     }

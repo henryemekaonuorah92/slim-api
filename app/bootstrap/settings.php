@@ -5,7 +5,7 @@ return [
         'jwt' => [
             'secret' => 'qwertyuiopasdfghjklzxcvbnm123456',
             'expire' => 2500,
-            'leeway' => 10,
+            'leeway' => 60,
             'algorithm' => 'HS512',
             'query' => 'x-token',
             'header' => 'x-token',
