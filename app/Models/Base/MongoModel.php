@@ -16,7 +16,7 @@ use Valitron\Validator;
  * @property string $update_at
  * @package App\Models\Base
  */
-class BaseMongoModel
+class MongoModel
 {
     /** @var Container */
     protected $container = null;

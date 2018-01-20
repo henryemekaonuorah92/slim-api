@@ -43,7 +43,6 @@ class RestController
         $this->container = $container;
         $this->request = $this->container['request'];
         $this->response = $this->container['response'];
-
         $this->model = new $this->modelClass();
     }
 

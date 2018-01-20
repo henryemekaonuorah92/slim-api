@@ -16,15 +16,12 @@ trait GetAll
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return static
+     * @return mixed
      * @throws \Exception
      */
     public function getAll(Request $request, Response $response, $args)
     {
-        $this->request = $request;
-        $this->response = $response;
-
         $rs = $this->model->find();
-        return $this->response->withJson($rs);
+        return $response->withJson($rs);
     }
 }

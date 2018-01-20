@@ -16,12 +16,12 @@ class UserController extends RestController
     public function me(Request $request, Response $response, $args)
     {
         $rs = $request->getAttribute('jwtUser');
-        return $this->response->withJson($rs);
+        return $response->withJson($rs);
     }
 
     public function login(Request $request, Response $response, $args)
     {
         $rs = ['xx'];
-        return $this->response->withJson($rs);
+        return $response->withJson($rs);
     }
 }

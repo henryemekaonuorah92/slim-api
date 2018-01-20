@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Base\BaseMongoModel;
+use App\Models\Base\MongoModel;
 use App\Util\Helpers\Password;
 
 /**
@@ -15,7 +15,7 @@ use App\Util\Helpers\Password;
  * @property string $updateAt
  * @package App\Models
  */
-class UserModel extends BaseMongoModel
+class UserModel extends MongoModel
 {
     /** @var string */
     protected $collectionNAme = 'users';
