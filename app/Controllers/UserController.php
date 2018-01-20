@@ -16,6 +16,12 @@ class UserController extends RestController
 {
     protected $modelClass = UserModel::class;
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return mixed
+     */
     public function me(Request $request, Response $response, $args)
     {
         $rs = AppContainer::config('jwtUser');

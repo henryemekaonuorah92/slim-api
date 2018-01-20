@@ -5,10 +5,10 @@
 $this->get('/user/me', \App\Controllers\UserController::class . ":me");
 
 // user login
-$this->map(['POST'], '/user/login', \App\Controllers\UserController::class . ":login");
+$this->post('/user/login', \App\Controllers\UserController::class . ":login");
 
 // register | insert
-$this->map(['POST'], '/user/register', \App\Controllers\UserController::class . ":insert");
+$this->post('/user/register', \App\Controllers\UserController::class . ":insert");
 
 ### REST API
 // list all users

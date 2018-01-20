@@ -17,7 +17,7 @@ trait UpdateById
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return array|\MongoDB\Driver\WriteResult
+     * @return mixed
      * @throws \Exception
      */
     public function update(Request $request, Response $response, $args)
@@ -29,7 +29,8 @@ trait UpdateById
         $updateData = $request->getParsedBody() ?? [];
 
         $rs = $this->model->updateDocById($id, $updateData);
-        return $rs;
+
+        return $response->withJson($rs);
 
     }
 }

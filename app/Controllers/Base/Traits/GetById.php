@@ -27,8 +27,12 @@ trait GetById
         $this->response = $response;
 
         $id = $args['id'] ?? null;
-
-        $rs = $this->model->findOne(['_id' => new ObjectId($id)]);
+        try {
+            $mongoId = new ObjectId($id);
+        } catch (\Exception $ex) {
+            throw new \Exception('Invalid ID', 400);
+        }
+        $rs = $this->model->findOne(['_id' => $mongoId]);
         return $this->response->withJson($rs);
     }
 

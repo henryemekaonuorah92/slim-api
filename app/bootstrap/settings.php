@@ -10,6 +10,11 @@ return [
             'query' => 'x-token',
             'header' => 'x-token',
             'cookie' => 'x-token',
+            'bypass' => [
+                '/api/user/register',
+                '/api/user/login',
+                '/api/ping',
+            ]
         ],
         // mongodb configuration @link
         'mongodb' => [
