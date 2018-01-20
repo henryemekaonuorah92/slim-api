@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "09add7c8ef1811d6fc188a130a39e62f",
+    "content-hash": "ad62475387ee1b83b21471a6b77062b0",
     "packages": [
         {
             "name": "catfan/medoo",
@@ -259,7 +259,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Meabed/mongoose-php",
-                "reference": "f24aa7d84124635596cbb241634e64bf61ec9e44"
+                "reference": "de71902eddd334dc5b05d9a1c84931547c3cb694"
             },
             "require": {
                 "ext-mongodb": ">=1.3.0",
@@ -302,7 +302,7 @@
                 "issues": "https://github.com/meabed/mongoose-php/issues",
                 "source": "https://github.com/meabed/mongoose-php"
             },
-            "time": "2018-01-20T13:32:15+00:00"
+            "time": "2018-01-20T22:11:10+00:00"
         },
         {
             "name": "monolog/monolog",
