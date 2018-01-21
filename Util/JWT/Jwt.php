@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Util\JWT;
 
-use App\AppContainer;
+use Core\AppContainer;
 use Psr\Http\Message\RequestInterface;
 
 class Jwt
@@ -58,6 +58,7 @@ class Jwt
     /**
      * @param $data
      * @param null $expirySeconds
+     * @param null $algorithm
      * @return array
      */
     public static function generateToken($data, $expirySeconds = null, $algorithm = null)
@@ -81,6 +82,7 @@ class Jwt
     }
 
     /**
+     * todo fix
      * @param RequestInterface $request
      * @return mixed
      */

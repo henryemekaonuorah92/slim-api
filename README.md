@@ -12,3 +12,5 @@
 - [ ] add more functions / aliases
 - [ ] add more tests
 - [ ] add examples
+
+test crud, token jwt, mongo, validation

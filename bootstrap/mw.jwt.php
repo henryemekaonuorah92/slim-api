@@ -5,7 +5,6 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
 
     $bypass = \Core\AppContainer::config('jwt')['bypass'] ?? [];
     $currentPath = $request->getUri()->getPath();
-
     // skip jwt if route match
     foreach ($bypass as $route) {
         if ($route == $currentPath) {
