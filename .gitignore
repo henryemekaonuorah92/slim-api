@@ -6,6 +6,7 @@
 /out-tsc
 /vendor
 /app/_logs
+/app/tests/_logs
 # dependencies
 /node_modules
 
