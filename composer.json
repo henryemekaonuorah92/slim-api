@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Module\\": "Module/"
+      "App\\": "app/"
     }
   },
   "autoload-dev": {
