@@ -1,4 +1,5 @@
 <?php
+
 return [
     'settings' => [
         // jwt config
@@ -19,7 +20,7 @@ return [
         // mongodb configuration @link
         'mongodb' => [
             'uri' => 'mongodb://localhost:27017',
-            'database' => 'phonebook_test',
+            'database' => 'phonebook',
             'uriOptions' => [],
             'driverOptions' => []
         ],
@@ -32,7 +33,7 @@ return [
             'err_trace' => 1, // allow trace in errors set to 0 in production
             'err_msg' => 1, // show error messages from exception in errors set to 0 in production
             'name' => 'app',
-            'path' => __DIR__ . '/../../storage/app_test.log',
+            'path' => __DIR__ . '/../storage/logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
     ]

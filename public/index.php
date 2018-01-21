@@ -1,6 +1,10 @@
 <?php
+//date_default_timezone_set('UTC');
+//if (function_exists('xdebug_disable')) {
+//    xdebug_disable();
+//}
+
 // Set default timezone
-date_default_timezone_set('UTC');
 
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
@@ -14,9 +18,9 @@ if (PHP_SAPI == 'cli-server') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$settings = require __DIR__ . '/../app/bootstrap/settings.php';
+$settings = require __DIR__ . '/../bootstrap/settings.php';
 
-$app = \App\AppContainer::getAppInstance($settings);
+$app = \Core\AppContainer::getAppInstance($settings);
 
 $container = $app->getContainer();
 
@@ -30,11 +34,9 @@ define('__ROOTURI__', $uri->getBasePath());
 define('__PATH__', $uri->getPath());
 define('__APPDIR__', __DIR__);
 
-define('__ISAPI__', (bool)stristr($uri->getPath(), '/api/'));
-
-require __DIR__ . '/../app/bootstrap/dep.base.php';
-require __DIR__ . '/../app/bootstrap/middlewares.php';
-require __DIR__ . '/../app/bootstrap/routes.php';
+require __DIR__ . '/../bootstrap/dep.base.php';
+require __DIR__ . '/../bootstrap/mw.base.php';
+require __DIR__ . '/../bootstrap/routes.php';
 
 try {
     $app->run();

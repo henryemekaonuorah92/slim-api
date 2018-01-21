@@ -32,7 +32,10 @@ lint:
 	vendor/bin/phpcs -p --standard=PSR2 --extensions=php --encoding=utf-8 --ignore=*/vendor/*,*/benchmarks/* .
 
 unit:
-	vendor/bin/phpunit -v --coverage-text --coverage-clover=coverage.xml
+	vendor/bin/phpunit
+
+unit-cov:
+	vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
 
 unit-html:
 	vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=./report/

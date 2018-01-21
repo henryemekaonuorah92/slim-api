@@ -1,12 +1,12 @@
 <?php
 // Set default timezone
-date_default_timezone_set('UTC');
+// date_default_timezone_set('UTC');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$settings = require __DIR__ . '/../app/bootstrap/settings.php';
+$settings = require __DIR__ . '/../bootstrap/settings.php';
 
-$app = \App\AppContainer::getAppInstance($settings);
+$app = \Core\AppContainer::getAppInstance($settings);
 
 $container = $app->getContainer();
 
@@ -22,6 +22,6 @@ define('__APPDIR__', __DIR__);
 
 define('__ISAPI__', (bool)stristr($uri->getPath(), '/api/'));
 
-require __DIR__ . '/../app/bootstrap/dep.base.php';
-require __DIR__ . '/../app/bootstrap/middlewares.php';
-require __DIR__ . '/../app/bootstrap/routes.php';
+require __DIR__ . '/../bootstrap/dep.base.php';
+require __DIR__ . '/../bootstrap/mw.base.php';
+require __DIR__ . '/../bootstrap/routes.php';
