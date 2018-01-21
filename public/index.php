@@ -20,7 +20,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $settings = require __DIR__ . '/../bootstrap/settings.php';
 
-$app = \Core\AppContainer::getAppInstance($settings);
+$app = \Module\Core\AppContainer::getAppInstance($settings);
 
 $container = $app->getContainer();
 

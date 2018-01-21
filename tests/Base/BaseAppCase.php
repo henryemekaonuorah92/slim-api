@@ -3,7 +3,7 @@
 namespace Tests\Base;
 
 
-use Core\AppContainer;
+use Module\Core\AppContainer;
 use Slim\App;
 use Slim\Container;
 use Slim\Http\Environment;

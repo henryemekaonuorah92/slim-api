@@ -3,7 +3,7 @@
  * @return \Monolog\Logger
  */
 $container['logger'] = function () {
-    $config = \Core\AppContainer::config('logger');
+    $config = \Module\Core\AppContainer::config('logger');
     $logger = new \Monolog\Logger($config['name']);
     $file = new \Monolog\Handler\RotatingFileHandler($config['path'], $config['level']);
     $logger->pushHandler($file);
@@ -19,7 +19,7 @@ $container['errorHandler'] = function (\Slim\Container $container) {
 
     return function (\Slim\Http\Request $request, \Slim\Http\Response $response, $exception) use ($container) {
 
-        $config = \Core\AppContainer::config('logger');
+        $config = \Module\Core\AppContainer::config('logger');
 
         /** @var \Exception $exception */
         $traceData = [
