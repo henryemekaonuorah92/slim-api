@@ -5,8 +5,7 @@
 /tmp
 /out-tsc
 /vendor
-/app/_logs
-/app/tests/_logs
+/server/logs
 # dependencies
 /node_modules
 
@@ -43,4 +42,8 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+.phplint-cache
+coverage.xml
+coverage.clover
+/report
 !.gitkeep

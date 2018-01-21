@@ -4,7 +4,7 @@ date_default_timezone_set('UTC');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$settings = require __DIR__ . '/../app/tests/bootstrap/settings.php';
+$settings = require __DIR__ . '/../app/bootstrap/settings.php';
 
 $app = \App\AppContainer::getAppInstance($settings);
 

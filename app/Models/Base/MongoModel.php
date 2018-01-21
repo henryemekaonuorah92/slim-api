@@ -17,7 +17,7 @@ use Valitron\Validator;
  * @property string $update_at
  * @package App\Models\Base
  */
-class MongoModel
+class MongoModel extends Magic
 {
     /** @var Container */
     protected $container = null;
@@ -160,7 +160,10 @@ class MongoModel
      */
     public function _beforeInsert()
     {
-        unset($this->data['_id']);
+        if (isset($this->data['_id']) && !($this->data['_id'] instanceof ObjectId)) {
+            unset($this->data['_id']);
+        }
+
         $this->created_at = new UTCDateTime();
         return true;
     }
@@ -188,7 +191,7 @@ class MongoModel
      * @param $offset
      * @return null|mixed
      */
-    public function __get($offset)
+    public function get($offset)
     {
         if (property_exists($this, $offset)) {
             return $this->{$offset};
@@ -202,7 +205,7 @@ class MongoModel
      * @param $value
      * @return $this
      */
-    public function __set($offset, $value)
+    public function set($offset, $value)
     {
         if (property_exists($this, $offset)) {
             $this->{$offset} = $value;
@@ -211,5 +214,23 @@ class MongoModel
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $offset
+     * @return bool
+     */
+    public function exists($offset)
+    {
+        return isset($this->{$offset});
+    }
+
+    /**
+     * @param string $offset
+     * @return NULL|void
+     */
+    public function clear($offset)
+    {
+        unset($this->{$offset});
     }
 }

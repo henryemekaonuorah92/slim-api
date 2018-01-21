@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Base;
+namespace Tests\Base;
 
 
 use App\AppContainer;
@@ -12,7 +12,7 @@ use Slim\Http\Request;
 use Slim\Http\RequestBody;
 use Slim\Http\Uri;
 
-class BaseCase extends \PHPUnit\Framework\TestCase
+class BaseAppCase extends \PHPUnit\Framework\TestCase
 {
     /** @var App */
     public static $appInstance;

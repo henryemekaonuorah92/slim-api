@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests;
+namespace Tests;
 
-use App\Tests\Base\BaseCase;
 use Slim\Http\Response;
+use Tests\Base\BaseAppCase;
 
-class UserRegisterTest extends BaseCase
+class UserRegisterTest extends BaseAppCase
 {
 
     /**
@@ -34,7 +34,7 @@ class UserRegisterTest extends BaseCase
     {
         $response = $this->request('POST', '/api/user/register', ['email' => 'email@gmail.com', 'password' => 'Hello world']);
         $this->assertSame($response->getStatusCode(), 200);
-        $this->assertSame((string)$response->getBody(), "Hello, Todo");
+        $this->assertSame((string)$response->getBody(), '{"n":1}');
 
     }
 

@@ -4,6 +4,7 @@ namespace App\Controllers\Base\Traits;
 
 use App\Models\Base\MongoModel;
 use Meabed\Mongoose\Method;
+use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -29,7 +30,7 @@ trait InsertOne
 
         $rs = $this->model->insertDoc($data);
 
-        return $response->withJson($rs);
+        return $response->withJson(['n' => $rs->getInsertedCount()]);
     }
 
     /**
@@ -45,11 +46,11 @@ trait InsertOne
         $this->response = $response;
         $data = $this->request->getParsedBody();
 
+        $data['_id'] = $objId = new ObjectId();
         $this->model->insertDoc($data);
 
-        // todo check why object if is alaways different
-        //$rs = $this->model->findOne(['_id' => $data['_id']]);
+        $rs = $this->model->findOne(['_id' => $objId]);
 
-        return $response->withJson($data);
+        return $response->withJson($rs);
     }
 }
