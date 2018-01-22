@@ -2,7 +2,17 @@
 ## Work In Progress
 ---
 
+---
+
+The missing php api boilerplate the follows the principles of 
+[**`KIS & VS `**](#kiss)  `Keep it simple AND VERY STUPID`
+
+
+---
+
 ```php -S 0.0.0.0:3500 -t public```
+
+
 
 
 #### TODO
