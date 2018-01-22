@@ -55,7 +55,7 @@ abstract class AbstractValidator
      *
      * @return array|null
      */
-    public function errors():?array
+    public function errors()
     {
         $errors = $this->validator->errors();
 
