@@ -42,8 +42,13 @@ class MongodbClient
             return self::$instances[$name];
         }
         $config = $this->container[self::MONGO_CONFIG_CONNECTION][$name];
-
-        $client = new Client($config['uri'], $config['uriOptions'], $config['driverOptions']);
+        $driverOptions = $config['driverOptions'] ?? [];
+        $driverOptions['typeMap'] = [
+            'root' => "\App\Base\Models\Base\Types\MDoc",
+            'array' => 'MongoDB\Model\BSONArray',
+            'document' => 'MongoDB\Model\BSONDocument',
+        ];
+        $client = new Client($config['uri'], $config['uriOptions'], $driverOptions);
         self::$instances[$name] = $client;
 
         return self::$instances[$name];
