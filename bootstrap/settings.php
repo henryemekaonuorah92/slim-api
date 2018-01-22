@@ -1,6 +1,6 @@
 <?php
 
-return [
+$baseSetting = [
     'settings' => [
         // jwt config
         'jwt' => [
@@ -39,3 +39,11 @@ return [
         ],
     ]
 ];
+// require extra settings -- ignored file to extend your app
+$extraSetting = [];
+$extraSettingFile = __DIR__ . '/ext.settings.php';
+if (file_exists($extraSettingFile)) {
+    require_once $extraSettingFile;
+}
+
+return array_merge_recursive($baseSetting, $extraSetting);
