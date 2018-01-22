@@ -1,6 +1,13 @@
 ---
 ## Work In Progress
----
+
+[![Build Status](https://travis-ci.org/Meabed/slim-api.svg?branch=master)](https://travis-ci.org/Meabed/slim-api)
+[![Packagist](https://img.shields.io/packagist/dm/meabed/slim-api.svg)](https://packagist.org/packages/meabed/slim-api)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![codecov](https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Meabed/slim-api)
+
+
 
 ---
 
