@@ -1,11 +1,4 @@
 <?php
-//date_default_timezone_set('UTC');
-//if (function_exists('xdebug_disable')) {
-//    xdebug_disable();
-//}
-
-// Set default timezone
-
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
