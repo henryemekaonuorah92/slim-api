@@ -1,17 +1,13 @@
 {
-  "name": "tajawal/slim-api",
+  "name": "meabed/slim-api",
   "license": "MIT",
   "version": "1.0.0",
   "require": {
     "php": ">=7.0",
     "slim/slim": "~3",
-    "catfan/Medoo": "~1",
     "vlucas/valitron": "~1",
-    "robmorgan/phinx": "~0",
     "firebase/php-jwt": "~5",
-    "swiftmailer/swiftmailer": "~6",
     "monolog/monolog": "~1",
-    "nesbot/carbon": "^1.22",
     "meabed/mongoose-php": "^1.0"
   },
   "require-dev": {
@@ -27,15 +23,5 @@
     "psr-4": {
       "Tests\\": "tests/"
     }
-  },
-  "repositories": [
-    {
-      "url": "https://github.com/Meabed/mongoose-php",
-      "type": "git"
-    }
-  ],
-  "scripts": {
-    "start": "php -S 0.0.0.0:3500 -t public public/index.php",
-    "test": "./phpunit"
   }
 }

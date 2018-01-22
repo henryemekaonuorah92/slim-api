@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests;
+namespace Tests\User;
 
 use Tests\Base\BaseAppCase;
 
-class UserTest extends BaseAppCase
+class RegisterTest extends BaseAppCase
 {
 
     /**
@@ -29,13 +29,12 @@ class UserTest extends BaseAppCase
      */
     public function testLoginUser()
     {
-        $response = $this->request(
+        $this->request(
             'POST', '/api/user/login',
             ['email' => 'email@gmail.com', 'password' => 'Hello world']
         );
 
         $this->assertThatResponseHasStatus(200);
         $this->assertArrayHasKey('token', $this->responseData());
-
     }
 }

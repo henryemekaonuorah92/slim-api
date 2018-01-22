@@ -101,21 +101,26 @@ class BaseAppCase extends \PHPUnit\Framework\TestCase
         return $rs;
     }
 
-
     /**
      * @param $expectedStatus
      */
-    protected function assertThatResponseHasStatus($expectedStatus)
+    public function assertThatResponseHasStatus($expectedStatus)
     {
         $this->assertEquals($expectedStatus, $this->response->getStatusCode());
     }
 
-    protected function assertThatResponseHasContentType($expectedContentType)
+    /**
+     * @param $expectedContentType
+     */
+    public function assertThatResponseHasContentType($expectedContentType)
     {
         $this->assertContains($expectedContentType, $this->response->getHeader('Content-Type'));
     }
 
-    protected function responseData()
+    /**
+     * @return mixed
+     */
+    public function responseData()
     {
         return json_decode((string)$this->response->getBody(), true);
     }
