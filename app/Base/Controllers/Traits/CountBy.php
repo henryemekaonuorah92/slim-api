@@ -27,6 +27,6 @@ trait CountBy
         $this->response = $response;
 
         $rs = $this->model->count();
-        return $this->response->withJson($rs);
+        return $this->response->withJson(['n' => $rs]);
     }
 }

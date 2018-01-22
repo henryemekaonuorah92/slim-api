@@ -65,7 +65,7 @@ class MongoModel extends Magic
     /**
      * @param $id
      * @param $data
-     * @return array|\MongoDB\Driver\WriteResult
+     * @return \MongoDB\UpdateResult
      * @throws \Exception
      */
     public function updateDocById($id, $data)

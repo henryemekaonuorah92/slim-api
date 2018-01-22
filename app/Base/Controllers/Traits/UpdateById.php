@@ -30,7 +30,7 @@ trait UpdateById
 
         $rs = $this->model->updateDocById($id, $updateData);
 
-        return $response->withJson($rs);
+        return $response->withJson(['n' => $rs->getModifiedCount()]);
 
     }
 }

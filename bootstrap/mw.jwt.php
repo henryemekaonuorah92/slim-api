@@ -3,6 +3,10 @@
 
 $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, $next) {
 
+    $enabled = \App\Base\AppContainer::config('jwt')['enabled'] ?? true;
+    if (!$enabled) {
+        return $response = $next($request, $response);
+    }
     $bypass = \App\Base\AppContainer::config('jwt')['bypass'] ?? [];
     $currentPath = $request->getUri()->getPath();
     // skip jwt if route match

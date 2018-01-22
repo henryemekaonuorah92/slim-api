@@ -22,7 +22,7 @@ trait GetAll
      */
     public function getAll(Request $request, Response $response, $args)
     {
-        $rs = $this->model->find();
+        $rs = $this->model->find()->toArray();
         return $response->withJson($rs);
     }
 }

@@ -18,8 +18,7 @@ trait DeleteById
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return array|\MongoDB\Driver\WriteResult
-     * @throws \Exception
+     * @return mixed
      */
     public function delete(Request $request, Response $response, $args)
     {
@@ -30,7 +29,8 @@ trait DeleteById
 
         $rs = $this->model->deleteOne(['_id' => new ObjectId($id)]);
 
-        return $rs;
+
+        return $response->withJson(['n' => $rs->getDeletedCount()]);
 
     }
 }
