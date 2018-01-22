@@ -10,6 +10,7 @@ use Slim\Http\Environment;
 use Slim\Http\Headers;
 use Slim\Http\Request;
 use Slim\Http\RequestBody;
+use Slim\Http\Response;
 use Slim\Http\Uri;
 
 class BaseAppCase extends \PHPUnit\Framework\TestCase
@@ -18,6 +19,9 @@ class BaseAppCase extends \PHPUnit\Framework\TestCase
     public static $appInstance;
     /** @var Container */
     public static $containerInstance;
+
+    /** @var Response */
+    public $response;
 
     /**
      *
@@ -79,5 +83,41 @@ class BaseAppCase extends \PHPUnit\Framework\TestCase
         return $request->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * @param $method
+     * @param $uir
+     * @param array $options
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Slim\Exception\MethodNotAllowedException
+     * @throws \Slim\Exception\NotFoundException
+     */
+    public function request($method, $uir, $options = array())
+    {
+        $request = $this->prepareRequest($method, $uir, $options);
+
+        $response = new Response();
+        $app = static::$appInstance;
+        $this->response = $rs = $app($request, $response);
+        return $rs;
+    }
+
+
+    /**
+     * @param $expectedStatus
+     */
+    protected function assertThatResponseHasStatus($expectedStatus)
+    {
+        $this->assertEquals($expectedStatus, $this->response->getStatusCode());
+    }
+
+    protected function assertThatResponseHasContentType($expectedContentType)
+    {
+        $this->assertContains($expectedContentType, $this->response->getHeader('Content-Type'));
+    }
+
+    protected function responseData()
+    {
+        return json_decode((string)$this->response->getBody(), true);
+    }
 
 }
