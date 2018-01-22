@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Group;
 
-use App\Core\Models\Base\MongoModel;
+use App\Base\Models\Base\MongoModel;
 
 /**
  * Class UserModel
@@ -12,7 +12,7 @@ use App\Core\Models\Base\MongoModel;
  * @property string $password
  * @property string $createdAt
  * @property string $updateAt
- * @package App\Core\Models
+ * @package App\Base\Models
  */
 class GroupModel extends MongoModel
 {

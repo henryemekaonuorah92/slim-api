@@ -3,7 +3,7 @@
 
 $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, $next) {
 
-    $bypass = \App\Core\AppContainer::config('jwt')['bypass'] ?? [];
+    $bypass = \App\Base\AppContainer::config('jwt')['bypass'] ?? [];
     $currentPath = $request->getUri()->getPath();
     // skip jwt if route match
     foreach ($bypass as $route) {
@@ -20,8 +20,8 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
 
     $tokenData = \App\Util\JWT\Jwt::decodeJwtToken($token);
 
-    \App\Core\AppContainer::setConfig('jwtToken', $token);
-    \App\Core\AppContainer::setConfig('jwtUser', $tokenData->data);
+    \App\Base\AppContainer::setConfig('jwtToken', $token);
+    \App\Base\AppContainer::setConfig('jwtUser', $tokenData->data);
 
     $response = $next($request, $response);
     return $response;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Util\JWT;
 
-use App\Core\AppContainer;
+use App\Base\AppContainer;
 use Psr\Http\Message\RequestInterface;
 
 class Jwt

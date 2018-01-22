@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core\Controllers\Base\Traits;
+namespace App\Base\Controllers\Base\Traits;
 
-use App\Core\Models\Base\MongoModel;
+use App\Base\Models\Base\MongoModel;
 use Meabed\Mongoose\Method;
 use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
@@ -10,7 +10,7 @@ use Slim\Http\Response;
 
 /**
  * @property Method|MongoModel $model
- * @package App\Core\Controllers\Base\Traits
+ * @package App\Base\Controllers\Base\Traits
  */
 trait GetById
 {

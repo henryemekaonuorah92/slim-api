@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Contact;
 
-use App\Core\Controllers\Base\RestController;
+use App\Base\Controllers\Base\RestController;
 
 class ContactController extends RestController
 {

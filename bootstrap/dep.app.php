@@ -4,7 +4,7 @@
  * @return mixed
  */
 $container['mongodb'] = function (\Slim\Container $container) {
-    $config = \App\Core\AppContainer::config('mongodb');
+    $config = \App\Base\AppContainer::config('mongodb');
 
     $connection = new \App\Util\Db\MongoManager($container);
     $connection->addConnection([

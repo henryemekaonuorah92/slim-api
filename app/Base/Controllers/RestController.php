@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Core\Controllers\Base;
+namespace App\Base\Controllers\Base;
 
-use App\Core\Controllers\Base\Traits\CountBy;
-use App\Core\Controllers\Base\Traits\DeleteById;
-use App\Core\Controllers\Base\Traits\GetAll;
-use App\Core\Controllers\Base\Traits\GetById;
-use App\Core\Controllers\Base\Traits\InsertOne;
-use App\Core\Controllers\Base\Traits\UpdateById;
+use App\Base\Controllers\Base\Traits\CountBy;
+use App\Base\Controllers\Base\Traits\DeleteById;
+use App\Base\Controllers\Base\Traits\GetAll;
+use App\Base\Controllers\Base\Traits\GetById;
+use App\Base\Controllers\Base\Traits\InsertOne;
+use App\Base\Controllers\Base\Traits\UpdateById;
 use Meabed\Mongoose\Method;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;

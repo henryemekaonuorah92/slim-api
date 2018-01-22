@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core\Models\Base;
+namespace App\Base\Models\Base;
 
-use App\Core\AppContainer;
+use App\Base\AppContainer;
 use App\Util\Db\MongoManager;
 use Meabed\Mongoose\Method;
 use MongoDB\BSON\ObjectId;
@@ -15,7 +15,7 @@ use Valitron\Validator;
  * Class BaseMongoModel
  * @property string $created_at
  * @property string $update_at
- * @package App\Core\Models\Base
+ * @package App\Base\Models\Base
  */
 class MongoModel extends Magic
 {
