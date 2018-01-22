@@ -17,12 +17,12 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
     }
 
 
-    $token = \App\Util\JWT\Jwt::fetchToken($request);
+    $token = \App\Helper\Jwt::fetchToken($request);
     if (!$token) {
         throw new Exception("Token not found", 401);
     }
 
-    $tokenData = \App\Util\JWT\Jwt::decodeJwtToken($token);
+    $tokenData = \App\Helper\Jwt::decodeJwtToken($token);
 
     \App\Base\AppContainer::setConfig('jwtToken', $token);
     \App\Base\AppContainer::setConfig('jwtUser', $tokenData->data);

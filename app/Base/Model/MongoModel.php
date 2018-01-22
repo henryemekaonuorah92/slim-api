@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Base\Models;
+namespace App\Base\Model;
 
 use App\Base\AppContainer;
-use App\Util\Db\MongodbClient;
+use App\Db\MongodbClient;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;

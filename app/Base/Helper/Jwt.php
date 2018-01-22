@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Util\JWT;
+namespace App\Helper;
 
 use App\Base\AppContainer;
 use Psr\Http\Message\RequestInterface;

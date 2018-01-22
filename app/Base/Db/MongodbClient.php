@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Util\Db;
+namespace App\Db;
 
 use MongoDB\Client;
 use Psr\Container\ContainerInterface;
@@ -44,7 +44,7 @@ class MongodbClient
         $config = $this->container[self::MONGO_CONFIG_CONNECTION][$name];
         $driverOptions = $config['driverOptions'] ?? [];
         $driverOptions['typeMap'] = [
-            'root' => "\App\Base\Models\Types\MDoc",
+            'root' => \App\Base\Model\Types\MDoc::class,
             'array' => 'MongoDB\Model\BSONArray',
             'document' => 'MongoDB\Model\BSONDocument',
         ];

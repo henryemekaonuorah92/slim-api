@@ -6,7 +6,7 @@
 $container['mongodb'] = function (\Slim\Container $container) {
     $config = \App\Base\AppContainer::config('mongodb');
 
-    $connection = new \App\Util\Db\MongodbClient($container);
+    $connection = new \App\Db\MongodbClient($container);
     $connection->addConnection([
         'uri' => $config['uri'],
         'database' => $config['database'],

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\User;
 
-use App\Util\Helpers\Password;
-use App\Util\JWT\Jwt;
 use App\Base\AppContainer;
-use App\Base\Controllers\RestController;
+use App\Base\Controller\RestController;
+use App\Helper\Jwt;
+use App\Helper\Password;
 use Slim\Http\Request;
 use Slim\Http\Response;
 

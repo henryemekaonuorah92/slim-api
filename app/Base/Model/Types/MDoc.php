@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Models\Types;
+namespace App\Base\Model\Types;
 
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Unserializable;

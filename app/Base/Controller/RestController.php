@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Base\Controllers;
+namespace App\Base\Controller;
 
-use App\Base\Controllers\Traits\CountBy;
-use App\Base\Controllers\Traits\DeleteById;
-use App\Base\Controllers\Traits\GetAll;
-use App\Base\Controllers\Traits\GetById;
-use App\Base\Controllers\Traits\InsertOne;
-use App\Base\Controllers\Traits\UpdateById;
+use App\Base\Controller\Traits\CountBy;
+use App\Base\Controller\Traits\DeleteById;
+use App\Base\Controller\Traits\GetAll;
+use App\Base\Controller\Traits\GetById;
+use App\Base\Controller\Traits\InsertOne;
+use App\Base\Controller\Traits\UpdateById;
 use MongoDB\Collection;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Base\Controllers\Traits;
+namespace App\Base\Controller\Traits;
 
-use App\Base\Models\MongoModel;
+use App\Base\Model\MongoModel;
 use MongoDB\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;

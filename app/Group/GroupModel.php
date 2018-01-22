@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Group;
 
-use App\Base\Models\MongoModel;
+use App\Base\Model\MongoModel;
 
 /**
  * Class UserModel

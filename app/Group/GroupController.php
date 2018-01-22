@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Group;
 
-use App\Base\Controllers\RestController;
+use App\Base\Controller\RestController;
 
 class GroupController extends RestController
 {

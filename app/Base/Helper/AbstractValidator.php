@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Util\Validators;
+namespace App\Helpers\Validators;
 
 use Valitron\Validator;
 
