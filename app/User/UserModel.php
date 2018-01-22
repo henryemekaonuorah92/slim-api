@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
 
 namespace App\User;
 
-use App\Base\Model\MongoModel;
-use App\Helper\Password;
+use App\Base\Helper\Password;
+use App\Base\Model\MongoDB;
 
 /**
  * Class UserModel
@@ -15,7 +14,7 @@ use App\Helper\Password;
  * @property string $updateAt
  * @package App\Base\Models
  */
-class UserModel extends MongoModel
+class UserModel extends MongoDB
 {
     /** @var string */
     protected $collectionNAme = 'users';

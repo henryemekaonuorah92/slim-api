@@ -2,12 +2,13 @@
 
 namespace Tests\User;
 
-use Tests\Base\BaseAppCase;
+use Tests\Base\BaseApiCase;
 
-class RegisterTest extends BaseAppCase
+class UserTest extends BaseApiCase
 {
 
     /**
+     * @throws \Exception
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
@@ -24,6 +25,7 @@ class RegisterTest extends BaseAppCase
     }
 
     /**
+     * @throws \Exception
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
@@ -35,6 +37,25 @@ class RegisterTest extends BaseAppCase
         );
 
         $this->assertThatResponseHasStatus(200);
-        $this->assertArrayHasKey('token', $this->responseData());
+        $rs = $this->responseData();
+        $this->assertArrayHasKey('token', $rs);
     }
+
+    /**
+     * @throws \Exception
+     * @throws \Slim\Exception\MethodNotAllowedException
+     * @throws \Slim\Exception\NotFoundException
+     */
+//    public function testUpdateUser()
+//    {
+//        $this->request(
+//            'POST', '/api/user/login',
+//            ['email' => 'email@gmail.com', 'password' => 'Hello world']
+//        );
+//
+//        $this->assertThatResponseHasStatus(200);
+//        $this->assertArrayHasKey('token', $this->responseData());
+//    }
+
+
 }

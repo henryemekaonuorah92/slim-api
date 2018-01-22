@@ -2,7 +2,6 @@
 
 namespace Tests\Base;
 
-
 use App\Base\AppContainer;
 use Slim\App;
 use Slim\Container;
@@ -13,7 +12,7 @@ use Slim\Http\RequestBody;
 use Slim\Http\Response;
 use Slim\Http\Uri;
 
-class BaseAppCase extends \PHPUnit\Framework\TestCase
+class BaseApiCase extends \PHPUnit\Framework\TestCase
 {
     /** @var App */
     public static $appInstance;
@@ -23,13 +22,19 @@ class BaseAppCase extends \PHPUnit\Framework\TestCase
     /** @var Response */
     public $response;
 
+    /** @var string */
+    public static $jwtToken = '';
+
     /**
-     *
+     * @throws \Exception
+     * @throws \Slim\Exception\MethodNotAllowedException
+     * @throws \Slim\Exception\NotFoundException
      */
     public static function setUpBeforeClass()
     {
         static::$appInstance = AppContainer::getAppInstance();
         static::$containerInstance = AppContainer::getContainer();
+        static::$jwtToken = static::ReqJwtToken();
         parent::setUpBeforeClass();
     }
 
@@ -87,7 +92,8 @@ class BaseAppCase extends \PHPUnit\Framework\TestCase
      * @param $method
      * @param $uir
      * @param array $options
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface|Response
+     * @throws \Exception
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
@@ -96,9 +102,11 @@ class BaseAppCase extends \PHPUnit\Framework\TestCase
         $request = $this->prepareRequest($method, $uir, $options);
 
         $response = new Response();
+        unset(static::$containerInstance['request']);
+        static::$containerInstance['request'] = $request;
         $app = static::$appInstance;
-        $this->response = $rs = $app($request, $response);
-        return $rs;
+        $this->response = $app->run(true);
+        return $this->response;
     }
 
     /**
@@ -125,4 +133,46 @@ class BaseAppCase extends \PHPUnit\Framework\TestCase
         return json_decode((string)$this->response->getBody(), true);
     }
 
+
+    /**
+     * @param array $userData
+     * @return array
+     * @throws \Exception
+     * @throws \Slim\Exception\MethodNotAllowedException
+     * @throws \Slim\Exception\NotFoundException
+     */
+    public static function ReqJwtToken($userData = [])
+    {
+        $token = '';
+        $user = [];
+        $instance = new static();
+
+        $userData['email'] = $userData['email'] ?? 'testemail@testemail.com';
+        $userData['password'] = $userData['password'] ?? 'testpassword';
+
+        $response = $instance->request(
+            'POST', '/api/user/login',
+            $userData
+        );
+
+        if ($response->getStatusCode() != 200) {
+            $response = $instance->request(
+                'POST', '/api/user/register',
+                $userData
+            );
+            if ($response->getStatusCode() == 200) {
+                $response = $instance->request(
+                    'POST', '/api/user/login',
+                    $userData
+                );
+            } else {
+                $instance->fail('cannot register user ' . $response->getStatusCode());
+            }
+        }
+
+        $dataArr = $instance->responseData();
+        $token = $dataArr['token'] ?? '';
+        $user = $userData;
+        return ['token' => $token, 'user' => $user];
+    }
 }

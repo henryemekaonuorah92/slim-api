@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
 
 namespace App\User;
 
 use App\Base\AppContainer;
 use App\Base\Controller\RestController;
-use App\Helper\Jwt;
-use App\Helper\Password;
+use App\Base\Helper\Jwt;
+use App\Base\Helper\Password;
 use Slim\Http\Request;
 use Slim\Http\Response;
 

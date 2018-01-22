@@ -7,6 +7,7 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
     if (!$enabled) {
         return $response = $next($request, $response);
     }
+
     $bypass = \App\Base\AppContainer::config('jwt')['bypass'] ?? [];
     $currentPath = $request->getUri()->getPath();
     // skip jwt if route match
@@ -17,12 +18,12 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
     }
 
 
-    $token = \App\Helper\Jwt::fetchToken($request);
+    $token = \App\Base\Helper\Jwt::fetchToken($request);
     if (!$token) {
         throw new Exception("Token not found", 401);
     }
 
-    $tokenData = \App\Helper\Jwt::decodeJwtToken($token);
+    $tokenData = \App\Base\Helper\Jwt::decodeJwtToken($token);
 
     \App\Base\AppContainer::setConfig('jwtToken', $token);
     \App\Base\AppContainer::setConfig('jwtUser', $tokenData->data);

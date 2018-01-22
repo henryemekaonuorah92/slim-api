@@ -1,8 +1,7 @@
 <?php
 
-declare(strict_types=1);
 
-namespace App\Helper;
+namespace App\Base\Helper;
 
 use App\Base\AppContainer;
 use Psr\Http\Message\RequestInterface;

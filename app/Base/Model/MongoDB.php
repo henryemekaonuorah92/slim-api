@@ -3,7 +3,7 @@
 namespace App\Base\Model;
 
 use App\Base\AppContainer;
-use App\Db\MongodbClient;
+use App\Base\Db\MongoDBClient;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
@@ -16,7 +16,7 @@ use Valitron\Validator;
  * @property string $update_at
  * @package App\Base\Models
  */
-class MongoModel extends Magic
+class MongoDB extends Magic
 {
     /** @var Container */
     protected $container = null;
@@ -43,9 +43,9 @@ class MongoModel extends Magic
     public function __construct()
     {
         $this->container = AppContainer::getContainer();
-        $this->mongodbClient = $this->container->get(MongodbClient::MONGO_DI);
+        $this->mongodbClient = $this->container->get(MongoDBClient::MONGO_DI);
 
-        $config = $this->container[MongodbClient::MONGO_CONFIG_CONNECTION][$this->connectionNAme];
+        $config = $this->container[MongoDBClient::MONGO_CONFIG_CONNECTION][$this->connectionNAme];
         $databaseName = $config['database'];
         $this->mongodbCollection = $this->mongodbClient->{$databaseName}->{$this->collectionNAme};
     }

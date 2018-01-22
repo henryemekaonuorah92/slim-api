@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Db;
+namespace App\Base\Db;
 
 use MongoDB\Client;
 use Psr\Container\ContainerInterface;
 
-class MongodbClient
+class MongoDBClient
 {
     const MONGO_DI = 'mongodb';
     const MONGO_CONFIG_CONNECTION = 'mongo.database.connections';

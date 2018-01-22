@@ -3,6 +3,7 @@ return [
     'settings' => [
         // jwt config
         'jwt' => [
+            'enabled' => true,
             'secret' => 'qwertyuiopasdfghjklzxcvbnm123456',
             'expire' => 2500,
             'leeway' => 60,

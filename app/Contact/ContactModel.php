@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types=1);
 
 namespace App\Contact;
 
-use App\Base\Model\MongoModel;
+use App\Base\Model\MongoDB;
 
 /**
  * Class UserModel
@@ -14,7 +13,7 @@ use App\Base\Model\MongoModel;
  * @property string $updateAt
  * @package App\Base\Models
  */
-class ContactModel extends MongoModel
+class ContactModel extends MongoDB
 {
     /** @var string */
     protected $collectionNAme = 'contacts';

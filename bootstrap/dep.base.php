@@ -58,6 +58,7 @@ $container['errorHandler'] = function (\Slim\Container $container) {
  */
 $container['notFoundHandler'] = function (\Slim\Container $container) {
     return function (\Slim\Http\Request $request, \Slim\Http\Response $response) use ($container) {
+        var_dump($request->getUri()->__toString());
         return $response->withJson(['status' => 'error', 'message' => 'Not found'], 404);
     };
 };

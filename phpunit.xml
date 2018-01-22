@@ -18,8 +18,8 @@
 >
     <testsuites>
         <testsuite name="Rest">
-            <directory suffix=".php">./tests</directory>
-            <exclude>./tests/Base/BaseAppCase.php</exclude>
+            <directory suffix="Test.php">./tests</directory>
+            <exclude>./tests/Base/BaseApiCase.php</exclude>
             <exclude>./tests/Base/BaseCase.php</exclude>
         </testsuite>
     </testsuites>

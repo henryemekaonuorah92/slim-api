@@ -2,13 +2,13 @@
 
 namespace App\Base\Controller\Traits;
 
-use App\Base\Model\MongoModel;
+use App\Base\Model\MongoDB;
 use MongoDB\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Collection|MongoModel $model
+ * @property Collection|MongoDB $model
  * @package App\Base\Controllers\Traits
  */
 trait GetAll
