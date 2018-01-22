@@ -48,20 +48,6 @@ class MongoModel extends Magic
         $config = $this->container[MongodbClient::MONGO_CONFIG_CONNECTION][$this->connectionNAme];
         $databaseName = $config['database'];
         $this->mongodbCollection = $this->mongodbClient->{$databaseName}->{$this->collectionNAme};
-        //// $this->mongodbClient, $databaseName, $this->collectionNAme
-    }
-
-
-    /**
-     * @param $name
-     * @param $args
-     * @return mixed
-     * @throws \Exception
-     */
-    public function __call($name, $args)
-    {
-        $rs = call_user_func_array([$this->mongodbCollection, $name], $args);
-        return $rs;
     }
 
     /**
@@ -232,5 +218,17 @@ class MongoModel extends Magic
     public function clear($offset)
     {
         unset($this->{$offset});
+    }
+
+    /**
+     * @param $name
+     * @param $args
+     * @return mixed
+     * @throws \Exception
+     */
+    public function __call($name, $args)
+    {
+        $rs = call_user_func_array([$this->mongodbCollection, $name], $args);
+        return $rs;
     }
 }
