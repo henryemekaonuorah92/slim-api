@@ -44,7 +44,7 @@ class MongodbClient
         $config = $this->container[self::MONGO_CONFIG_CONNECTION][$name];
         $driverOptions = $config['driverOptions'] ?? [];
         $driverOptions['typeMap'] = [
-            'root' => "\App\Base\Models\Base\Types\MDoc",
+            'root' => "\App\Base\Models\Types\MDoc",
             'array' => 'MongoDB\Model\BSONArray',
             'document' => 'MongoDB\Model\BSONDocument',
         ];

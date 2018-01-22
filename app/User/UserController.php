@@ -7,7 +7,7 @@ namespace App\User;
 use App\Util\Helpers\Password;
 use App\Util\JWT\Jwt;
 use App\Base\AppContainer;
-use App\Base\Controllers\Base\RestController;
+use App\Base\Controllers\RestController;
 use Slim\Http\Request;
 use Slim\Http\Response;
 

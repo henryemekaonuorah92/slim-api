@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Base\Controllers\Base\Traits;
+namespace App\Base\Controllers\Traits;
 
-use App\Base\Models\Base\MongoModel;
+use App\Base\Models\MongoModel;
 use MongoDB\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
  * @property Collection|MongoModel $model
- * @package App\Base\Controllers\Base\Traits
+ * @package App\Base\Controllers\Traits
  */
 trait UpdateById
 {

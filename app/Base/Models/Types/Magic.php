@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Base\Models\Base\Types;
+namespace App\Base\Models\Types;
 
 abstract class Magic implements \ArrayAccess
 {

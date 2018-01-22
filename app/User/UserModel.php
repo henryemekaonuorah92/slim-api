@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\User;
 
 use App\Util\Helpers\Password;
-use App\Base\Models\Base\MongoModel;
+use App\Base\Models\MongoModel;
 
 /**
  * Class UserModel
