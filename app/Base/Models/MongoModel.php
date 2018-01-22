@@ -3,11 +3,10 @@
 namespace App\Base\Models\Base;
 
 use App\Base\AppContainer;
-use App\Util\Db\MongoManager;
-use Meabed\Mongoose\Method;
+use App\Util\Db\MongodbClient;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
-use MongoDB\Driver\Manager;
+use MongoDB\Client;
 use Slim\Container;
 use Valitron\Validator;
 
@@ -25,14 +24,14 @@ class MongoModel extends Magic
     /** @var string */
     protected $connectionNAme = 'default';
 
-    /** @var Manager */
-    protected $mongoManager = null;
+    /** @var Client */
+    protected $mongodbClient = null;
+    /** @var \MongoDB\Collection */
+    protected $mongodbCollection = null;
     /** @var string */
     protected $databaseName = '';
     /** @var string */
     protected $collectionNAme = '';
-
-    protected $method;
 
     protected $data = null;
 
@@ -44,11 +43,12 @@ class MongoModel extends Magic
     public function __construct()
     {
         $this->container = AppContainer::getContainer();
-        $this->mongoManager = $this->container->get(MongoManager::MONGO_DI);
-        $config = $this->container[MongoManager::MONGO_CONFIG_CONNECTION][$this->connectionNAme];
-        $databaseName = $config['database'];
+        $this->mongodbClient = $this->container->get(MongodbClient::MONGO_DI);
 
-        $this->method = (new Method())->__setup($this->mongoManager, $databaseName, $this->collectionNAme);
+        $config = $this->container[MongodbClient::MONGO_CONFIG_CONNECTION][$this->connectionNAme];
+        $databaseName = $config['database'];
+        $this->mongodbCollection = $this->mongodbClient->{$databaseName}->{$this->collectionNAme};
+        //// $this->mongodbClient, $databaseName, $this->collectionNAme
     }
 
 
@@ -60,7 +60,7 @@ class MongoModel extends Magic
      */
     public function __call($name, $args)
     {
-        $rs = call_user_func_array([$this->method, $name], $args);
+        $rs = call_user_func_array([$this->mongodbCollection, $name], $args);
         return $rs;
     }
 
@@ -73,7 +73,7 @@ class MongoModel extends Magic
     {
         $this->data = $data;
         $this->checkBeforeInsert();
-        return $this->method->insert($this->data);
+        return $this->mongodbCollection->insertOne($this->data);
     }
 
     /**
@@ -86,7 +86,7 @@ class MongoModel extends Magic
     {
         $this->data = $data;
         $this->checkBeforeUpdate();
-        return $this->method->update(['_id' => new ObjectId($id)], ['$set' => $this->data]);
+        return $this->mongodbCollection->updateOne(['_id' => new ObjectId($id)], ['$set' => $this->data]);
     }
 
     /**

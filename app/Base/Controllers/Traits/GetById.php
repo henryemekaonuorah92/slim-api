@@ -3,13 +3,13 @@
 namespace App\Base\Controllers\Base\Traits;
 
 use App\Base\Models\Base\MongoModel;
-use Meabed\Mongoose\Method;
 use MongoDB\BSON\ObjectId;
+use MongoDB\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Method|MongoModel $model
+ * @property Collection|MongoModel $model
  * @package App\Base\Controllers\Base\Traits
  */
 trait GetById

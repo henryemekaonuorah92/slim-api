@@ -2,9 +2,10 @@
 
 namespace App\Util\Db;
 
+use MongoDB\Client;
 use Psr\Container\ContainerInterface;
 
-class MongoManager
+class MongodbClient
 {
     const MONGO_DI = 'mongodb';
     const MONGO_CONFIG_CONNECTION = 'mongo.database.connections';
@@ -42,8 +43,8 @@ class MongoManager
         }
         $config = $this->container[self::MONGO_CONFIG_CONNECTION][$name];
 
-        $manager = new \MongoDB\Driver\Manager($config['uri'], $config['uriOptions'], $config['driverOptions']);
-        self::$instances[$name] = $manager;
+        $client = new Client($config['uri'], $config['uriOptions'], $config['driverOptions']);
+        self::$instances[$name] = $client;
 
         return self::$instances[$name];
 
