@@ -87,23 +87,18 @@ class Jwt
     public static function fetchToken(Request $request)
     {
         $jwtConfig = AppContainer::config('jwt');
-        $queryParam = $jwtConfig['query'] ?? false;
-        $headerName = $jwtConfig['header'] ?? false;
+        $queryParam = $jwtConfig['query'] ?? '';
+        $headerName = $jwtConfig['header'] ?? '';
         $token = null;
 
-        switch (true) {
-            case $queryParam:
-                $token = $request->getQueryParam($queryParam);
-            //break;
-            case $headerName:
-                if (!$token) {
-                    $headerVal = $request->getHeader($headerName)[0] ?? '';
-                    $tokenArr = explode(' ', $headerVal);
-                    $token = $tokenArr[1] ?? null;
-                }
-            //break;
-            default:
-                break;
+        // fetch from query params
+        $token = $request->getQueryParam($queryParam);
+
+        // if not exist fetch from header
+        if (!$token) {
+            $headerVal = $request->getHeader($headerName)[0] ?? '';
+            $tokenArr = explode(' ', $headerVal);
+            $token = $tokenArr[1] ?? null;
         }
 
         return $token;
