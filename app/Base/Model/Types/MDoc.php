@@ -2,7 +2,7 @@
 
 namespace App\Base\Model\Types;
 
-use App\Base\Model\Magic;
+use App\Base\Magic;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Unserializable;
 use MongoDB\BSON\UTCDateTime;

@@ -4,6 +4,7 @@ namespace App\Base\Model;
 
 use App\Base\AppContainer;
 use App\Base\Db\MongoDBClient;
+use App\Base\Magic;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
