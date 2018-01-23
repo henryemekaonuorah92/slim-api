@@ -6,7 +6,7 @@
 /out-tsc
 /vendor
 /storage/logs/*
-/bootstrap/ext.*.php
+/config/ext.*.php
 # dependencies
 /node_modules
 
