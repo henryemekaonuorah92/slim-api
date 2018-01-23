@@ -2,13 +2,13 @@
 
 namespace App\Base\Model\Types;
 
-use App\Base\Magic;
+use App\Base\DataObject;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Unserializable;
 use MongoDB\BSON\UTCDateTime;
 
 
-class MDoc extends Magic implements Unserializable, \Countable
+class MDoc extends DataObject implements Unserializable, \Countable
 {
 
     /**
@@ -70,7 +70,7 @@ class MDoc extends Magic implements Unserializable, \Countable
      * @param string $key
      * @return NULL|void
      */
-    public function clear($key)
+    public function unset($key)
     {
         unset($this->{$key});
     }

@@ -2,7 +2,7 @@
 
 namespace App\Base;
 
-abstract class Magic implements \ArrayAccess
+abstract class DataObject implements \ArrayAccess
 {
     /**
      * Return TRUE if key is not empty
@@ -31,7 +31,7 @@ abstract class Magic implements \ArrayAccess
      * @return NULL
      * @param $key string
      **/
-    abstract public function clear($key);
+    abstract public function unset($key);
 
     /**
      * Convenience method for checking property value
@@ -73,7 +73,7 @@ abstract class Magic implements \ArrayAccess
      **/
     public function offsetunset($key)
     {
-        $this->clear($key);
+        $this->unset($key);
     }
 
     /**

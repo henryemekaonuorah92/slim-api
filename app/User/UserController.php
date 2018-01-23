@@ -5,6 +5,7 @@ namespace App\User;
 
 use App\Base\AppContainer;
 use App\Base\Controller\RestController;
+use App\Base\Helper\Event;
 use App\Base\Helper\Jwt;
 use App\Base\Helper\Password;
 use Slim\Http\Request;
@@ -32,6 +33,8 @@ class UserController extends RestController
      * @param $args
      * @return mixed
      * @throws \Exception
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function login(Request $request, Response $response, $args)
     {
@@ -50,6 +53,8 @@ class UserController extends RestController
         }
 
         $rs = Jwt::generateToken($dbUser);
+
+        Event::emit('user.loging', $dbUser);
 
         return $response->withJson($rs);
     }

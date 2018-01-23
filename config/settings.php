@@ -25,6 +25,7 @@ $baseSetting = [
             'driverOptions' => []
         ],
 
+        'determineRouteBeforeAppMiddleware' => true, // Only set this if you need access to route within middleware
         'displayErrorDetails' => true, // set to false in production
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
