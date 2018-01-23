@@ -15,12 +15,14 @@ class RestTest extends BaseApiCase
     {
         $response = $this->request(
             'POST', '/api/group',
-            ['email' => 'email@gmail.com', 'password' => 'Hello world']
+            ['name' => 'group name', 'description' => 'group desc']
         );
 
         //var_dump((string)$response->getBody());
-        $this->assertSame($response->getStatusCode(), 401);
-        //$this->assertSame((string)$response->getBody(), '{"n":1}');
+        $this->assertSame($response->getStatusCode(), 200);
+        $rs = $this->responseDataArr();
+        $this->assertContains('group name', $rs['name']);
+        $this->assertContains('group desc', $rs['description']);
 
     }
 }

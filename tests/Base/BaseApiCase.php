@@ -22,8 +22,8 @@ class BaseApiCase extends \PHPUnit\Framework\TestCase
     /** @var Response */
     public $response;
 
-    /** @var string */
-    public static $jwtToken = '';
+    /** @var array */
+    public static $jwtData = '';
 
     /**
      * @throws \Exception
@@ -34,7 +34,7 @@ class BaseApiCase extends \PHPUnit\Framework\TestCase
     {
         static::$appInstance = AppContainer::getAppInstance();
         static::$containerInstance = AppContainer::getContainer();
-        static::$jwtToken = static::ReqJwtToken();
+        static::$jwtData = static::ReqJwtToken();
         parent::setUpBeforeClass();
     }
 
@@ -62,11 +62,15 @@ class BaseApiCase extends \PHPUnit\Framework\TestCase
      */
     public function prepareRequest($method, $url, array $requestParameters)
     {
-        $env = Environment::mock([
+        $mock = [
             'SCRIPT_NAME' => '/index.php',
             'REQUEST_URI' => $url,
             'REQUEST_METHOD' => $method,
-        ]);
+        ];
+        if (!empty(static::$jwtData['token'])) {
+            $mock['HTTP_AUTHORIZATION'] = 'bearer ' . static::$jwtData['token'];
+        }
+        $env = Environment::mock($mock);
 
         $parts = explode('?', $url);
 
@@ -77,7 +81,6 @@ class BaseApiCase extends \PHPUnit\Framework\TestCase
         $uri = Uri::createFromEnvironment($env);
         $headers = Headers::createFromEnvironment($env);
         $cookies = [];
-
         $serverParams = $env->all();
 
         $body = new RequestBody();
@@ -128,7 +131,7 @@ class BaseApiCase extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed
      */
-    public function responseData()
+    public function responseDataArr()
     {
         return json_decode((string)$this->response->getBody(), true);
     }
@@ -170,7 +173,7 @@ class BaseApiCase extends \PHPUnit\Framework\TestCase
             }
         }
 
-        $dataArr = $instance->responseData();
+        $dataArr = $instance->responseDataArr();
         $token = $dataArr['token'] ?? '';
         $user = $userData;
         return ['token' => $token, 'user' => $user];

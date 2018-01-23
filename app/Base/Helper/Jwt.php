@@ -4,7 +4,7 @@
 namespace App\Base\Helper;
 
 use App\Base\AppContainer;
-use Psr\Http\Message\RequestInterface;
+use Slim\Http\Request;
 
 class Jwt
 {
@@ -81,16 +81,14 @@ class Jwt
     }
 
     /**
-     * todo fix
-     * @param RequestInterface $request
-     * @return mixed
+     * @param Request $request
+     * @return mixed|null
      */
-    public static function fetchToken(RequestInterface $request)
+    public static function fetchToken(Request $request)
     {
         $jwtConfig = AppContainer::config('jwt');
         $queryParam = $jwtConfig['query'] ?? false;
         $headerName = $jwtConfig['header'] ?? false;
-        $cookieName = $jwtConfig['cookie'] ?? false;
         $token = null;
 
         switch (true) {
@@ -99,14 +97,9 @@ class Jwt
             //break;
             case $headerName:
                 if (!$token) {
-                    $headrVal = $request->getHeader('Authorization')[0] ?? '';
-                    $tokenArr = explode(' ', $headrVal);
+                    $headerVal = $request->getHeader($headerName)[0] ?? '';
+                    $tokenArr = explode(' ', $headerVal);
                     $token = $tokenArr[1] ?? null;
-                }
-            //break;
-            case $cookieName:
-                if (!$token) {
-                    $token = $request->getQueryParam($queryParam);
                 }
             //break;
             default:

@@ -9,9 +9,8 @@ $baseSetting = [
             'expire' => 2500,
             'leeway' => 60,
             'algorithm' => 'HS512',
-            'query' => 'x-token',
-            'header' => 'x-token',
-            'cookie' => 'x-token',
+            'header' => 'authorization',
+            'query' => 'token',
             'bypass' => [
                 '/api/user/register',
                 '/api/user/login',

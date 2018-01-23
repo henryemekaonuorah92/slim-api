@@ -37,7 +37,7 @@ class UserTest extends BaseApiCase
         );
 
         $this->assertThatResponseHasStatus(200);
-        $rs = $this->responseData();
+        $rs = $this->responseDataArr();
         $this->assertArrayHasKey('token', $rs);
     }
 
