@@ -89,7 +89,6 @@ class Jwt
         $jwtConfig = AppContainer::config('jwt');
         $queryParam = $jwtConfig['query'] ?? '';
         $headerName = $jwtConfig['header'] ?? '';
-        $token = null;
 
         // fetch from query params
         $token = $request->getQueryParam($queryParam);
