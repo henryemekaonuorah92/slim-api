@@ -8,6 +8,7 @@ use App\Base\Db\MongoDBClient;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
+use MongoDB\Collection;
 use Slim\Container;
 use Valitron\Validator;
 
@@ -23,12 +24,12 @@ class MongoDB extends DataObject
     protected $container = null;
 
     /** @var string */
-    protected $connectionNAme = 'default';
+    protected $connectionName = 'default';
 
     /** @var Client */
     protected $mongodbClient = null;
 
-    /** @var \MongoDB\Collection */
+    /** @var Collection */
     protected $mongodbCollection = null;
 
     /** @var string */
@@ -86,18 +87,24 @@ class MongoDB extends DataObject
     protected $storedData = [];
 
     /**
-     * BaseMongoModel constructor.
+     * @param null $connectionName
+     * @param null $collectionNAme
+     * @return self|Collection
      */
-    public function __construct()
+    public function __construct($connectionName = null, $collectionNAme = null)
     {
         $this->container = AppContainer::getContainer();
         $this->mongodbClient = $this->container->get(MongoDBClient::MONGO_DI);
 
-        $config = $this->container[MongoDBClient::MONGO_CONFIG_CONNECTION][$this->connectionNAme];
+        $connectionName = $connectionName ?? $this->connectionName;
+        $collectionNAme = $collectionNAme ?? $this->collectionNAme;
+
+        $config = $this->container[MongoDBClient::MONGO_CONFIG_CONNECTION][$connectionName];
         $databaseName = $config['database'];
 
-        $this->mongodbCollection = $this->mongodbClient->{$databaseName}->{$this->collectionNAme};
+        $this->mongodbCollection = $this->mongodbClient->{$databaseName}->{$collectionNAme};
         $this->_resourceCollection = $this->mongodbCollection;
+        return $this;
     }
 
 //    public function __sleep()
