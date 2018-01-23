@@ -13,6 +13,6 @@ $this->map(['POST'], '/group', \App\Group\GroupController::class . ":insertAndRe
 // get group by id
 $this->get('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":get");
 // update group by id
-$this->put('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":update");
+$this->put('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":updateAndRetrieve");
 // delete group by id
 $this->delete('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":delete");

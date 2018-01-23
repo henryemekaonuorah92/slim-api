@@ -13,6 +13,6 @@ $this->map(['POST'], '/contact', \App\Contact\ContactController::class . ":inser
 // get contact by id
 $this->get('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":get");
 // update contact by id
-$this->put('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":update");
+$this->put('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":updateAndRetrieve");
 // delete contact by id
 $this->delete('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":delete");
