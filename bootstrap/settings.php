@@ -38,6 +38,7 @@ $baseSetting = [
         ],
     ]
 ];
+
 // require extra settings -- ignored file to extend your app
 $extraSetting = [];
 $extraSettingFile = __DIR__ . '/ext.settings.php';

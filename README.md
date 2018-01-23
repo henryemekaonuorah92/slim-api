@@ -1,8 +1,8 @@
-# REST API with Slim [![Build Status](https://travis-ci.org/Meabed/slim-api.svg?branch=master)](https://travis-ci.org/Meabed/slim-api) [![Packagist](https://img.shields.io/packagist/dm/meabed/slim-api.svg)](https://packagist.org/packages/meabed/slim-api) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md) [![codecov](https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Meabed/slim-api)
+# REST API with Slim, MongoDB, JWT [![Build Status](https://travis-ci.org/Meabed/slim-api.svg?branch=master)](https://travis-ci.org/Meabed/slim-api) [![Packagist](https://img.shields.io/packagist/dm/meabed/slim-api.svg)](https://packagist.org/packages/meabed/slim-api) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md) [![codecov](https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Meabed/slim-api)
 
 A RESTful API boilerplate for Slim framework. Features included:
 
-* Jwt Authentication
+* JWT Authentication
 * Endpoint Tests and Unit Tests
 * Build Process with [Travis CI](https://travis-ci.org/)
 * Event Handling
@@ -15,7 +15,7 @@ A RESTful API boilerplate for Slim framework. Features included:
 First, clone the repo:
 
 ```bash
-git clone https://github.com/Meabed/slim-api
+git clone https://github.com/meabed/slim-api
 ```
 
 ### Install dependencies
@@ -27,10 +27,11 @@ composer install
 
 ### Configure the Environment
 
-Create `.env` file:
+Create `bootstrap/ext.settings.php` file:
 
 ```bash
-cat .env.example > .env
+// override any default settings
+return []
 ```
 
 If you want you can edit database name, database username and database password.
@@ -40,12 +41,12 @@ If you want you can edit database name, database username and database password.
 To start making RESTful requests to slim-api start the PHP local server using:
 
 ```bash
-php -S localgost:3000 -t public
+php -S localhost:3500 -t public
 ```
 
 ### Creating token
 
-For creating token we have to use the http://localhost:3000/api/user/login route. Here is an example of creating token with [Postman](https://www.getpostman.com/).
+For creating token we have to use the http://localhost:3500/api/user/login route. Here is an example of creating token with [Postman](https://www.getpostman.com/).
 
 ![Imgur](https://i.imgur.com/dkFX1o4.png)
 
@@ -76,7 +77,7 @@ $this->delete('/posts/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":de
 
 For more info please visit Slim [Routing](https://www.slimframework.com/docs/objects/router.html) page.
 
-#### Step 2: Creat Model
+#### Step 2: Create Model
 
 Create a model `Post.php` inside `app/Post` directory.
 
