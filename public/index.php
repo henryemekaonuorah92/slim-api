@@ -11,7 +11,7 @@ if (PHP_SAPI == 'cli-server') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$settings = require __DIR__ . '/../bootstrap/settings.php';
+$settings = require __DIR__ . '/../config/settings.php';
 
 $app = \App\Base\AppContainer::getAppInstance($settings);
 
@@ -27,9 +27,9 @@ define('__ROOTURI__', $uri->getBasePath());
 define('__PATH__', $uri->getPath());
 define('__APPDIR__', __DIR__);
 
-require __DIR__ . '/../bootstrap/dep.base.php';
-require __DIR__ . '/../bootstrap/mw.base.php';
-require __DIR__ . '/../bootstrap/routes.php';
+require __DIR__ . '/../config/dep.base.php';
+require __DIR__ . '/../config/mw.base.php';
+require __DIR__ . '/../config/routes.php';
 
 try {
     $app->run();
