@@ -1,33 +1,53 @@
----
-## Work In Progress
+# REST API with Slim [![Build Status](https://travis-ci.org/Meabed/slim-api.svg?branch=master)](https://travis-ci.org/Meabed/slim-api) [![Packagist](https://img.shields.io/packagist/dm/meabed/slim-api.svg)](https://packagist.org/packages/meabed/slim-api) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md) [![codecov](https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Meabed/slim-api)
 
-[![Build Status](https://travis-ci.org/Meabed/slim-api.svg?branch=master)](https://travis-ci.org/Meabed/slim-api)
-[![Packagist](https://img.shields.io/packagist/dm/meabed/slim-api.svg)](https://packagist.org/packages/meabed/slim-api)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![codecov](https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Meabed/slim-api)
+A RESTful API boilerplate for Slim framework. Features included:
 
+* Jwt Authentication
+* Endpoint Tests and Unit Tests
+* Build Process with [Travis CI](https://travis-ci.org/)
+* Event Handling
+* Pagination
+* API Resources
+* Validation
 
+## Getting Started
 
----
+First, clone the repo:
 
-The missing php api boilerplate the follows the principles of 
-[**`KIS & VS `**](#kiss)  `Keep it simple AND VERY STUPID`
+```bash
+git clone https://github.com/Meabed/slim-api
+```
 
+### Install dependencies
 
----
+```bash
+cd slim-api
+composer install
+```
 
-```php -S 0.0.0.0:3500 -t public```
+### Configure the Environment
 
+Create `.env` file:
 
+```bash
+cat .env.example > .env
+```
 
+If you want you can edit database name, database username and database password.
 
-#### TODO
-- [ ] prepare readme
-- [ ] docs / wiki
-- [ ] travis / codecov
-- [ ] add more functions / aliases
-- [ ] add more tests
-- [ ] add examples
+### Run Application
 
-test crud, token jwt, mongo, validation
+To start making RESTful requests to slim-api start the PHP local server using:
+
+```bash
+php -S localgost:3000 -t public
+```
+
+## TODO
+
+- [ ] Prepare readme
+- [ ] Docs / Wiki
+- [ ] Travis CI / Codecov
+- [ ] Add more functions / aliases
+- [ ] Add more tests
+- [ ] Add examples
