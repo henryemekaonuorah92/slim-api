@@ -5,7 +5,7 @@ namespace Tests\Base;
 use App\Base\Model\MongoDB;
 use MongoDB\Driver\Exception\Exception as MongoException;
 
-class MongoDBTest extends BaseApiCase
+class MongoDBTest extends BaseCase
 {
 
     public function testInsertOneFindOne()
