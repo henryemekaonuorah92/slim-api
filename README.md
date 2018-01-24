@@ -140,6 +140,57 @@ class PostController extends RestController
 }
 ```
 
+### Events
+
+Slim API events provides a simple observer implementation, allowing you to subscribe and listen for various events that occur in your application. To define your events for a Post resource lets create `_events.php` file inside `app/Post`.
+
+```php
+<?php
+
+$events = [
+    'post.created' => function ($event, ...$params) {
+        // Do processing of the event.
+    }
+];
+return $events;
+```
+
+Now lets emmit `post.created` event by the following code.
+
+```php
+<?php 
+
+namespace App\Post;
+
+use Slim\Http\Request;
+use Slim\Http\Response;
+use App\Base\Helper\Event;
+use App\Base\Controller\RestController;
+
+class PostController extends RestController
+{
+    protected $modelClass = PostModel::class;
+	
+	/**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return mixed
+     * @throws \Exception
+     */
+	public function insert(Request $request, Response $response, $args) {
+		// Create post and then retrieve it
+		$post = [
+		    "_id" 		  => "523b1153a2aa6a3233a91412",
+		    "description" => "Buzzfeed asked a bunch of people...",
+		    "title"       => "Cronut Mania: Buzzfeed asked a bunch of people...",
+		];
+
+		Event::emit('post.created', $post);
+	}
+}
+```
+
 ## Contributing
 
 Contributions, questions and comments are all welcome and encouraged. For code contributions submit a pull request.
