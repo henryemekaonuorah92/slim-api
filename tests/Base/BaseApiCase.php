@@ -12,7 +12,7 @@ use Slim\Http\RequestBody;
 use Slim\Http\Response;
 use Slim\Http\Uri;
 
-class BaseApiCase extends \PHPUnit\Framework\TestCase
+class BaseApiCase extends BaseCase
 {
     /** @var App */
     public static $appInstance;
