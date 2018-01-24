@@ -93,11 +93,12 @@ class Jwt
         // fetch from query params
         $token = $request->getQueryParam($queryParam);
 
+
         // if not exist fetch from header
         if (!$token) {
             $headerVal = $request->getHeader($headerName)[0] ?? '';
             $tokenArr = explode(' ', $headerVal);
-            $token = $tokenArr[1] ?? null;
+            $token = $tokenArr[1] ?? $tokenArr[0];
         }
 
         return $token;
