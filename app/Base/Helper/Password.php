@@ -10,6 +10,9 @@ class Password
      */
     public static function hash($password)
     {
+        if (!$password) {
+            return null;
+        }
         $hashInfo = password_get_info($password);
 
         if ($hashInfo['algo'] == 0) {

@@ -1,6 +1,7 @@
 <?php
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
+    var_dump("XXX");exit;
     return $response;
 });
 

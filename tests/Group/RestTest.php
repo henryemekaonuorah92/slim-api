@@ -71,5 +71,23 @@ class RestTest extends BaseApiCase
         $rs = $this->responseDataArr();
         $this->assertEquals(null, $rs);
 
+
+        // get group exception
+        $response = $this->sendHttpRequest(
+            'GET', '/api/group/' . '12312'
+        );
+        $this->assertSame($response->getStatusCode(), 400);
+        $rs = $this->responseDataArr();
+        $this->assertEquals('Invalid ID', $rs['message']);
+
+        // update group exception
+        $response = $this->sendHttpRequest(
+            'PUT', '/api/group/' . '12312',
+            ['name' => 'group name update', 'description' => 'group desc update']
+        );
+        $this->assertSame($response->getStatusCode(), 400);
+        $rs = $this->responseDataArr();
+        $this->assertEquals('Invalid ID', $rs['message']);
+
     }
 }
