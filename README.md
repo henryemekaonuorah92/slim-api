@@ -11,6 +11,7 @@ A RESTful API boilerplate for Slim framework. Features included:
 * Pagination
 * API Resources
 * Validation
+* CORS Support
 
 ## Getting Started
 
@@ -31,7 +32,7 @@ composer install
 
 Create `bootstrap/ext.settings.php` file:
 
-```bash
+```php
 // override any default settings
 return []
 ```
@@ -52,7 +53,28 @@ For creating token we have to use the http://localhost:3500/api/user/login route
 
 ![Imgur](https://i.imgur.com/dkFX1o4.png)
 
-### Creating a New Resource
+### Create A REST API
+
+Run the following command to create a REST API:
+
+```bash
+composer create-project --prefer-dist Meabed/slim-api blog
+```
+
+#### Database connection
+
+Out of the box slim-api supports MongoDB. So, to set up the connection with MongoDB create a new file `bootstrap/ext.settings.php` and configure the settings like this.
+
+```php
+return [
+	'mongodb' => [
+		'uri'           => 'mongodb://localhost:27017',
+        'database'      => 'blog', // Collection name
+	]
+]
+```
+
+#### Creating a New Resource
 
 Creating a new resource is very easy and straight-forward. Follow these simple steps to create a new resource. The complete structure for a resource is like this:
 
@@ -95,7 +117,7 @@ class PostModel extends MongoDB
     /** 
     * @var string 
     */
-    protected $collectionName = 'groups';
+    protected $collectionName = 'posts';
 }
 ```
 
