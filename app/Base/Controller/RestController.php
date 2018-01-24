@@ -8,6 +8,7 @@ use App\Base\Controller\Traits\GetAll;
 use App\Base\Controller\Traits\GetById;
 use App\Base\Controller\Traits\InsertOne;
 use App\Base\Controller\Traits\UpdateById;
+use App\Base\Model\MongoDB;
 use MongoDB\Collection;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
@@ -29,7 +30,7 @@ class RestController
     /** @var string */
     protected $connectionName = 'mongodb';
 
-    /** @var Collection */
+    /** @var Collection|MongoDB */
     protected $model = null;
 
     /** @var ContainerInterface */

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-        bootstrap="public/index.test.php"
+        bootstrap="tests/public/index.php"
         backupStaticAttributes="false"
         backupGlobals="false"
         cacheTokens="false"
@@ -17,11 +17,14 @@
         stopOnSkipped="false"
 >
     <testsuites>
-        <testsuite name="Rest">
+
+        <testsuite name="Integration">
             <directory suffix="Test.php">./tests</directory>
-            <exclude>./tests/Base/BaseApiCase.php</exclude>
             <exclude>./tests/Base/BaseCase.php</exclude>
+            <exclude>./tests/Base/BaseAppCase.php</exclude>
+            <exclude>./tests/Base/BaseApiCase.php</exclude>
         </testsuite>
+
     </testsuites>
     <filter>
         <blacklist>
@@ -33,8 +36,8 @@
     </filter>
     <php>
         <env name="APP_ENV" value="testing"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
     </php>
+    <listeners>
+        <listener class="tests\TestListener" file="./tests/TestListener.php"></listener>
+    </listeners>
 </phpunit>

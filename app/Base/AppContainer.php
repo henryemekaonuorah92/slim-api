@@ -8,48 +8,52 @@ use Slim\Container;
 class AppContainer
 {
     /** @var App */
-    private static $app = null;
+    private static $app = [];
 
     /**
      * @param array $settings
-     * @return App|null
+     * @param int $appId
+     * @return mixed
      */
-    public static function getAppInstance($settings = [])
+    public static function getAppInstance($settings = [], $appId = 0)
     {
-        if (null === self::$app) {
-            self::$app = self::makeAppInstance($settings);
+        if (!isset(self::$app[$appId]) || null === self::$app[$appId]) {
+            self::$app[$appId] = self::makeAppInstance($settings);
         }
 
-        return self::$app;
+        return self::$app[$appId];
     }
 
     /**
+     * @param int $appId
      * @return \Psr\Container\ContainerInterface|Container
      */
-    public static function getContainer()
+    public static function getContainer($appId = 0)
     {
-        return static::getAppInstance()->getContainer();
+        return static::getAppInstance([], $appId)->getContainer();
     }
 
     /**
      * @param $key
      * @param null $defaultValue
+     * @param int $appId
      * @return mixed|null
      */
-    public static function config($key, $defaultValue = null)
+    public static function config($key, $defaultValue = null, $appId = 0)
     {
-        $settings = static::getContainer()->get('settings');
+        $settings = static::getContainer($appId)->get('settings');
         return $settings[$key] ?? $defaultValue;
     }
 
     /**
      * @param $key
      * @param $value
+     * @param int $appId
      * @return \Psr\Container\ContainerInterface|Container
      */
-    public static function setConfig($key, $value)
+    public static function setConfig($key, $value, $appId = 0)
     {
-        $container = static::getContainer();
+        $container = static::getContainer($appId);
         $container->get('settings')->replace([
             $key => $value,
         ]);
