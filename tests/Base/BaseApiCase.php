@@ -100,7 +100,7 @@ class BaseApiCase extends BaseCase
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
-    public function request($method, $uir, $options = array())
+    public function sendHttpRequest($method, $uir, $options = array())
     {
         $request = $this->prepareRequest($method, $uir, $options);
 
@@ -153,18 +153,18 @@ class BaseApiCase extends BaseCase
         $userData['email'] = $userData['email'] ?? 'testemail@testemail.com';
         $userData['password'] = $userData['password'] ?? 'testpassword';
 
-        $response = $instance->request(
+        $response = $instance->sendHttpRequest(
             'POST', '/api/user/login',
             $userData
         );
 
         if ($response->getStatusCode() != 200) {
-            $response = $instance->request(
+            $response = $instance->sendHttpRequest(
                 'POST', '/api/user/register',
                 $userData
             );
             if ($response->getStatusCode() == 200) {
-                $response = $instance->request(
+                $response = $instance->sendHttpRequest(
                     'POST', '/api/user/login',
                     $userData
                 );

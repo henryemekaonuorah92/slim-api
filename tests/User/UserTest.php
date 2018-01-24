@@ -14,7 +14,7 @@ class UserTest extends BaseApiCase
      */
     public function testRegisterUser()
     {
-        $response = $this->request(
+        $response = $this->sendHttpRequest(
             'POST', '/api/user/register',
             ['email' => 'email@gmail.com', 'password' => 'Hello world']
         );
@@ -31,7 +31,7 @@ class UserTest extends BaseApiCase
      */
     public function testLoginUser()
     {
-        $this->request(
+        $this->sendHttpRequest(
             'POST', '/api/user/login',
             ['email' => 'email@gmail.com', 'password' => 'Hello world']
         );
