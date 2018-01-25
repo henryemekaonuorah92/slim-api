@@ -111,6 +111,4 @@ class Jwt
 
         return $token;
     }
-
-
 }
