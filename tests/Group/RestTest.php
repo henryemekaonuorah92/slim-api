@@ -14,7 +14,7 @@ class RestTest extends BaseApiCase
     public function testGroupFlow()
     {
         // insert group
-        $response = $this->request(
+        $response = $this->sendHttpRequest(
             'POST', '/api/group',
             ['name' => 'group name', 'description' => 'group desc']
         );
@@ -28,7 +28,7 @@ class RestTest extends BaseApiCase
 
 
         // get group
-        $response = $this->request(
+        $response = $this->sendHttpRequest(
             'GET', '/api/group/' . $groupId
         );
         $this->assertSame($response->getStatusCode(), 200);
@@ -37,7 +37,7 @@ class RestTest extends BaseApiCase
         $this->assertContains('group desc', $rs['description']);
 
         // update group
-        $response = $this->request(
+        $response = $this->sendHttpRequest(
             'PUT', '/api/group/' . $groupId,
             ['name' => 'group name update', 'description' => 'group desc update']
 
@@ -47,7 +47,7 @@ class RestTest extends BaseApiCase
         $this->assertContains('group desc', $rs['description']);
 
         // get group
-        $response = $this->request(
+        $response = $this->sendHttpRequest(
             'GET', '/api/group/' . $groupId
         );
         $this->assertSame($response->getStatusCode(), 200);
@@ -56,7 +56,7 @@ class RestTest extends BaseApiCase
         $this->assertContains('group desc update', $rs['description']);
 
         // update group
-        $response = $this->request(
+        $response = $this->sendHttpRequest(
             'DELETE', '/api/group/' . $groupId
         );
         $this->assertSame($response->getStatusCode(), 200);
@@ -64,12 +64,30 @@ class RestTest extends BaseApiCase
         $this->assertEquals(1, $rs['n']);
 
         // get group
-        $response = $this->request(
+        $response = $this->sendHttpRequest(
             'GET', '/api/group/' . $groupId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertEquals(null, $rs);
+
+
+        // get group exception
+        $response = $this->sendHttpRequest(
+            'GET', '/api/group/' . '12312'
+        );
+        $this->assertSame($response->getStatusCode(), 400);
+        $rs = $this->responseDataArr();
+        $this->assertEquals('Invalid ID', $rs['message']);
+
+        // update group exception
+        $response = $this->sendHttpRequest(
+            'PUT', '/api/group/' . '12312',
+            ['name' => 'group name update', 'description' => 'group desc update']
+        );
+        $this->assertSame($response->getStatusCode(), 400);
+        $rs = $this->responseDataArr();
+        $this->assertEquals('Invalid ID', $rs['message']);
 
     }
 }
