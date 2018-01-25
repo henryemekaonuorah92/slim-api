@@ -1,9 +1,27 @@
 
-# REST API with Slim, MongoDB, JWT 
+<p align="center">
+  <h3 align="center">REST API with Slim, MongoDB, JWT </h3>
+  <p align="center">a RESTful API boilerplate for Slim framework</p>
+  <p align="center">
+    <a href="https://travis-ci.org/Meabed/slim-api">
+      <img src="https://travis-ci.org/Meabed/slim-api.svg?branch=master" alt="Build Status">
+    </a>
+            <a href="LICENSE.md">
+      <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License">
+    </a>
+        <a href="https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master">
+      <img src="https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality">
+    </a>
+    <a href="https://codecov.io/gh/Meabed/slim-api">
+      <img src="https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg" alt="codecov">
+    </a>
+    <a href="https://packagist.org/packages/meabed/slim-api/">
+      <img src="https://img.shields.io/packagist/dm/meabed/slim-api.svg" alt="Packagist">
+    </a>
+  </p>
+</p>
 
-[![Build Status](https://travis-ci.org/Meabed/slim-api.svg?branch=master)](https://travis-ci.org/Meabed/slim-api) [![Packagist](https://img.shields.io/packagist/dm/meabed/slim-api.svg)](https://packagist.org/packages/meabed/slim-api) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md) [![codecov](https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg)](https://codecov.io/gh/Meabed/slim-api)
-
-A RESTful API boilerplate for Slim framework. Features included:
+## Features
 
 * JWT Authentication
 * Endpoint Tests and Unit Tests
@@ -19,7 +37,8 @@ A RESTful API boilerplate for Slim framework. Features included:
 ```
 .
 ├── app                    # Core code of the application.
-│   ├── Base               # Contains base functionality of the framework 
+│   ├── Base               # Contains base functionality of the framework
+│   ├── Contract           # Express routes, e.g. /login/facebook
 │   └── User               # Resource example for user
 ├── config                 # Framework configuration files are in this folder
 │   └── settings.php       # Main configuartion of the framework.
@@ -90,8 +109,8 @@ Out of the box slim-api supports MongoDB. So, to set up the connection with Mong
 ```php
 return [
 	'mongodb' => [
-		'uri'           => 'mongodb://localhost:27017',
-        'database'      => 'blog', // Collection name
+	'uri'      => 'mongodb://localhost:27017',
+	'database' => 'blog', // Collection name
 	]
 ]
 ```
