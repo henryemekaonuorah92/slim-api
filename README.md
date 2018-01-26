@@ -22,15 +22,12 @@
 </p>
 
 ## Features
-
+* API CRUD with MongoDB Collection persistence. " KIS & VS" "Keep It Simple and Very Stupid"
 * JWT Authentication
-* Endpoint Tests and Unit Tests
-* Build Process with [Travis CI](https://travis-ci.org/)
+* Middleware "CORS, JWT"
 * Event Handling
-* Pagination
-* API Resources
-* Validation
-* CORS Support
+* Endpoint Tests and Unit Tests
+* CI - [Travis CI](https://travis-ci.org/)
 
 ## Directory Layout
 
