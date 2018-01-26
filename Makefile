@@ -18,7 +18,7 @@ help:
 	@echo ""
 
 server:
-	php -S 0.0.0.0:3500 -t public public/index.php
+	php -S 0.0.0.0:3500 -t public index.php
 
 deps-update-dev:
 	composer update --prefer-dist --no-ansi --no-interaction --no-scripts --optimize-autoloader --ignore-platform-reqs

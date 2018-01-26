@@ -85,7 +85,7 @@ If you want you can edit database name, database username and database password.
 To start making RESTful requests to slim-api start the PHP local server using:
 
 ```bash
-php -S localhost:3500 -t public
+php -S 0.0.0.0:3500 -t public index.php
 ```
 
 ### Creating token
