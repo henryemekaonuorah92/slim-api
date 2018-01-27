@@ -21,7 +21,7 @@ trait Save
      * @return mixed
      * @throws \Exception
      */
-    public function SaveAndRetrieve(Request $request, Response $response, $args)
+    public function saveAndRetrieve(Request $request, Response $response, $args)
     {
         $this->request = $request;
         $this->response = $response;
@@ -31,6 +31,8 @@ trait Save
         $this->model->setData($data)->save();
 
         $rs = $this->model->load($objId)->getStoredData();
+
+        $rs = $rs ?: null;
 
         return $response->withJson($rs);
     }

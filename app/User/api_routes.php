@@ -17,7 +17,7 @@ $this->get('/users', \App\User\UserController::class . ":getAll");
 $this->get('/users/count', \App\User\UserController::class . ":count");
 
 // get user by id
-$this->get('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":get");
+$this->get('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":getById");
 // update user by id
 $this->put('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":updateAndRetrieve");
 // delete user by id

@@ -75,7 +75,6 @@ class RestTest extends BaseApiCase
         $response = $this->sendHttpRequest(
             'PUT', '/api/user/' . $userId,
             ['email' => $userEmail, 'password' => $userPass . 'update']
-
         );
         $this->assertSame($response->getStatusCode(), 200);
 

@@ -29,7 +29,6 @@ trait DeleteById
 
         $rs = $this->model->deleteOne([$this->model->getIdFieldName() => new ObjectId($id)]);
 
-
         return $response->withJson(['n' => $rs->getDeletedCount()]);
 
     }

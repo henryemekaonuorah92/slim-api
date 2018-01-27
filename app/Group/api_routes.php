@@ -11,7 +11,7 @@ $this->get('/groups/count', \App\Group\GroupController::class . ":count");
 // insert group
 $this->map(['POST'], '/group', \App\Group\GroupController::class . ":saveAndRetrieve");
 // get group by id
-$this->get('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":get");
+$this->get('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":getById");
 // update group by id
 $this->put('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":updateAndRetrieve");
 // delete group by id

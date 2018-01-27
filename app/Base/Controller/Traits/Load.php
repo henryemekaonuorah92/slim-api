@@ -3,7 +3,6 @@
 namespace App\Base\Controller\Traits;
 
 use App\Base\Model\MongoDB;
-use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -12,7 +11,7 @@ use Slim\Http\Response;
  * @property Collection|MongoDB $model
  * @package App\Base\Controllers\Traits
  */
-trait GetById
+trait Load
 {
     /**
      * @param Request $request
@@ -21,18 +20,15 @@ trait GetById
      * @return static
      * @throws \Exception
      */
-    public function get(Request $request, Response $response, $args)
+    public function getById(Request $request, Response $response, $args)
     {
         $this->request = $request;
         $this->response = $response;
 
         $id = $args['id'] ?? null;
-        try {
-            $mongoId = new ObjectId($id);
-        } catch (\Exception $ex) {
-            throw new \Exception('Invalid ID', 400);
-        }
-        $rs = $this->model->findOne([$this->model->getIdFieldName() => $mongoId]);
+        $rs = $this->model->load($id)->getStoredData();
+        // return null if not exist | [] empty object
+        $rs = $rs ?: null;
 
         return $this->response->withJson($rs);
     }

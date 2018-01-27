@@ -3,7 +3,6 @@
 namespace App\Base\Controller\Traits;
 
 use App\Base\Model\MongoDB;
-use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -12,7 +11,7 @@ use Slim\Http\Response;
  * @property Collection|MongoDB $model
  * @package App\Base\Controllers\Traits
  */
-trait UpdateById
+trait Update
 {
     /**
      * @param Request $request
@@ -34,6 +33,8 @@ trait UpdateById
         $this->model->setData($updateData)->update($id);
 
         $rs = $this->model->load($id)->getStoredData();
+
+        $rs = $rs ?: null;
 
         return $response->withJson($rs);
     }
