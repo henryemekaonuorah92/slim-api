@@ -235,7 +235,7 @@ class MongoDB extends DataObject
      */
     public function dataHasChangedFor($field)
     {
-        $newData = $this->getData($field);
+        $newData = $this->get($field);
         $origData = $this->getOrigData($field);
         return $newData != $origData;
     }
@@ -251,10 +251,22 @@ class MongoDB extends DataObject
     }
 
 
+    /**
+     * @param $modelId
+     * @param null $field
+     * @return $this
+     * @throws \Exception
+     */
     public function load($modelId, $field = null)
     {
+        try {
+            $modelId = new ObjectId($modelId);
+        } catch (\Exception $ex) {
+            throw new \Exception('Invalid ID', 400);
+        }
+
         $this->_beforeLoad($modelId, $field);
-        //$this->_getResource()->load($this, $modelId, $field);
+        $this->_data = $this->getCollection()->findOne([$this->getIdFieldName() => $modelId]);
         $this->_afterLoad();
         $this->setOrigData();
         $this->_hasDataChanges = false;
@@ -310,14 +322,17 @@ class MongoDB extends DataObject
     }
 
     /**
-     * @param $id
+     * @param $modelId
      * @return $this
      * @throws \Exception
      */
-    public function update($id)
+    public function update($modelId)
     {
-        $modelId = new ObjectId($id);
-        // prevent changing mongo id
+        try {
+            $modelId = new ObjectId($modelId);
+        } catch (\Exception $ex) {
+            throw new \Exception('Invalid ID', 400);
+        }
         $this->_beforeSaveValidate();
         $this->_beforeSave();
         $this->_beforeUpdate();
@@ -464,6 +479,7 @@ class MongoDB extends DataObject
      */
     public function _beforeUpdate()
     {
+        // prevent changing mongo id
         unset($this->_data[$this->getIdFieldName()]);
         unset($this->_data['created_at']);
         return $this;

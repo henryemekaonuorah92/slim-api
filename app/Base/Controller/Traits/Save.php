@@ -49,7 +49,7 @@ trait Save
         $data[$this->model->getIdFieldName()] = $objId = new ObjectId();
         $this->model->setData($data)->save();
 
-        $rs = $this->model->findOne([$this->model->getIdFieldName() => $objId]);
+        $rs = $this->model->load($objId)->getStoredData();
 
         return $response->withJson($rs);
     }

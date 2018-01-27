@@ -27,18 +27,13 @@ trait UpdateById
         $this->response = $response;
 
         $id = $args['id'] ?? null;
-        try {
-            $mongoId = new ObjectId($id);
-        } catch (\Exception $ex) {
-            throw new \Exception('Invalid ID', 400);
-        }
 
         $updateData = $request->getParsedBody() ?? [];
 
         // todo
         $this->model->setData($updateData)->update($id);
 
-        $rs = $this->model->load(new ObjectId($mongoId))->getStoredData();
+        $rs = $this->model->load($id)->getStoredData();
 
         return $response->withJson($rs);
     }
