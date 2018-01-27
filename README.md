@@ -36,7 +36,6 @@
 .
 ├── app                    # Core code of the application.
 │   ├── Base               # Contains base functionality of the framework
-│   ├── Contract           # Express routes, e.g. /login/facebook
 │   └── User               # Resource example for user
 ├── config                 # Framework configuration files are in this folder
 │   └── settings.php       # Main configuartion of the framework.
