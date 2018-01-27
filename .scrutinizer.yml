@@ -83,13 +83,8 @@ build:
     mysql: false
     postgresql: false
     redis: false
-    mongodb: '3.6'
     php:
       version: 7.0, 7.1, 7.2
   tests:
     override:
     - php-scrutinizer-run
-    - command: make unit-cov
-      coverage:
-        file: coverage.xml
-        format: clover
