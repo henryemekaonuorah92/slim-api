@@ -29,6 +29,17 @@ class RestTest extends BaseApiCase
         $groupId = $rs[$idFieldName];
 
 
+        // get all group
+        $response = $this->sendHttpRequest(
+            'GET', '/api/groups'
+        );
+        $this->assertSame($response->getStatusCode(), 200);
+        $rs = $this->responseDataArr();
+        $this->assertEquals(true, count($rs) >= 1);
+        $this->assertEquals(true, is_array($rs[0]));
+        $this->assertEquals(true, is_string($rs[0]['name']));
+
+
         // get group
         $response = $this->sendHttpRequest(
             'GET', '/api/group/' . $groupId
@@ -72,7 +83,6 @@ class RestTest extends BaseApiCase
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertEquals(null, $rs);
-
 
         // get group exception
         $response = $this->sendHttpRequest(
