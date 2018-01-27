@@ -74,7 +74,7 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertEquals(1, $rs['n']);
+        $this->assertEquals(1, $rs['ok']);
 
         // get group
         $response = $this->sendHttpRequest(

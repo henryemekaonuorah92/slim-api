@@ -3,7 +3,6 @@
 namespace App\Base\Controller\Traits;
 
 use App\Base\Model\MongoDB;
-use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -24,9 +23,9 @@ trait DeleteById
     {
         $id = $args['id'] ?? null;
 
-        $rs = $this->model->deleteOne([$this->model->getIdFieldName() => new ObjectId($id)]);
+        $this->model->delete($id);
 
-        return $response->withJson(['n' => $rs->getDeletedCount()]);
+        return $response->withJson(['ok' => '1']);
 
     }
 }

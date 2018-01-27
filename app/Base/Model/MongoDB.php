@@ -141,7 +141,6 @@ class MongoDB extends DataObject
      */
     public function save()
     {
-
         $this->_beforeSave();
         $this->getResourceCollection()->insertOne($this->_data);
         $this->_afterSave();
@@ -226,11 +225,21 @@ class MongoDB extends DataObject
 
 
     /**
+     * @param $modelId
      * @return $this
+     * @throws \Exception
      */
-    public function delete()
+    public function delete($modelId)
     {
-        $this->getResourceCollection()->deleteOne($this);
+        try {
+            $modelId = new ObjectId($modelId);
+        } catch (\Exception $ex) {
+            throw new \Exception('Invalid ID', 400);
+        }
+
+        $this->_beforeDelete();
+        $this->getResourceCollection()->deleteOne([$this->getIdFieldName() => $modelId]);
+        $this->_afterDelete();
         return $this;
     }
 
@@ -257,6 +266,7 @@ class MongoDB extends DataObject
     public function clearInstance()
     {
         $this->_data = [];
+        $this->storedData = [];
         return $this;
     }
 
