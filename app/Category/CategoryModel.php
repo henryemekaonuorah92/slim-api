@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Group;
+namespace App\Category;
 
 use App\Base\Model\MongoDB;
 
@@ -13,8 +13,8 @@ use App\Base\Model\MongoDB;
  * @property string $updateAt
  * @package App\Base\Models
  */
-class GroupModel extends MongoDB
+class CategoryModel extends MongoDB
 {
     /** @var string */
-    protected $collectionNAme = 'groups';
+    protected $collectionNAme = 'categorys';
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contact;
+namespace App\Post;
 
 use App\Base\Model\MongoDB;
 
@@ -13,8 +13,8 @@ use App\Base\Model\MongoDB;
  * @property string $updateAt
  * @package App\Base\Models
  */
-class ContactModel extends MongoDB
+class PostModel extends MongoDB
 {
     /** @var string */
-    protected $collectionNAme = 'contacts';
+    protected $collectionNAme = 'posts';
 }

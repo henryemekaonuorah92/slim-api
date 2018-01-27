@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Group;
+namespace Tests\Post;
 
-use App\Group\GroupModel;
+use App\Post\PostModel;
 use Tests\Base\BaseApiCase;
 
 class RestTest extends BaseApiCase
@@ -12,26 +12,26 @@ class RestTest extends BaseApiCase
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
-    public function testGroupFlow()
+    public function testPostFlow()
     {
-        $idFieldName = (new GroupModel())->getIdFieldName();
-        // insert group
+        $idFieldName = (new PostModel())->getIdFieldName();
+        // insert post
         $response = $this->sendHttpRequest(
-            'POST', '/api/group',
-            ['name' => 'group name', 'description' => 'group desc']
+            'POST', '/api/post',
+            ['name' => 'post name', 'description' => 'post desc']
         );
 
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains('group name', $rs['name']);
-        $this->assertContains('group desc', $rs['description']);
+        $this->assertContains('post name', $rs['name']);
+        $this->assertContains('post desc', $rs['description']);
 
-        $groupId = $rs[$idFieldName];
+        $postId = $rs[$idFieldName];
 
 
-        // get all group
+        // get all post
         $response = $this->sendHttpRequest(
-            'GET', '/api/groups'
+            'GET', '/api/posts'
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
@@ -40,70 +40,70 @@ class RestTest extends BaseApiCase
         $this->assertEquals(true, is_string($rs[0]['name']));
 
 
-        // get group
+        // get post
         $response = $this->sendHttpRequest(
-            'GET', '/api/group/' . $groupId
+            'GET', '/api/post/' . $postId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($groupId, $rs[$idFieldName]);
-        $this->assertContains('group desc', $rs['description']);
+        $this->assertContains($postId, $rs[$idFieldName]);
+        $this->assertContains('post desc', $rs['description']);
 
-        // update group
+        // update post
         $response = $this->sendHttpRequest(
-            'PUT', '/api/group/' . $groupId,
-            ['name' => 'group name update', 'description' => 'group desc update']
+            'PUT', '/api/post/' . $postId,
+            ['name' => 'post name update', 'description' => 'post desc update']
 
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains('group desc', $rs['description']);
+        $this->assertContains('post desc', $rs['description']);
 
-        // get group
+        // get post
         $response = $this->sendHttpRequest(
-            'GET', '/api/group/' . $groupId
+            'GET', '/api/post/' . $postId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($groupId, $rs[$idFieldName]);
-        $this->assertContains('group desc update', $rs['description']);
+        $this->assertContains($postId, $rs[$idFieldName]);
+        $this->assertContains('post desc update', $rs['description']);
 
-        // delete group invalid id
+        // delete post invalid id
         $response = $this->sendHttpRequest(
-            'DELETE', '/api/group/' . '12312312'
+            'DELETE', '/api/post/' . '12312312'
         );
         $this->assertSame($response->getStatusCode(), 400);
         $rs = $this->responseDataArr();
         $this->assertEquals('Invalid ID', $rs['message']);
 
-        // delete group
+        // delete post
         $response = $this->sendHttpRequest(
-            'DELETE', '/api/group/' . $groupId
+            'DELETE', '/api/post/' . $postId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertEquals(1, $rs['ok']);
 
-        // get group
+        // get post
         $response = $this->sendHttpRequest(
-            'GET', '/api/group/' . $groupId
+            'GET', '/api/post/' . $postId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertEquals(null, $rs);
 
-        // get group exception
+        // get post exception
         $response = $this->sendHttpRequest(
-            'GET', '/api/group/' . '12312'
+            'GET', '/api/post/' . '12312'
         );
         $this->assertSame($response->getStatusCode(), 400);
         $rs = $this->responseDataArr();
         $this->assertEquals('Invalid ID', $rs['message']);
 
-        // update group exception
+        // update post exception
         $response = $this->sendHttpRequest(
-            'PUT', '/api/group/' . '12312',
-            ['name' => 'group name update', 'description' => 'group desc update']
+            'PUT', '/api/post/' . '12312',
+            ['name' => 'post name update', 'description' => 'post desc update']
         );
         $this->assertSame($response->getStatusCode(), 400);
         $rs = $this->responseDataArr();
