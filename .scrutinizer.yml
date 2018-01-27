@@ -83,6 +83,7 @@ build:
     mysql: false
     postgresql: false
     redis: false
+    mongodb: true
     php:
       version: 7.0, 7.1, 7.2
   tests:
