@@ -98,9 +98,10 @@ class MongoDB extends DataObject
         } catch (\Exception $ex) {
             throw new \Exception('Invalid ID', 400);
         }
-
+        $field = $field ?? $this->getIdFieldName();
         $this->_beforeLoad($modelId, $field);
-        $this->_data = $this->getResourceCollection()->findOne([$this->getIdFieldName() => $modelId]);
+        // todo fix field
+        $this->_data = $this->getResourceCollection()->findOne([$field => $modelId]);
         $this->_afterLoad();
         $this->setOrigData();
         $this->_hasDataChanges = false;

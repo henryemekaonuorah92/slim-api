@@ -22,9 +22,6 @@ trait Update
      */
     public function updateAndRetrieve(Request $request, Response $response, $args)
     {
-        $this->request = $request;
-        $this->response = $response;
-
         $id = $args['id'] ?? null;
 
         $updateData = $request->getParsedBody() ?? [];

@@ -23,11 +23,8 @@ trait CountBy
      */
     public function count(Request $request, Response $response, $args)
     {
-        $this->request = $request;
-        $this->response = $response;
-
         $rs = $this->model->count();
 
-        return $this->response->withJson(['n' => $rs]);
+        return $response->withJson(['n' => $rs]);
     }
 }

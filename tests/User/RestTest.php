@@ -125,6 +125,7 @@ class RestTest extends BaseApiCase
             'GET', '/api/user/me'
         );
 
+        // todo conditional based on jwt setting if enabled
         $this->assertThatResponseHasStatus(200);
         $rs = $this->responseDataArr();
         $this->assertEquals($userEmail, $rs['email']);

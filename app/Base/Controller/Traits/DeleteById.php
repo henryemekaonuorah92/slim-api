@@ -23,9 +23,6 @@ trait DeleteById
      */
     public function delete(Request $request, Response $response, $args)
     {
-        $this->request = $request;
-        $this->response = $response;
-
         $id = $args['id'] ?? null;
 
         $rs = $this->model->deleteOne([$this->model->getIdFieldName() => new ObjectId($id)]);
