@@ -33,6 +33,7 @@ trait GetById
             throw new \Exception('Invalid ID', 400);
         }
         $rs = $this->model->findOne(['_id' => $mongoId]);
+
         return $this->response->withJson($rs);
     }
 
