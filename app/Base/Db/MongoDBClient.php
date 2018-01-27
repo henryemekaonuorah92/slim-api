@@ -45,8 +45,10 @@ class MongoDBClient
         $driverOptions = $config['driverOptions'] ?? [];
         $driverOptions['typeMap'] = [
             'root' => \App\Base\Model\Types\MDoc::class,
-            'array' => 'MongoDB\Model\BSONArray',
-            'document' => 'MongoDB\Model\BSONDocument',
+            'array' => \App\Base\Model\Types\MDoc::class,
+            'document' => \App\Base\Model\Types\MDoc::class,
+//            'array' => 'MongoDB\Model\BSONArray',
+//            'document' => 'MongoDB\Model\BSONDocument',
         ];
         $client = new Client($config['uri'], $config['uriOptions'], $driverOptions);
         self::$instances[$name] = $client;
