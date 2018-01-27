@@ -8,8 +8,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Collection|MongoDB $model
- * @package App\Base\Controllers\Traits
+ * @property MongoDB|Collection $model
  */
 trait CountBy
 {
