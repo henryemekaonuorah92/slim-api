@@ -18,7 +18,8 @@ trait DeleteById
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return mixed
+     * @return Response
+     * @throws \Exception
      */
     public function delete(Request $request, Response $response, $args)
     {

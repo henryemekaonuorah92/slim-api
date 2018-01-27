@@ -17,7 +17,7 @@ trait Update
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return mixed
+     * @return Response
      * @throws \Exception
      */
     public function updateAndRetrieve(Request $request, Response $response, $args)
@@ -34,8 +34,6 @@ trait Update
 
         $rs = $this->model->load($id)->getStoredData();
 
-        $rs = $rs ?: null;
-
-        return $response->withJson($rs);
+        return $response->withJson($rs ?: null);
     }
 }

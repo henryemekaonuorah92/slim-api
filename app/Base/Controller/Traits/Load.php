@@ -17,7 +17,7 @@ trait Load
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return static
+     * @return Response
      * @throws \Exception
      */
     public function getById(Request $request, Response $response, $args)
@@ -27,10 +27,9 @@ trait Load
 
         $id = $args['id'] ?? null;
         $rs = $this->model->load($id)->getStoredData();
-        // return null if not exist | [] empty object
-        $rs = $rs ?: null;
 
-        return $this->response->withJson($rs);
+        // return null if not exist | [] empty object
+        return $response->withJson($rs ?: null);
     }
 
 }

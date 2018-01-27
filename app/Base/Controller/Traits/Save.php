@@ -18,7 +18,7 @@ trait Save
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return mixed
+     * @return Response
      * @throws \Exception
      */
     public function saveAndRetrieve(Request $request, Response $response, $args)
@@ -32,8 +32,6 @@ trait Save
 
         $rs = $this->model->load($objId)->getStoredData();
 
-        $rs = $rs ?: null;
-
-        return $response->withJson($rs);
+        return $response->withJson($rs ?: null);
     }
 }

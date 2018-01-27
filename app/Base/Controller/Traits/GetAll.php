@@ -17,12 +17,13 @@ trait GetAll
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return mixed
+     * @return Response
      * @throws \Exception
      */
     public function getAll(Request $request, Response $response, $args)
     {
         $rs = $this->model->find()->toArray();
-        return $response->withJson($rs);
+
+        return $response->withJson($rs ?: null);
     }
 }
