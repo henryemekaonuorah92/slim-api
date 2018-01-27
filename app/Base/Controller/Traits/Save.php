@@ -21,26 +21,7 @@ trait Save
      * @return mixed
      * @throws \Exception
      */
-    public function insert(Request $request, Response $response, $args)
-    {
-        $this->request = $request;
-        $this->response = $response;
-
-        $data = $this->request->getParsedBody();
-
-        $rs = $this->model->setData($data)->save();
-
-        return $response->withJson(['ok' => 1]);
-    }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @param $args
-     * @return mixed
-     * @throws \Exception
-     */
-    public function insertAndRetrieve(Request $request, Response $response, $args)
+    public function SaveAndRetrieve(Request $request, Response $response, $args)
     {
         $this->request = $request;
         $this->response = $response;

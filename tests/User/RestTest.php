@@ -15,11 +15,12 @@ class RestTest extends BaseApiCase
     public function testUserFlow()
     {
         $userEmail = rand(0, 1000000) . 'useremail@email.com';
+        $userPass = rand(0, 1000000) . 'usertestpass';
         $idFieldName = (new UserModel())->getIdFieldName();
         // insert user
         $response = $this->sendHttpRequest(
             'POST', '/api/user/register',
-            ['email' => $userEmail, 'password' => 'usertestpass']
+            ['email' => $userEmail, 'password' => $userPass]
         );
 
         $this->assertSame($response->getStatusCode(), 200);
@@ -28,10 +29,29 @@ class RestTest extends BaseApiCase
         $userData = $rs;
         $userId = $userData[$idFieldName];
 
+        // login wrong email
+        $response = $this->sendHttpRequest(
+            'POST', '/api/user/login',
+            ['email' => $userEmail . 'wrong', 'password' => $userPass]
+        );
+        $this->assertSame($response->getStatusCode(), 400);
+        $rs = $this->responseDataArr();
+        $this->assertContains('not found', $rs['message']);
+
+        // login wrong password
+        $response = $this->sendHttpRequest(
+            'POST', '/api/user/login',
+            ['email' => $userEmail, 'password' => $userPass . 'wrong']
+        );
+        $this->assertSame($response->getStatusCode(), 400);
+        $rs = $this->responseDataArr();
+        $this->assertContains('password is incorrect', $rs['message']);
+
+
         // login and save token to assign it for all next requests
         $response = $this->sendHttpRequest(
             'POST', '/api/user/login',
-            ['email' => $userEmail, 'password' => 'usertestpass']
+            ['email' => $userEmail, 'password' => $userPass]
         );
 
         $this->assertSame($response->getStatusCode(), 200);
@@ -54,11 +74,10 @@ class RestTest extends BaseApiCase
         // update user
         $response = $this->sendHttpRequest(
             'PUT', '/api/user/' . $userId,
-            ['email' => $userEmail, 'password' => 'usertestpassupdate']
+            ['email' => $userEmail, 'password' => $userPass . 'update']
 
         );
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
 
         // get user
         $response = $this->sendHttpRequest(

@@ -8,7 +8,7 @@ $this->get('/user/me', \App\User\UserController::class . ":me");
 $this->post('/user/login', \App\User\UserController::class . ":login");
 
 // register | insert
-$this->post('/user/register', \App\User\UserController::class . ":insertAndRetrieve");
+$this->post('/user/register', \App\User\UserController::class . ":saveAndRetrieve");
 
 ### REST API
 // list all users

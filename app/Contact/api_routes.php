@@ -9,7 +9,7 @@ $this->get('/contacts', \App\Contact\ContactController::class . ":getAll");
 $this->get('/contacts/count', \App\Contact\ContactController::class . ":count");
 
 // insert contact
-$this->map(['POST'], '/contact', \App\Contact\ContactController::class . ":insertAndRetrieve");
+$this->map(['POST'], '/contact', \App\Contact\ContactController::class . ":saveAndRetrieve");
 // get contact by id
 $this->get('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":get");
 // update contact by id

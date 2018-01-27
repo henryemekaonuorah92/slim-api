@@ -9,7 +9,7 @@ $this->get('/groups', \App\Group\GroupController::class . ":getAll");
 $this->get('/groups/count', \App\Group\GroupController::class . ":count");
 
 // insert group
-$this->map(['POST'], '/group', \App\Group\GroupController::class . ":insertAndRetrieve");
+$this->map(['POST'], '/group', \App\Group\GroupController::class . ":saveAndRetrieve");
 // get group by id
 $this->get('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":get");
 // update group by id
