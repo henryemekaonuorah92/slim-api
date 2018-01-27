@@ -18,7 +18,7 @@ $baseSetting = [
             ]
         ],
         // mongodb configuration @link
-        'mongodb' => [
+        'mongodb.default' => [
             'uri' => 'mongodb://localhost:27017',
             'database' => 'phonebook',
             'uriOptions' => [],

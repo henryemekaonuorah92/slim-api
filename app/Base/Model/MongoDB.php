@@ -4,7 +4,6 @@ namespace App\Base\Model;
 
 use App\Base\AppContainer;
 use App\Base\DataObject;
-use App\Base\Db\MongoDBClient;
 use App\Base\Helper\Event;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
@@ -28,7 +27,7 @@ class MongoDB extends DataObject
     protected $container = null;
 
     /** @var string */
-    protected $connectionName = 'default';
+    protected $_connectionName = 'mongodb.default';
 
     /** @var Client */
     protected $_mongodbClient = null;
@@ -70,14 +69,17 @@ class MongoDB extends DataObject
     public function __construct($connectionName = null, $collectionNAme = null)
     {
         $this->container = AppContainer::getContainer();
-        $this->_mongodbClient = $this->container->get(MongoDBClient::MONGO_DI);
-
-        $connectionName = $connectionName ?? $this->connectionName;
+        $connectionName = $connectionName ?? $this->_connectionName;
         $collectionNAme = $collectionNAme ?? $this->collectionNAme;
+        // init mongodb client
+        $this->_mongodbClient = $this->container[$connectionName];
 
-        $config = $this->container[MongoDBClient::MONGO_CONFIG_CONNECTION][$connectionName];
+        // get config
+        $configKey = $connectionName . '__config';
+        $config = $this->container[$configKey];
+
+        // assign db
         $databaseName = $config['database'];
-
         $this->_resourceCollection = $this->_mongodbClient->{$databaseName}->{$collectionNAme};
         return $this;
     }

@@ -7,8 +7,6 @@ use Psr\Container\ContainerInterface;
 
 class MongoDBClient
 {
-    const MONGO_DI = 'mongodb';
-    const MONGO_CONFIG_CONNECTION = 'mongo.database.connections';
     protected $config = [];
     protected $container = [];
     protected static $instances = [];
@@ -25,29 +23,29 @@ class MongoDBClient
      * @param  string $name
      * @return void
      */
-    public function addConnection(array $config, $name = 'default')
+    public function addConnection(array $config, $name = 'mongodb.default')
     {
-        $connections = $this->container[self::MONGO_CONFIG_CONNECTION] ?? [];
-
-        $connections[$name] = $config;
-
-        $this->container[self::MONGO_CONFIG_CONNECTION] = function () use ($connections) {
-            return $connections;
+        $configKey = $name . '__config';
+        $this->container[$configKey] = function () use ($config) {
+            return $config;
         };
     }
 
-    public function getConnection($name = 'default')
+    public function getConnection($name = 'mongodb.default')
     {
         if (isset(self::$instances[$name])) {
             return self::$instances[$name];
         }
-        $config = $this->container[self::MONGO_CONFIG_CONNECTION][$name];
+        $configKey = $name . '__config';
+        $config = $this->container[$configKey];
+
         $driverOptions = $config['driverOptions'] ?? [];
         $driverOptions['typeMap'] = [
             'root' => \App\Base\Model\Types\MDoc::class,
             'array' => \App\Base\Model\Types\MDoc::class,
             'document' => \App\Base\Model\Types\MDoc::class,
         ];
+
         $client = new Client($config['uri'], $config['uriOptions'], $driverOptions);
         self::$instances[$name] = $client;
 
