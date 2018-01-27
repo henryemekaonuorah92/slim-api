@@ -18,10 +18,9 @@ class MongoDBClient
 
     /**
      * Register a connection with the manager.
-     *
-     * @param  array $config
-     * @param  string $name
-     * @return void
+     * @param array $config
+     * @param string $name
+     * @return $this
      */
     public function addConnection(array $config, $name = 'mongodb.default')
     {
@@ -29,8 +28,13 @@ class MongoDBClient
         $this->container[$configKey] = function () use ($config) {
             return $config;
         };
+        return $this;
     }
 
+    /**
+     * @param string $name
+     * @return Client
+     */
     public function getConnection($name = 'mongodb.default')
     {
         if (isset(self::$instances[$name])) {
@@ -50,6 +54,5 @@ class MongoDBClient
         self::$instances[$name] = $client;
 
         return self::$instances[$name];
-
     }
 }
