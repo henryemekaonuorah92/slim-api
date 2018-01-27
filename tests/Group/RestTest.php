@@ -68,7 +68,15 @@ class RestTest extends BaseApiCase
         $this->assertContains($groupId, $rs[$idFieldName]);
         $this->assertContains('group desc update', $rs['description']);
 
-        // update group
+        // delete group invalid id
+        $response = $this->sendHttpRequest(
+            'DELETE', '/api/group/' . '12312312'
+        );
+        $this->assertSame($response->getStatusCode(), 400);
+        $rs = $this->responseDataArr();
+        $this->assertEquals('Invalid ID', $rs['message']);
+
+        // delete group
         $response = $this->sendHttpRequest(
             'DELETE', '/api/group/' . $groupId
         );
