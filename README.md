@@ -9,6 +9,7 @@
             <a href="LICENSE.md">
       <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License">
     </a>
+    <a class="badge-align" href="https://www.codacy.com/app/Meabed/slim-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Meabed/slim-api&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/5689a6a0f39f474ca6b45f68185414c9"/></a>
         <a href="https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master">
       <img src="https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality">
     </a>
