@@ -4,10 +4,10 @@ filter:
         - config/*
         - public/*
     excluded_paths:
-        - app/tests/*
-
-before_commands:
-    - 'make deps-install-dev'
+        - 'test/*'
+        - 'storage/*'
+    dependency_paths:
+        - 'vendor/*'
 
 checks:
     php:
@@ -74,13 +74,11 @@ tools:
             - vendor
 
 
+before_commands:
+    - 'make deps-install-dev'
+
+
 build:
-    cache:
-        directories:
-            - vendor/
-    project_setup:
-        before:
-            - 'make deps-install-dev'
     tests:
         override:
             - php-scrutinizer-run
@@ -89,6 +87,14 @@ build:
                 coverage:
                     file: 'coverage.xml'
                     format: 'clover'
+    dependencies:
+        before:
+            - sudo composer selfupdate
+            - make deps-install-dev
     environment:
+        timezone: "UTC"
+        mysql: false
+        postgresql: false
+        redis: false
         php:
             version: 7.0, 7.1, 7.2
