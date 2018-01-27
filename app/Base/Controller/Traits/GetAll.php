@@ -24,6 +24,6 @@ trait GetAll
     {
         $rs = $this->model->find()->toArray();
 
-        return $response->withJson($rs ?: null);
+        return $response->withJson($rs);
     }
 }
