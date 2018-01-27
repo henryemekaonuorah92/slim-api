@@ -20,6 +20,9 @@ use Valitron\Validator;
  */
 class MongoDB extends DataObject
 {
+    /** @var array validation rules */
+    protected $_rules = [];
+
     /** @var Container */
     protected $container = null;
 
@@ -38,11 +41,7 @@ class MongoDB extends DataObject
     /** @var string */
     protected $collectionNAme = '';
 
-    protected $data = null;
-
     protected $_data = [];
-
-    protected $rules = [];
 
     protected $_eventPrefix = 'core_abstract';
 
@@ -379,23 +378,35 @@ class MongoDB extends DataObject
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function beforeDelete()
     {
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function afterDelete()
     {
         $this->storedData = [];
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function clearInstance()
     {
         $this->_data = [];
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     private function updateStoredData()
     {
         if (isset($this->_data)) {
@@ -406,33 +417,22 @@ class MongoDB extends DataObject
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getStoredData()
     {
         return $this->storedData;
     }
 
+    /**
+     * @return string
+     */
     public function getEventPrefix()
     {
         return $this->_eventPrefix;
     }
 
-
-    /**
-     * @throws \Exception
-     */
-    public function checkBeforeUpdate()
-    {
-        //$this->_validate();
-        $bU = $this->_beforeUpdate();
-        if ($bU !== true) {
-            throw new \Exception($bU, 400);
-        }
-        $bS = $this->_beforeSave();
-        if ($bS !== true) {
-            throw new \Exception($bS, 400);
-        }
-
-    }
 
     /**
      * @param $arr
@@ -452,13 +452,14 @@ class MongoDB extends DataObject
     }
 
     /**
+     * @return $this
      * @throws \Exception
      */
     protected function _beforeSaveValidate()
     {
         if (!$this->_validatorBeforeSave) {
             $v = new Validator();
-            $v->mapFieldsRules($this->rules);
+            $v->mapFieldsRules($this->_rules);
             $this->_validatorBeforeSave = $v;
         }
         $validator = $this->_validatorBeforeSave;
@@ -475,7 +476,7 @@ class MongoDB extends DataObject
     }
 
     /**
-     * @return bool|string
+     * @return $this
      */
     public function _beforeUpdate()
     {

@@ -3,13 +3,13 @@
 
 namespace App\User;
 
+use App\Base\AppContainer;
+use App\Base\Controller\RestController;
+use App\Base\Helper\Event;
+use App\Base\Helper\Jwt;
+use App\Base\Helper\Password;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use App\Base\Helper\Jwt;
-use App\Base\Helper\Event;
-use App\Base\AppContainer;
-use App\Base\Helper\Password;
-use App\Base\Controller\RestController;
 
 class UserController extends RestController
 {

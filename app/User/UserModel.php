@@ -20,7 +20,7 @@ class UserModel extends MongoDB
     protected $collectionNAme = 'users';
 
     /** @var array */
-    protected $rules = [
+    protected $_rules = [
         'email' => ['required', 'email'],
         'password' => ['required', ['lengthMin', 6]],
     ];
