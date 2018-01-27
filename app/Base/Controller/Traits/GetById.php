@@ -32,7 +32,7 @@ trait GetById
         } catch (\Exception $ex) {
             throw new \Exception('Invalid ID', 400);
         }
-        $rs = $this->model->findOne(['_id' => $mongoId]);
+        $rs = $this->model->findOne([$this->model->getIdFieldName() => $mongoId]);
 
         return $this->response->withJson($rs);
     }

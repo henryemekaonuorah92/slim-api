@@ -46,10 +46,10 @@ trait Save
         $this->response = $response;
         $data = $this->request->getParsedBody();
 
-        $data['_id'] = $objId = new ObjectId();
+        $data[$this->model->getIdFieldName()] = $objId = new ObjectId();
         $this->model->setData($data)->save();
 
-        $rs = $this->model->findOne(['_id' => $objId]);
+        $rs = $this->model->findOne([$this->model->getIdFieldName() => $objId]);
 
         return $response->withJson($rs);
     }

@@ -321,7 +321,7 @@ class MongoDB extends DataObject
         $this->_beforeSaveValidate();
         $this->_beforeSave();
         $this->_beforeUpdate();
-        $this->mongodbCollection->updateOne(['_id' => $modelId], ['$set' => $this->_data]);
+        $this->mongodbCollection->updateOne([$this->getIdFieldName() => $modelId], ['$set' => $this->_data]);
         return $this;
     }
 
@@ -464,7 +464,7 @@ class MongoDB extends DataObject
      */
     public function _beforeUpdate()
     {
-        unset($this->_data['_id']);
+        unset($this->_data[$this->getIdFieldName()]);
         unset($this->_data['created_at']);
         return $this;
     }
@@ -474,8 +474,8 @@ class MongoDB extends DataObject
      */
     public function _beforeSave()
     {
-        if (isset($this->_data['_id']) && !($this->_data['_id'] instanceof ObjectId)) {
-            unset($this->_data['_id']);
+        if (isset($this->_data[$this->getIdFieldName()]) && !($this->_data[$this->getIdFieldName()] instanceof ObjectId)) {
+            unset($this->_data[$this->getIdFieldName()]);
         }
         $this->update_at = new UTCDateTime();
         // if is new object only

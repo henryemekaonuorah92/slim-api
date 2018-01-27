@@ -2,6 +2,7 @@
 
 namespace Tests\User;
 
+use App\User\UserModel;
 use Tests\Base\BaseApiCase;
 
 class RestTest extends BaseApiCase
@@ -14,7 +15,7 @@ class RestTest extends BaseApiCase
     public function testUserFlow()
     {
         $userEmail = rand(0, 1000000) . 'useremail@email.com';
-
+        $idFieldName = (new UserModel())->getIdFieldName();
         // insert user
         $response = $this->sendHttpRequest(
             'POST', '/api/user/register',
@@ -25,7 +26,7 @@ class RestTest extends BaseApiCase
         $rs = $this->responseDataArr();
         $this->assertContains($userEmail, $rs['email']);
         $userData = $rs;
-        $userId = $userData['_id'];
+        $userId = $userData[$idFieldName];
 
         // login and save token to assign it for all next requests
         $response = $this->sendHttpRequest(
@@ -48,7 +49,7 @@ class RestTest extends BaseApiCase
 
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($userId, $rs['_id']);
+        $this->assertContains($userId, $rs[$idFieldName]);
 
         // update user
         $response = $this->sendHttpRequest(
@@ -65,7 +66,7 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($userId, $rs['_id']);
+        $this->assertContains($userId, $rs[$idFieldName]);
 
         // update user
         $response = $this->sendHttpRequest(

@@ -2,6 +2,7 @@
 
 namespace Tests\Group;
 
+use App\Group\GroupModel;
 use Tests\Base\BaseApiCase;
 
 class RestTest extends BaseApiCase
@@ -13,6 +14,7 @@ class RestTest extends BaseApiCase
      */
     public function testGroupFlow()
     {
+        $idFieldName = (new GroupModel())->getIdFieldName();
         // insert group
         $response = $this->sendHttpRequest(
             'POST', '/api/group',
@@ -24,7 +26,7 @@ class RestTest extends BaseApiCase
         $this->assertContains('group name', $rs['name']);
         $this->assertContains('group desc', $rs['description']);
 
-        $groupId = $rs['_id'];
+        $groupId = $rs[$idFieldName];
 
 
         // get group
@@ -33,7 +35,7 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($groupId, $rs['_id']);
+        $this->assertContains($groupId, $rs[$idFieldName]);
         $this->assertContains('group desc', $rs['description']);
 
         // update group
@@ -52,7 +54,7 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($groupId, $rs['_id']);
+        $this->assertContains($groupId, $rs[$idFieldName]);
         $this->assertContains('group desc update', $rs['description']);
 
         // update group
