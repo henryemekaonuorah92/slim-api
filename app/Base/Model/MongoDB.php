@@ -60,8 +60,6 @@ class MongoDB extends DataObject
 
     protected $_isObjectNew = null;
 
-    protected $_validatorBeforeSave = null;
-
     protected $storedData = [];
 
     /**
@@ -141,6 +139,7 @@ class MongoDB extends DataObject
      */
     public function save()
     {
+
         $this->_beforeSave();
         $this->getResourceCollection()->insertOne($this->_data);
         $this->_afterSave();
@@ -153,7 +152,6 @@ class MongoDB extends DataObject
      */
     public function _beforeSave()
     {
-        $this->_beforeSaveValidate();
 
         if (!$this->getId()) {
             $this->isObjectNew(true);
@@ -168,6 +166,7 @@ class MongoDB extends DataObject
         $this->update_at = new UTCDateTime();
         // if is new object only
         $this->created_at = new UTCDateTime();
+        $this->_beforeSaveValidate();
 
         Event::emit('model_save_before', ['object' => $this]);
         Event::emit($this->_eventPrefix . '_save_before', ['object' => $this]);
@@ -180,18 +179,13 @@ class MongoDB extends DataObject
      */
     protected function _beforeSaveValidate()
     {
-        if (!$this->_validatorBeforeSave) {
-            $v = new Validator();
-            $v->mapFieldsRules($this->_rules);
-            $this->_validatorBeforeSave = $v;
-        }
-        $validator = $this->_validatorBeforeSave;
+        $validator = new Validator($this->_data);
+        $validator->mapFieldsRules($this->_rules);
 
-        $validatorResult = $validator->withData($this->_data)->validate();
+        $validatorResult = $validator->validate();
 
-        if ($validatorResult == true || $validatorResult == null) {
+        if (!$validatorResult) {
 
-        } else {
             $errAsText = $this->textErrorFromArr($validator->errors());
             throw new \Exception($errAsText, 400);
         }
