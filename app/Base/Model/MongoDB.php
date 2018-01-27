@@ -56,15 +56,7 @@ class MongoDB extends DataObject
 
     protected $_isDeleted = false;
 
-    protected $_resource;
-
     protected $_resourceCollection;
-
-    protected $_resourceName;
-
-    protected $_collectionName;
-
-    protected $_cacheTag = false;
 
     protected $_dataSaveAllowed = true;
 
@@ -73,16 +65,6 @@ class MongoDB extends DataObject
     protected $_validatorBeforeSave = null;
 
     protected $_eventManager;
-
-    protected $_cacheManager;
-
-    protected $_registry;
-
-    protected $_logger;
-
-    protected $_appState;
-
-    protected $_actionValidator;
 
     protected $storedData = [];
 
@@ -107,24 +89,6 @@ class MongoDB extends DataObject
         return $this;
     }
 
-//    public function __sleep()
-//    {
-//        $properties = array_keys(get_object_vars($this));
-//        $properties = array_diff(
-//            $properties,
-//            [
-//                '_eventManager',
-//                '_cacheManager',
-//                '_registry',
-//                '_appState',
-//                '_actionValidator',
-//                '_logger',
-//                '_resourceCollection',
-//                '_resource',
-//            ]
-//        );
-//        return $properties;
-//    }
 
     /**
      * @param $name
@@ -367,81 +331,6 @@ class MongoDB extends DataObject
         return $this;
     }
 
-    public function validateBeforeSave()
-    {
-//        $validator = $this->_getValidatorBeforeSave();
-//        if ($validator && !$validator->isValid($this)) {
-//            $errors = $validator->getMessages();
-//            $exception = new \Magento\Framework\Validator\Exception(
-//                new Phrase(implode(PHP_EOL, $errors))
-//            );
-//            foreach ($errors as $errorMessage) {
-//                $exception->addMessage(new \Magento\Framework\Message\Error($errorMessage));
-//            }
-//            throw $exception;
-//        }
-        return $this;
-    }
-
-    protected function _getValidatorBeforeSave()
-    {
-        if ($this->_validatorBeforeSave === null) {
-            $this->_validatorBeforeSave = $this->_createValidatorBeforeSave();
-        }
-        return $this->_validatorBeforeSave;
-    }
-
-    protected function _createValidatorBeforeSave()
-    {
-        $modelRules = $this->_getValidationRulesBeforeSave();
-        $resourceRules = $this->_getResource()->getValidationRulesBeforeSave();
-        if (!$modelRules && !$resourceRules) {
-            return false;
-        }
-
-        if ($modelRules && $resourceRules) {
-            $validator = new \Zend_Validate();
-            $validator->addValidator($modelRules);
-            $validator->addValidator($resourceRules);
-        } elseif ($modelRules) {
-            $validator = $modelRules;
-        } else {
-            $validator = $resourceRules;
-        }
-
-        return $validator;
-    }
-
-    protected function _getValidationRulesBeforeSave()
-    {
-        return null;
-    }
-
-    public function getCacheTags()
-    {
-        $tags = false;
-        if ($this->_cacheTag) {
-            if ($this->_cacheTag === true) {
-                $tags = [];
-            } else {
-                if (is_array($this->_cacheTag)) {
-                    $tags = $this->_cacheTag;
-                } else {
-                    $tags = [$this->_cacheTag];
-                }
-            }
-        }
-        return $tags;
-    }
-
-    public function cleanModelCache()
-    {
-        $tags = $this->getCacheTags();
-        if ($tags !== false) {
-            $this->_cacheManager->clean($tags);
-        }
-        return $this;
-    }
 
     public function afterSave()
     {
@@ -461,60 +350,18 @@ class MongoDB extends DataObject
 
     public function beforeDelete()
     {
-//        if (!$this->_actionValidator->isAllowed($this)) {
-//            throw new \Magento\Framework\Exception\LocalizedException(
-//                new \Magento\Framework\Phrase('Delete operation is forbidden for current area')
-//            );
-//        }
-//
-//        $this->_eventManager->dispatch('model_delete_before', ['object' => $this]);
-//        $this->_eventManager->dispatch($this->_eventPrefix . '_delete_before', $this->_getEventData());
-        $this->cleanModelCache();
         return $this;
     }
 
     public function afterDelete()
     {
-        $this->_eventManager->dispatch('model_delete_after', ['object' => $this]);
-        $this->_eventManager->dispatch('clean_cache_by_tags', ['object' => $this]);
-        $this->_eventManager->dispatch($this->_eventPrefix . '_delete_after', $this->_getEventData());
         $this->storedData = [];
         return $this;
     }
 
-    public function afterDeleteCommit()
-    {
-        $this->_eventManager->dispatch('model_delete_commit_after', ['object' => $this]);
-        $this->_eventManager->dispatch($this->_eventPrefix . '_delete_commit_after', $this->_getEventData());
-        return $this;
-    }
-
-
-    public function getEntityId()
-    {
-        return $this->_getData('entity_id');
-    }
-
-    public function setEntityId($entityId)
-    {
-        return $this->setData('entity_id', $entityId);
-    }
-
     public function clearInstance()
     {
-        $this->_clearReferences();
-        $this->_eventManager->dispatch($this->_eventPrefix . '_clear', $this->_getEventData());
-        $this->_clearData();
-        return $this;
-    }
-
-    protected function _clearReferences()
-    {
-        return $this;
-    }
-
-    protected function _clearData()
-    {
+        $this->_data = [];
         return $this;
     }
 
@@ -546,9 +393,9 @@ class MongoDB extends DataObject
      */
     public function insertDoc($data)
     {
-        $this->data = $data;
+        $this->_data = $data;
         $this->checkBeforeInsert();
-        return $this->mongodbCollection->insertOne($this->data);
+        return $this->mongodbCollection->insertOne($this->_data);
     }
 
     /**
@@ -559,9 +406,9 @@ class MongoDB extends DataObject
      */
     public function updateDocById($id, $data)
     {
-        $this->data = $data;
+        $this->_data = $data;
         $this->checkBeforeUpdate();
-        return $this->mongodbCollection->updateOne(['_id' => new ObjectId($id)], ['$set' => $this->data]);
+        return $this->mongodbCollection->updateOne(['_id' => new ObjectId($id)], ['$set' => $this->_data]);
     }
 
     /**
@@ -620,7 +467,7 @@ class MongoDB extends DataObject
      */
     protected function _validate()
     {
-        $v = new Validator($this->data);
+        $v = new Validator($this->_data);
         $v->mapFieldsRules($this->rules);
         if ($v->validate()) {
             // valid
@@ -635,8 +482,8 @@ class MongoDB extends DataObject
      */
     public function _beforeInsert()
     {
-        if (isset($this->data['_id']) && !($this->data['_id'] instanceof ObjectId)) {
-            unset($this->data['_id']);
+        if (isset($this->_data['_id']) && !($this->_data['_id'] instanceof ObjectId)) {
+            unset($this->_data['_id']);
         }
 
         $this->created_at = new UTCDateTime();
@@ -648,8 +495,8 @@ class MongoDB extends DataObject
      */
     public function _beforeUpdate()
     {
-        unset($this->data['_id']);
-        unset($this->data['created_at']);
+        unset($this->_data['_id']);
+        unset($this->_data['created_at']);
         return true;
     }
 
@@ -671,7 +518,7 @@ class MongoDB extends DataObject
         if (property_exists($this, $offset)) {
             return $this->{$offset};
         } else {
-            return $this->data[$offset] ?? null;
+            return $this->_data[$offset] ?? null;
         }
     }
 
@@ -686,7 +533,7 @@ class MongoDB extends DataObject
             $this->{$offset} = $value;
             $this->_hasDataChanges = true;
         } else {
-            return $this->data[$offset] = $value;
+            return $this->_data[$offset] = $value;
         }
 
         return $this;
