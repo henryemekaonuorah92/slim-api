@@ -10,7 +10,7 @@ use Slim\Http\Response;
 /**
  * @property MongoDB|Collection $model
  */
-trait DeleteById
+trait Delete
 {
     /**
      * @param Request $request
@@ -19,7 +19,7 @@ trait DeleteById
      * @return Response
      * @throws \Exception
      */
-    public function delete(Request $request, Response $response, $args)
+    public function deleteById(Request $request, Response $response, $args)
     {
         $id = $args['id'] ?? null;
 

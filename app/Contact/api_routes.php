@@ -15,4 +15,4 @@ $this->get('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class .
 // update contact by id
 $this->put('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":updateAndRetrieve");
 // delete contact by id
-$this->delete('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":delete");
+$this->delete('/contact/{id:[A-Z0-9a-z]+}', \App\Contact\ContactController::class . ":deleteById");

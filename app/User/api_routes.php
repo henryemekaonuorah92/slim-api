@@ -21,4 +21,4 @@ $this->get('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":loadBy
 // update user by id
 $this->put('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":updateAndRetrieve");
 // delete user by id
-$this->delete('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":delete");
+$this->delete('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":deleteById");

@@ -15,4 +15,4 @@ $this->get('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":loa
 // update group by id
 $this->put('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":updateAndRetrieve");
 // delete group by id
-$this->delete('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":delete");
+$this->delete('/group/{id:[A-Z0-9a-z]+}', \App\Group\GroupController::class . ":deleteById");
