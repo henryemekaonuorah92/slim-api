@@ -36,7 +36,7 @@ trait UpdateById
         $updateData = $request->getParsedBody() ?? [];
 
         // todo
-        $rs = $this->model->updateDocById($id, $updateData);
+        $rs = $this->model->setData($updateData)->update($id);
 
         $rs = $this->model->findOne(['_id' => new ObjectId($mongoId)]);
 

@@ -12,7 +12,7 @@ use Slim\Http\Response;
  * @property Collection|MongoDB $model
  * @package App\Base\Controllers\Traits
  */
-trait InsertOne
+trait Save
 {
     /**
      * @param Request $request
@@ -28,9 +28,9 @@ trait InsertOne
 
         $data = $this->request->getParsedBody();
 
-        $rs = $this->model->insertDoc($data);
+        $rs = $this->model->setData($data)->save();
 
-        return $response->withJson(['n' => $rs->getInsertedCount()]);
+        return $response->withJson(['ok' => 1]);
     }
 
     /**
@@ -47,7 +47,7 @@ trait InsertOne
         $data = $this->request->getParsedBody();
 
         $data['_id'] = $objId = new ObjectId();
-        $this->model->insertDoc($data);
+        $this->model->setData($data)->save();
 
         $rs = $this->model->findOne(['_id' => $objId]);
 

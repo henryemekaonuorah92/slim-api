@@ -6,7 +6,7 @@ use App\Base\Controller\Traits\CountBy;
 use App\Base\Controller\Traits\DeleteById;
 use App\Base\Controller\Traits\GetAll;
 use App\Base\Controller\Traits\GetById;
-use App\Base\Controller\Traits\InsertOne;
+use App\Base\Controller\Traits\Save;
 use App\Base\Controller\Traits\UpdateById;
 use App\Base\Model\MongoDB;
 use MongoDB\Collection;
@@ -20,7 +20,7 @@ class RestController
     use GetAll;
     use GetById;
     use CountBy;
-    use InsertOne;
+    use Save;
     use UpdateById;
     use DeleteById;
 

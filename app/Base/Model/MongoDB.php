@@ -297,18 +297,34 @@ class MongoDB extends DataObject
         $this->_hasDataChanges = $flag;
     }
 
+    /**
+     * @return $this
+     * @throws \Exception
+     */
     public function save()
     {
-        $this->getCollection()->insertOne($this);
+        $this->_beforeSaveValidate();
+        $this->_beforeSave();
+        $this->getCollection()->insertOne($this->_data);
         return $this;
     }
 
-    public function afterCommitCallback()
+    /**
+     * @param $id
+     * @return $this
+     * @throws \Exception
+     */
+    public function update($id)
     {
-//        $this->_eventManager->dispatch('model_save_commit_after', ['object' => $this]);
-//        $this->_eventManager->dispatch($this->_eventPrefix . '_save_commit_after', $this->_getEventData());
+        $modelId = new ObjectId($id);
+        // prevent changing mongo id
+        $this->_beforeSaveValidate();
+        $this->_beforeSave();
+        $this->_beforeUpdate();
+        $this->mongodbCollection->updateOne(['_id' => $modelId], ['$set' => $this->_data]);
         return $this;
     }
+
 
     public function isObjectNew($flag = null)
     {
@@ -387,53 +403,11 @@ class MongoDB extends DataObject
 
 
     /**
-     * @param $data
-     * @return array|\MongoDB\Driver\WriteResult
-     * @throws \Exception
-     */
-    public function insertDoc($data)
-    {
-        $this->_data = $data;
-        $this->checkBeforeInsert();
-        return $this->mongodbCollection->insertOne($this->_data);
-    }
-
-    /**
-     * @param $id
-     * @param $data
-     * @return \MongoDB\UpdateResult
-     * @throws \Exception
-     */
-    public function updateDocById($id, $data)
-    {
-        $this->_data = $data;
-        $this->checkBeforeUpdate();
-        return $this->mongodbCollection->updateOne(['_id' => new ObjectId($id)], ['$set' => $this->_data]);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function checkBeforeInsert()
-    {
-        $this->_validate();
-        $bI = $this->_beforeInsert();
-        if ($bI !== true) {
-            throw new \Exception($bI, 400);
-        }
-        $bS = $this->_beforeSave();
-        if ($bS !== true) {
-            throw new \Exception($bS, 400);
-        }
-
-    }
-
-    /**
      * @throws \Exception
      */
     public function checkBeforeUpdate()
     {
-        $this->_validate();
+        //$this->_validate();
         $bU = $this->_beforeUpdate();
         if ($bU !== true) {
             throw new \Exception($bU, 400);
@@ -465,29 +439,24 @@ class MongoDB extends DataObject
     /**
      * @throws \Exception
      */
-    protected function _validate()
+    protected function _beforeSaveValidate()
     {
-        $v = new Validator($this->_data);
-        $v->mapFieldsRules($this->rules);
-        if ($v->validate()) {
-            // valid
+        if (!$this->_validatorBeforeSave) {
+            $v = new Validator();
+            $v->mapFieldsRules($this->rules);
+            $this->_validatorBeforeSave = $v;
+        }
+        $validator = $this->_validatorBeforeSave;
+
+        $validatorResult = $validator->withData($this->_data)->validate();
+
+        if ($validatorResult == true || $validatorResult == null) {
+
         } else {
-            $errAsText = $this->textErrorFromArr($v->errors());
+            $errAsText = $this->textErrorFromArr($validator->errors());
             throw new \Exception($errAsText, 400);
         }
-    }
-
-    /**
-     * @return bool|string
-     */
-    public function _beforeInsert()
-    {
-        if (isset($this->_data['_id']) && !($this->_data['_id'] instanceof ObjectId)) {
-            unset($this->_data['_id']);
-        }
-
-        $this->created_at = new UTCDateTime();
-        return true;
+        return $this;
     }
 
     /**
@@ -497,16 +466,21 @@ class MongoDB extends DataObject
     {
         unset($this->_data['_id']);
         unset($this->_data['created_at']);
-        return true;
+        return $this;
     }
 
     /**
-     * @return bool|string
+     * @return $this
      */
     public function _beforeSave()
     {
+        if (isset($this->_data['_id']) && !($this->_data['_id'] instanceof ObjectId)) {
+            unset($this->_data['_id']);
+        }
         $this->update_at = new UTCDateTime();
-        return true;
+        // if is new object only
+        $this->created_at = new UTCDateTime();
+        return $this;
     }
 
     /**

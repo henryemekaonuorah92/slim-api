@@ -25,12 +25,14 @@ class UserModel extends MongoDB
         'password' => ['required', ['lengthMin', 6]],
     ];
 
+
     /**
-     * @return bool|string
+     * @return $this
      */
     public function _beforeSave()
     {
         $this->password = Password::hash($this->password);
-        return parent::_beforeSave();
+        parent::_beforeSave();
+        return $this;
     }
 }
