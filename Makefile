@@ -21,16 +21,16 @@ server:
 	php -S 0.0.0.0:3500 -t public index.php
 
 deps-update-dev:
-	composer update --prefer-dist --no-ansi --no-interaction --no-scripts --optimize-autoloader --ignore-platform-reqs
+	composer update --prefer-dist --no-ansi --no-interaction --optimize-autoloader --ignore-platform-reqs
 
 deps-update-prod:
-	composer update --prefer-dist --no-ansi --no-interaction --no-scripts --optimize-autoloader --ignore-platform-reqs --no-dev
+	composer update --prefer-dist --no-ansi --no-interaction --optimize-autoloader --ignore-platform-reqs --no-dev
 
 deps-install-dev:
-	composer install --prefer-dist --no-ansi --no-interaction --no-scripts --optimize-autoloader --ignore-platform-reqs
+	composer install --prefer-dist --no-ansi --no-interaction --optimize-autoloader --ignore-platform-reqs
 
 deps-install-prod:
-	composer install --prefer-dist --no-ansi --no-interaction --no-scripts --optimize-autoloader --ignore-platform-reqs --no-dev
+	composer install --prefer-dist --no-ansi --no-interaction --optimize-autoloader --ignore-platform-reqs --no-dev
 
 lint:
 	vendor/bin/phplint . --exclude=vendor/
