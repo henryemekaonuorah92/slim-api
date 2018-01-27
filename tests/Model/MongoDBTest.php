@@ -23,7 +23,7 @@ class MongoDBTest extends BaseCase
     {
         $mongoDbModel = new MongoDB(null, 'test_mongodb_model');
         // drop before start
-        $this->collection = $mongoDbModel->getCollection();
+        $this->collection = $mongoDbModel->getResourceCollection();
         $this->collection->drop();
         parent::setUp();
     }

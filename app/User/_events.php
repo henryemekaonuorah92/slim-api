@@ -1,7 +1,7 @@
 <?php
 
 $events = [
-    'user.loging' => function ($event, ...$params) {
+    'user.login' => function ($event, ...$params) {
         // Do processing of the event.
     },
 ];

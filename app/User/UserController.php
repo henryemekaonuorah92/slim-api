@@ -54,7 +54,7 @@ class UserController extends RestController
 
         $rs = Jwt::generateToken($dbUser);
 
-        Event::emit('user.loging', $dbUser);
+        Event::emit('user.login', $dbUser);
 
         return $response->withJson($rs);
     }
