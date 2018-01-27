@@ -79,4 +79,10 @@ build:
             project_setup:
                 override: true
             tests:
-                override: [php-scrutinizer-run]
+                override:
+                  - php-scrutinizer-run
+                  -
+                      command: 'make unit-cov'
+                      coverage:
+                          file: 'coverage.xml'
+                          format: 'clover'
