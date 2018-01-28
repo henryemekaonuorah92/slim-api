@@ -9,8 +9,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Collection|MongoDB $model
- * @package App\Base\Controllers\Traits
+ * @property MongoDB|Collection $model
  */
 trait Save
 {
@@ -23,9 +22,7 @@ trait Save
      */
     public function saveAndRetrieve(Request $request, Response $response, $args)
     {
-        $this->request = $request;
-        $this->response = $response;
-        $data = $this->request->getParsedBody();
+        $data = $request->getParsedBody();
 
         $data[$this->model->getIdFieldName()] = $objId = new ObjectId();
         $this->model->setData($data)->save();

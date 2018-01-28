@@ -3,8 +3,7 @@
 namespace App\Base\Controller;
 
 use App\Base\Controller\Traits\CountBy;
-use App\Base\Controller\Traits\DeleteById;
-use App\Base\Controller\Traits\GetAll;
+use App\Base\Controller\Traits\Delete;
 use App\Base\Controller\Traits\Load;
 use App\Base\Controller\Traits\Save;
 use App\Base\Controller\Traits\Update;
@@ -17,12 +16,11 @@ use Slim\Http\Response;
 class RestController
 {
     // CRUD
-    use GetAll;
     use Load;
     use CountBy;
     use Save;
     use Update;
-    use DeleteById;
+    use Delete;
 
     /** @var string */
     protected $modelClass = null;

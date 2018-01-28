@@ -4,7 +4,6 @@ namespace App\Base\Model;
 
 use App\Base\AppContainer;
 use App\Base\DataObject;
-use App\Base\Db\MongoDBClient;
 use App\Base\Helper\Event;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
@@ -28,10 +27,13 @@ class MongoDB extends DataObject
     protected $container = null;
 
     /** @var string */
-    protected $connectionName = 'default';
+    protected $_connectionName = 'mongodb.default';
 
     /** @var Client */
-    protected $mongodbClient = null;
+    protected $_mongodbClient = null;
+
+    /** @var Collection */
+    protected $_resourceCollection;
 
     /** @var string */
     protected $databaseName = '';
@@ -53,14 +55,9 @@ class MongoDB extends DataObject
 
     protected $_isDeleted = false;
 
-    /** @var Collection */
-    protected $_resourceCollection;
-
     protected $_dataSaveAllowed = true;
 
     protected $_isObjectNew = null;
-
-    protected $_validatorBeforeSave = null;
 
     protected $storedData = [];
 
@@ -72,15 +69,18 @@ class MongoDB extends DataObject
     public function __construct($connectionName = null, $collectionNAme = null)
     {
         $this->container = AppContainer::getContainer();
-        $this->mongodbClient = $this->container->get(MongoDBClient::MONGO_DI);
-
-        $connectionName = $connectionName ?? $this->connectionName;
+        $connectionName = $connectionName ?? $this->_connectionName;
         $collectionNAme = $collectionNAme ?? $this->collectionNAme;
+        // init mongodb client
+        $this->_mongodbClient = $this->container[$connectionName];
 
-        $config = $this->container[MongoDBClient::MONGO_CONFIG_CONNECTION][$connectionName];
+        // get config
+        $configKey = $connectionName . '__config';
+        $config = $this->container[$configKey];
+
+        // assign db
         $databaseName = $config['database'];
-
-        $this->_resourceCollection = $this->mongodbClient->{$databaseName}->{$collectionNAme};
+        $this->_resourceCollection = $this->_mongodbClient->{$databaseName}->{$collectionNAme};
         return $this;
     }
 
@@ -98,9 +98,10 @@ class MongoDB extends DataObject
         } catch (\Exception $ex) {
             throw new \Exception('Invalid ID', 400);
         }
-
+        $field = $field ?? $this->getIdFieldName();
         $this->_beforeLoad($modelId, $field);
-        $this->_data = $this->getResourceCollection()->findOne([$this->getIdFieldName() => $modelId]);
+        // todo fix field
+        $this->_data = $this->getResourceCollection()->findOne([$field => $modelId]);
         $this->_afterLoad();
         $this->setOrigData();
         $this->_hasDataChanges = false;
@@ -140,7 +141,6 @@ class MongoDB extends DataObject
      */
     public function save()
     {
-        $this->_beforeSaveValidate();
         $this->_beforeSave();
         $this->getResourceCollection()->insertOne($this->_data);
         $this->_afterSave();
@@ -149,21 +149,28 @@ class MongoDB extends DataObject
 
     /**
      * @return $this
+     * @throws \Exception
      */
     public function _beforeSave()
     {
+
         if (!$this->getId()) {
             $this->isObjectNew(true);
         }
-        Event::emit('model_save_before', ['object' => $this]);
-        Event::emit($this->_eventPrefix . '_save_before', ['object' => $this]);
 
-        if (isset($this->_data[$this->getIdFieldName()]) && !($this->_data[$this->getIdFieldName()] instanceof ObjectId)) {
-            unset($this->_data[$this->getIdFieldName()]);
+        $modelId = $this->_data[$this->getIdFieldName()] ?? null;
+
+        if (!($modelId instanceof ObjectId)) {
+            $this->_data[$this->getIdFieldName()] = new ObjectId();
         }
+
         $this->update_at = new UTCDateTime();
         // if is new object only
         $this->created_at = new UTCDateTime();
+        $this->_beforeSaveValidate();
+
+        Event::emit('model_save_before', ['object' => $this]);
+        Event::emit($this->_eventPrefix . '_save_before', ['object' => $this]);
         return $this;
     }
 
@@ -173,18 +180,13 @@ class MongoDB extends DataObject
      */
     protected function _beforeSaveValidate()
     {
-        if (!$this->_validatorBeforeSave) {
-            $v = new Validator();
-            $v->mapFieldsRules($this->_rules);
-            $this->_validatorBeforeSave = $v;
-        }
-        $validator = $this->_validatorBeforeSave;
+        $validator = new Validator($this->_data);
+        $validator->mapFieldsRules($this->_rules);
 
-        $validatorResult = $validator->withData($this->_data)->validate();
+        $validatorResult = $validator->validate();
 
-        if ($validatorResult == true || $validatorResult == null) {
+        if (!$validatorResult) {
 
-        } else {
             $errAsText = $this->textErrorFromArr($validator->errors());
             throw new \Exception($errAsText, 400);
         }
@@ -223,11 +225,21 @@ class MongoDB extends DataObject
 
 
     /**
+     * @param $modelId
      * @return $this
+     * @throws \Exception
      */
-    public function delete()
+    public function delete($modelId)
     {
-        $this->getResourceCollection()->deleteOne($this);
+        try {
+            $modelId = new ObjectId($modelId);
+        } catch (\Exception $ex) {
+            throw new \Exception('Invalid ID', 400);
+        }
+
+        $this->_beforeDelete();
+        $this->getResourceCollection()->deleteOne([$this->getIdFieldName() => $modelId]);
+        $this->_afterDelete();
         return $this;
     }
 
@@ -254,6 +266,7 @@ class MongoDB extends DataObject
     public function clearInstance()
     {
         $this->_data = [];
+        $this->storedData = [];
         return $this;
     }
 
@@ -539,6 +552,14 @@ class MongoDB extends DataObject
         $newData = $this->get($field);
         $origData = $this->getOrigData($field);
         return $newData != $origData;
+    }
+
+    /**
+     * @return mixed|Client
+     */
+    public function getDBClient()
+    {
+        return $this->_mongodbClient;
     }
 
     /**

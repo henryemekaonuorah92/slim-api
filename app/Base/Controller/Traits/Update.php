@@ -8,8 +8,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Collection|MongoDB $model
- * @package App\Base\Controllers\Traits
+ * @property MongoDB|Collection $model
  */
 trait Update
 {
@@ -22,9 +21,6 @@ trait Update
      */
     public function updateAndRetrieve(Request $request, Response $response, $args)
     {
-        $this->request = $request;
-        $this->response = $response;
-
         $id = $args['id'] ?? null;
 
         $updateData = $request->getParsedBody() ?? [];

@@ -92,7 +92,7 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertEquals(1, $rs['n']);
+        $this->assertEquals(1, $rs['ok']);
 
         // get user
         $response = $this->sendHttpRequest(
@@ -125,6 +125,7 @@ class RestTest extends BaseApiCase
             'GET', '/api/user/me'
         );
 
+        // todo conditional based on jwt setting if enabled
         $this->assertThatResponseHasStatus(200);
         $rs = $this->responseDataArr();
         $this->assertEquals($userEmail, $rs['email']);

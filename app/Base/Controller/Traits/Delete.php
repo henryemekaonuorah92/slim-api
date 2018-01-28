@@ -8,10 +8,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Collection|MongoDB $model
- * @package App\Base\Controllers\Traits
+ * @property MongoDB|Collection $model
  */
-trait GetAll
+trait Delete
 {
     /**
      * @param Request $request
@@ -20,10 +19,13 @@ trait GetAll
      * @return Response
      * @throws \Exception
      */
-    public function getAll(Request $request, Response $response, $args)
+    public function deleteById(Request $request, Response $response, $args)
     {
-        $rs = $this->model->find()->toArray();
+        $id = $args['id'] ?? null;
 
-        return $response->withJson($rs);
+        $this->model->delete($id);
+
+        return $response->withJson(['ok' => '1']);
+
     }
 }

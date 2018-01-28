@@ -8,8 +8,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * @property Collection|MongoDB $model
- * @package App\Base\Controllers\Traits
+ * @property MongoDB|Collection $model
  */
 trait CountBy
 {
@@ -23,11 +22,8 @@ trait CountBy
      */
     public function count(Request $request, Response $response, $args)
     {
-        $this->request = $request;
-        $this->response = $response;
-
         $rs = $this->model->count();
 
-        return $this->response->withJson(['n' => $rs]);
+        return $response->withJson(['n' => $rs]);
     }
 }

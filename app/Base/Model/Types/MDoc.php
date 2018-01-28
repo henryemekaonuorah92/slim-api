@@ -51,7 +51,7 @@ class MDoc extends DataObject implements Unserializable, \Countable
 
             $this->{$key} = $value->__toString();
             // todo check if need to set original vals with _ prefix
-            //$this->{'_' . $key} = $value;
+            //$this->{'_' . $key} = $value->__toString();
         }
 
         return $this;
