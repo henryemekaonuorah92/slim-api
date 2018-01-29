@@ -116,5 +116,4 @@ abstract class DataObject implements \ArrayAccess
     {
         $this->offsetunset($key);
     }
-
 }

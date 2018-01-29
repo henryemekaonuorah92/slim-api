@@ -33,8 +33,8 @@ deps-install-prod:
 	composer install --prefer-dist --no-ansi --no-interaction --optimize-autoloader --ignore-platform-reqs --no-dev
 
 lint:
-	vendor/bin/phplint . --exclude=vendor/
-	vendor/bin/phpcs -p --standard=PSR2 --extensions=php --encoding=utf-8 --ignore=*/vendor/*,*/benchmarks/* .
+	vendor/bin/phplint . --exclude=vendor/ --exclude=tests/
+	vendor/bin/phpcs -p --standard=PSR2 --extensions=php --encoding=utf-8 --ignore=*/tests/*,*/vendor/*,*/benchmarks/* .
 
 unit:
 	vendor/bin/phpunit

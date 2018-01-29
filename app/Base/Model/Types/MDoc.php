@@ -7,10 +7,8 @@ use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Unserializable;
 use MongoDB\BSON\UTCDateTime;
 
-
 class MDoc extends DataObject implements Unserializable, \Countable
 {
-
     /**
      * Unserialize the document to BSON.
      *

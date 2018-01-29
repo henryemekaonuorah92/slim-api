@@ -26,6 +26,5 @@ trait Delete
         $this->model->delete($id);
 
         return $response->withJson(['ok' => '1']);
-
     }
 }

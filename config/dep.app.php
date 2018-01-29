@@ -39,4 +39,3 @@ $container['event_manager'] = function (\Slim\Container $container) {
 
     return $emitter;
 };
-

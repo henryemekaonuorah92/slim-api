@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\User;
 
 use App\Base\AppContainer;

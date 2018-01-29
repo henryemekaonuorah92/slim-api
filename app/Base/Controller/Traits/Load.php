@@ -42,5 +42,4 @@ trait Load
         // return null if not exist | [] empty object
         return $response->withJson($rs ?: null);
     }
-
 }
