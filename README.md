@@ -6,11 +6,11 @@
     <a href="https://travis-ci.org/me-io/slim-api">
       <img src="https://travis-ci.org/me-io/slim-api.svg?branch=master" alt="Build Status">
     </a>
-            <a href="LICENSE.md">
+    <a href="LICENSE.md">
       <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License">
     </a>
-    <a class="badge-align" href="https://www.codacy.com/app/me-io/slim-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Me-io/slim-api&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/5689a6a0f39f474ca6b45f68185414c9"/></a>
-        <a href="https://scrutinizer-ci.com/g/me-io/slim-api/?branch=master">
+      <a class="badge-align" href="https://www.codacy.com/app/Meabed/slim-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=me-io/slim-api&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/266923eec70e41418be8f981a5b4cefe"/></a>        
+      <a href="https://scrutinizer-ci.com/g/me-io/slim-api/?branch=master">
       <img src="https://scrutinizer-ci.com/g/me-io/slim-api/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality">
     </a>
     <a href="https://codecov.io/gh/me-io/slim-api">
