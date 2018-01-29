@@ -26,9 +26,11 @@ trait Update
         $updateData = $request->getParsedBody() ?? [];
 
         // todo
-        $this->model->setData($updateData)->update($id);
+        $this->model->setData($updateData)
+            ->update($id);
 
-        $rs = $this->model->load($id)->getStoredData();
+        $rs = $this->model->load($id)
+            ->getStoredData();
 
         return $response->withJson($rs ?: null);
     }

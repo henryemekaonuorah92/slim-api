@@ -141,6 +141,10 @@ class MongoDB extends DataObject
      */
     public function save()
     {
+        if (!$this->isSaveAllowed()) {
+            throw new \Exception('Save Method is not allowed', 405);
+        }
+
         $this->_beforeSave();
         $this->getResourceCollection()->insertOne($this->_data);
         $this->_afterSave();
@@ -211,6 +215,10 @@ class MongoDB extends DataObject
      */
     public function update($modelId)
     {
+        if (!$this->isSaveAllowed()) {
+            throw new \Exception('Update Method is not allowed', 405);
+        }
+
         try {
             $modelId = new ObjectId($modelId);
         } catch (\Exception $ex) {
@@ -231,6 +239,10 @@ class MongoDB extends DataObject
      */
     public function delete($modelId)
     {
+        if (!$this->isSaveAllowed()) {
+            throw new \Exception('Delete Method is not allowed', 405);
+        }
+
         try {
             $modelId = new ObjectId($modelId);
         } catch (\Exception $ex) {

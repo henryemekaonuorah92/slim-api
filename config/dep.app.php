@@ -25,7 +25,7 @@ $container['event_manager'] = function (\Slim\Container $container) {
     $emitter = new \App\Base\EventManager();
 
     // require events
-    $eventFiles = glob(__DIR__ . '/../app/*/*_events.php');
+    $eventFiles = glob(__DIR__ . '/../app/*/*event_listeners.php');
 
     foreach ($eventFiles as $file) {
         $eventArr = require $file;

@@ -36,7 +36,8 @@ trait Load
     public function loadById(Request $request, Response $response, $args)
     {
         $id = $args['id'] ?? null;
-        $rs = $this->model->load($id)->getStoredData();
+        $rs = $this->model->load($id)
+            ->getStoredData();
 
         // return null if not exist | [] empty object
         return $response->withJson($rs ?: null);

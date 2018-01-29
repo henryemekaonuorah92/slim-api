@@ -24,10 +24,13 @@ trait Save
     {
         $data = $request->getParsedBody();
 
-        $data[$this->model->getIdFieldName()] = $objId = new ObjectId();
-        $this->model->setData($data)->save();
+        $objId = new ObjectId();
+        $this->model->setData($data)
+            ->setId($objId)
+            ->save();
 
-        $rs = $this->model->load($objId)->getStoredData();
+        $rs = $this->model->load($objId)
+            ->getStoredData();
 
         return $response->withJson($rs ?: null);
     }
