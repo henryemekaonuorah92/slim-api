@@ -46,7 +46,6 @@ class MDoc extends DataObject implements Unserializable, \Countable
         // convert UTCDateTime and ObjectId in root level to string value
         // todo check all MongoDB\BSON types
         if ($value instanceof ObjectId || $value instanceof UTCDateTime) {
-
             $this->{$key} = $value->__toString();
             // todo check if need to set original vals with _ prefix
             //$this->{'_' . $key} = $value->__toString();

@@ -190,7 +190,6 @@ class MongoDB extends DataObject
         $validatorResult = $validator->validate();
 
         if (!$validatorResult) {
-
             $errAsText = $this->textErrorFromArr($validator->errors());
             throw new \Exception($errAsText, 400);
         }
@@ -598,5 +597,4 @@ class MongoDB extends DataObject
     {
         $this->_hasDataChanges = $flag;
     }
-
 }

@@ -36,6 +36,9 @@ lint:
 	vendor/bin/phplint . --exclude=vendor/ --exclude=tests/
 	vendor/bin/phpcs -p --standard=PSR2 --extensions=php --encoding=utf-8 --ignore=*/tests/*,*/vendor/*,*/benchmarks/* .
 
+csfix:
+	vendor/bin/phpcbf -p --standard=PSR2 --extensions=php --encoding=utf-8 --ignore=*/tests/*,*/vendor/*,*/benchmarks/* .
+
 unit:
 	vendor/bin/phpunit
 
