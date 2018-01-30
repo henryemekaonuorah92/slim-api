@@ -40,9 +40,10 @@ $container['errorHandler'] = function (\Slim\Container $container) {
             $err['trace'] = $traceData;
         }
         $statusCode = [
-            "100", "101", "200", "201", "202", "203", "204", "205", "206", "300", "301", "302", "303",
-            "304", "305", "306", "307", "400", "401", "402", "403", "404", "405", "406", "407", "408", "409", "410",
-            "411", "412", "413", "414", "415", "416", "417", "500", "501", "502", "503", "504", "505"
+            "100", "101", "200", "201", "202", "203", "204", "205", "206", "300", "301",
+            "302", "303", "304", "305", "306", "307", "400", "401", "402", "403", "404",
+            "405", "406", "407", "408", "409", "410", "411", "412", "413", "414", "415",
+            "416", "417", "500", "501", "502", "503", "504", "505"
         ];
         $exCode = $exception->getCode();
         if (!in_array($exCode, $statusCode)) {
@@ -68,7 +69,8 @@ $container['notFoundHandler'] = function (\Slim\Container $container) {
  */
 $container['notAllowedHandler'] = function (\Slim\Container $container) {
     return function (\Slim\Http\Request $request, \Slim\Http\Response $response, $methods) use ($container) {
-        return $response->withJson(['status' => 'error', 'message' => 'Method not allowed ' . implode(', ', $methods)], 405);
+        $rsArr = ['status' => 'error', 'message' => 'Method not allowed ' . implode(', ', $methods)];
+        return $response->withJson($rsArr, 405);
     };
 };
 

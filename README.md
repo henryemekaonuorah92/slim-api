@@ -1,23 +1,24 @@
-
 <p align="center">
   <h3 align="center">REST API with Slim, MongoDB, JWT </h3>
   <p align="center">a RESTful API boilerplate for Slim framework</p>
   <p align="center">
-    <a href="https://travis-ci.org/Meabed/slim-api">
-      <img src="https://travis-ci.org/Meabed/slim-api.svg?branch=master" alt="Build Status">
+    <a href="https://travis-ci.org/me-io/slim-api">
+      <img src="https://travis-ci.org/me-io/slim-api.svg?branch=master" alt="Build Status">
     </a>
-            <a href="LICENSE.md">
+    <a href="LICENSE.md">
       <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License">
     </a>
-    <a class="badge-align" href="https://www.codacy.com/app/Meabed/slim-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Meabed/slim-api&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/5689a6a0f39f474ca6b45f68185414c9"/></a>
-        <a href="https://scrutinizer-ci.com/g/meabed/slim-api/?branch=master">
-      <img src="https://scrutinizer-ci.com/g/meabed/slim-api/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality">
+    <a class="badge-align" href="https://www.codacy.com/app/Meabed/slim-api">
+      <img src="https://api.codacy.com/project/badge/Grade/266923eec70e41418be8f981a5b4cefe"/>
+    </a>        
+    <a href="https://scrutinizer-ci.com/g/me-io/slim-api/?branch=master">
+      <img src="https://scrutinizer-ci.com/g/me-io/slim-api/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality">
     </a>
-    <a href="https://codecov.io/gh/Meabed/slim-api">
-      <img src="https://codecov.io/gh/Meabed/slim-api/branch/master/graph/badge.svg" alt="codecov">
+    <a href="https://codecov.io/gh/me-io/slim-api">
+      <img src="https://codecov.io/gh/me-io/slim-api/branch/master/graph/badge.svg" alt="codecov">
     </a>
-    <a href="https://packagist.org/packages/meabed/slim-api/">
-      <img src="https://img.shields.io/packagist/dm/meabed/slim-api.svg" alt="Packagist">
+    <a href="https://packagist.org/packages/me-io/slim-api/">
+      <img src="https://img.shields.io/packagist/dm/me-io/slim-api.svg" alt="Packagist">
     </a>
   </p>
 </p>
@@ -56,7 +57,7 @@
 First, clone the repo:
 
 ```bash
-git clone https://github.com/meabed/slim-api
+git clone https://github.com/me-io/slim-api
 ```
 
 ### Install dependencies
@@ -96,7 +97,7 @@ For creating token we have to use the http://localhost:3500/api/user/login route
 Run the following command to create a REST API:
 
 ```bash
-composer create-project --prefer-dist Meabed/slim-api blog
+composer create-project --prefer-dist Me-io/slim-api blog
 ```
 
 #### Database connection

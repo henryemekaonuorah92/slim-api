@@ -12,7 +12,6 @@ use Slim\Http\Response;
  */
 trait CountBy
 {
-
     /**
      * @param Request $request
      * @param Response $response

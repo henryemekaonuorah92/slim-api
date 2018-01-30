@@ -4,7 +4,6 @@ namespace App\Category;
 
 use App\Base\Model\MongoDB;
 
-
 /**
  * Class UserModel
  * @property string $email

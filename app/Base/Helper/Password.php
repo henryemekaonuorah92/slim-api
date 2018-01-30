@@ -31,5 +31,4 @@ class Password
     {
         return password_verify($password, $hash);
     }
-
 }
