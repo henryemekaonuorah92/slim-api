@@ -69,7 +69,7 @@ composer install
 
 ### Configure the Environment
 
-Create `bootstrap/ext.settings.php` file:
+Create `config/ext.settings.php` file:
 
 ```php
 // override any default settings
