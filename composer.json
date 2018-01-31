@@ -1,7 +1,10 @@
 {
   "name": "me-io/slim-api",
+  "description": "A \"No-frills\" CRUD RESTful JSON API Boilerplate built on Slim 3, MongoDB, JWT",
   "license": "MIT",
   "version": "1.0.0",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "php": ">=7.0",
     "slim/slim": "~3",
