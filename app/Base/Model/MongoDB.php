@@ -18,7 +18,7 @@ use Valitron\Validator;
  * @property string $update_at
  * @package App\Base\Models
  */
-class MongoDB extends DataObject
+class MongoDB extends Persistent
 {
     /** @var array validation rules */
     protected $_rules = [];
@@ -29,37 +29,11 @@ class MongoDB extends DataObject
     /** @var string */
     protected $_connectionName = 'mongodb.default';
 
-    /** @var Client */
-    protected $_mongodbClient = null;
-
-    /** @var Collection */
-    protected $_resourceCollection;
-
     /** @var string */
     protected $databaseName = '';
 
     /** @var string */
     protected $collectionNAme = '';
-
-    protected $_data = [];
-
-    protected $_eventPrefix = 'core_abstract';
-
-    protected $_eventObject = 'object';
-
-    protected $_idFieldName = '_id';
-
-    protected $_hasDataChanges = false;
-
-    protected $_origData;
-
-    protected $_isDeleted = false;
-
-    protected $_dataSaveAllowed = true;
-
-    protected $_isObjectNew = null;
-
-    protected $storedData = [];
 
     /**
      * @param null $connectionName
@@ -72,7 +46,7 @@ class MongoDB extends DataObject
         $connectionName = $connectionName ?? $this->_connectionName;
         $collectionNAme = $collectionNAme ?? $this->collectionNAme;
         // init mongodb client
-        $this->_mongodbClient = $this->container[$connectionName];
+        $this->_dbClient = $this->container[$connectionName];
 
         // get config
         $configKey = $connectionName . '__config';
@@ -80,7 +54,7 @@ class MongoDB extends DataObject
 
         // assign db
         $databaseName = $config['database'];
-        $this->_resourceCollection = $this->_mongodbClient->{$databaseName}->{$collectionNAme};
+        $this->_resourceCollection = $this->_dbClient->{$databaseName}->{$collectionNAme};
         return $this;
     }
 
@@ -274,16 +248,6 @@ class MongoDB extends DataObject
     /**
      * @return $this
      */
-    public function clearInstance()
-    {
-        $this->_data = [];
-        $this->storedData = [];
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
     private function updateStoredData()
     {
         if (isset($this->_data)) {
@@ -338,53 +302,6 @@ class MongoDB extends DataObject
         return !(bool)$this->getId();
     }
 
-    /**
-     * @param $offset
-     * @return null|mixed
-     */
-    public function get($offset)
-    {
-        if (property_exists($this, $offset)) {
-            return $this->{$offset};
-        } else {
-            return $this->_data[$offset] ?? null;
-        }
-    }
-
-    /**
-     * @param $offset
-     * @param $value
-     * @return $this
-     */
-    public function set($offset, $value)
-    {
-        if (!empty($this->{$offset}) && $this->{$offset} !== $value) {
-            $this->{$offset} = $value;
-            $this->_hasDataChanges = true;
-        } else {
-            return $this->_data[$offset] = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $offset
-     * @return bool
-     */
-    public function exists($offset)
-    {
-        return isset($this->{$offset});
-    }
-
-    /**
-     * @param string $offset
-     * @return NULL|void
-     */
-    public function unset($offset)
-    {
-        unset($this->{$offset});
-    }
 
     /**
      * @param $name
@@ -398,203 +315,4 @@ class MongoDB extends DataObject
         return $rs;
     }
 
-
-    /**
-     * @return array
-     */
-    public function getStoredData()
-    {
-        return $this->storedData;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEventPrefix()
-    {
-        return $this->_eventPrefix;
-    }
-
-    /**
-     * @param $name
-     * @return $this
-     */
-    public function setIdFieldName($name)
-    {
-        $this->_idFieldName = $name;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdFieldName()
-    {
-        return $this->_idFieldName;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getId()
-    {
-        return $this->get($this->_idFieldName);
-    }
-
-    /**
-     * @param $value
-     * @return $this
-     */
-    public function setId($value)
-    {
-        $this->setData($this->_idFieldName, $value);
-        return $this;
-    }
-
-    /**
-     * @param null $isDeleted
-     * @return bool
-     */
-    public function isDeleted($isDeleted = null)
-    {
-        $result = $this->_isDeleted;
-        if ($isDeleted !== null) {
-            $this->_isDeleted = $isDeleted;
-        }
-        return $result;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasDataChanges()
-    {
-        return $this->_hasDataChanges;
-    }
-
-    /**
-     * @param $key
-     * @param null $value
-     * @return $this
-     */
-    public function setData($key, $value = null)
-    {
-        if ($key === (array)$key) {
-            if ($this->_data !== $key) {
-                $this->_hasDataChanges = true;
-            }
-            $this->_data = $key;
-        } else {
-            if (!array_key_exists($key, $this->_data) || $this->_data[$key] !== $value) {
-                $this->_hasDataChanges = true;
-            }
-            $this->_data[$key] = $value;
-        }
-        return $this;
-    }
-
-    /**
-     * @param null $key
-     * @return $this
-     */
-    public function unsetData($key = null)
-    {
-        if ($key === null) {
-            $this->setData([]);
-        } elseif (is_string($key)) {
-            if (isset($this->_data[$key]) || array_key_exists($key, $this->_data)) {
-                $this->_hasDataChanges = true;
-                unset($this->_data[$key]);
-            }
-        } elseif ($key === (array)$key) {
-            foreach ($key as $element) {
-                $this->unsetData($element);
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * @param $value
-     * @return $this
-     */
-    public function setDataChanges($value)
-    {
-        $this->_hasDataChanges = (bool)$value;
-        return $this;
-    }
-
-    /**
-     * @param null $key
-     * @return null
-     */
-    public function getOrigData($key = null)
-    {
-        if ($key === null) {
-            return $this->_origData;
-        }
-        if (isset($this->_origData[$key])) {
-            return $this->_origData[$key];
-        }
-        return null;
-    }
-
-    /**
-     * @param null $key
-     * @param null $data
-     * @return $this
-     */
-    public function setOrigData($key = null, $data = null)
-    {
-        if ($key === null) {
-            $this->_origData = $this->_data;
-        } else {
-            $this->_origData[$key] = $data;
-        }
-        return $this;
-    }
-
-    /**
-     * @param $field
-     * @return bool
-     */
-    public function dataHasChangedFor($field)
-    {
-        $newData = $this->get($field);
-        $origData = $this->getOrigData($field);
-        return $newData != $origData;
-    }
-
-    /**
-     * @return mixed|Client
-     */
-    public function getDBClient()
-    {
-        return $this->_mongodbClient;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getResourceCollection()
-    {
-        return $this->_resourceCollection;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function isSaveAllowed()
-    {
-        return (bool)$this->_dataSaveAllowed;
-    }
-
-    /**
-     * @param $flag
-     */
-    public function setHasDataChanges($flag)
-    {
-        $this->_hasDataChanges = $flag;
-    }
 }
