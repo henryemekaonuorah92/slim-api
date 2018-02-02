@@ -37,7 +37,7 @@ class AppContainer
      * @param $key
      * @param null $defaultValue
      * @param int $appId
-     * @return mixed|null
+     * @return null|mixed
      */
     public static function config($key, $defaultValue = null, $appId = 0)
     {
