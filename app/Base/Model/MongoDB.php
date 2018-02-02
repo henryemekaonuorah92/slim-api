@@ -3,22 +3,18 @@
 namespace App\Base\Model;
 
 use App\Base\AppContainer;
-use App\Base\DataObject;
 use App\Base\Helper\Event;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
-use MongoDB\Client;
 use MongoDB\Collection;
 use Slim\Container;
 use Valitron\Validator;
 
 /**
- * Class BaseMongoModel
  * @property string $created_at
  * @property string $update_at
- * @package App\Base\Models
  */
-class MongoDB extends Persistent
+class MongoDB extends AbstractPersistent
 {
     /** @var array validation rules */
     protected $_rules = [];
@@ -183,10 +179,11 @@ class MongoDB extends Persistent
 
     /**
      * @param $modelId
+     * @param $field
      * @return $this
      * @throws \Exception
      */
-    public function update($modelId)
+    public function update($modelId, $field = null)
     {
         if (!$this->isSaveAllowed()) {
             throw new \Exception('Update Method is not allowed', 405);
@@ -207,10 +204,11 @@ class MongoDB extends Persistent
 
     /**
      * @param $modelId
+     * @param $field
      * @return $this
      * @throws \Exception
      */
-    public function delete($modelId)
+    public function delete($modelId, $field = null)
     {
         if (!$this->isSaveAllowed()) {
             throw new \Exception('Delete Method is not allowed', 405);

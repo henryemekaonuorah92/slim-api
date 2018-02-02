@@ -4,7 +4,7 @@ namespace App\Base\Model;
 
 use App\Base\DataObject;
 
-class Persistent extends DataObject
+abstract class AbstractPersistent extends DataObject
 {
     protected $_dbClient = null;
 
@@ -29,6 +29,14 @@ class Persistent extends DataObject
     protected $_eventPrefix = 'core_abstract';
 
     protected $_eventObject = 'object';
+
+    abstract public function load($modelId, $field);
+
+    abstract public function update($modelId, $field);
+
+    abstract public function delete($modelId, $field);
+
+    abstract public function save();
 
     /**
      * @param $value

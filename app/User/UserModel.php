@@ -22,9 +22,9 @@ class UserModel extends MongoDB
         'password' => ['required', ['lengthMin', 6]],
     ];
 
-
     /**
      * @return $this
+     * @throws \Exception
      */
     public function _beforeSave()
     {
