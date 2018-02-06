@@ -37,7 +37,6 @@
 .
 ├── app                    # Core code of the application.
 │   ├── Base               # Contains base functionality of the framework
-│   ├── Contract           # Express routes, e.g. /login/facebook
 │   └── User               # Resource example for user
 ├── config                 # Framework configuration files are in this folder
 │   └── settings.php       # Main configuartion of the framework.
@@ -70,7 +69,7 @@ composer install
 
 ### Configure the Environment
 
-Create `bootstrap/ext.settings.php` file:
+Create `config/ext.settings.php` file:
 
 ```php
 // override any default settings
@@ -84,7 +83,7 @@ If you want you can edit database name, database username and database password.
 To start making RESTful requests to slim-api start the PHP local server using:
 
 ```bash
-php -S 0.0.0.0:3500 -t public index.php
+php -S 0.0.0.0:3500 -t public
 ```
 
 ### Creating token
