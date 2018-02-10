@@ -47,4 +47,4 @@ if (file_exists($extraSettingFile)) {
     require_once $extraSettingFile;
 }
 
-return array_merge_recursive($baseSetting, $extraSetting);
+return array_replace_recursive($baseSetting, $extraSetting);
