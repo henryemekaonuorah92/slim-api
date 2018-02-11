@@ -154,18 +154,18 @@ class BaseApiCase extends BaseCase
         $userData['password'] = $userData['password'] ?? 'testpassword';
 
         $response = $instance->sendHttpRequest(
-            'POST', '/api/user/login',
+            'POST', '/api/my-account/user/login',
             $userData
         );
 
         if ($response->getStatusCode() != 200) {
             $response = $instance->sendHttpRequest(
-                'POST', '/api/user/register',
+                'POST', '/api/my-account/user/register',
                 $userData
             );
             if ($response->getStatusCode() == 200) {
                 $response = $instance->sendHttpRequest(
-                    'POST', '/api/user/login',
+                    'POST', '/api/my-account/user/login',
                     $userData
                 );
             } else {
