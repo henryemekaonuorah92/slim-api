@@ -26,7 +26,7 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
     $tokenData = \App\Base\Helper\Jwt::decodeJwtToken($token);
 
     \App\Base\AppContainer::setConfig('jwtToken', $token);
-    \App\Base\AppContainer::setConfig('jwtUser', $tokenData->data);
+    \App\Base\AppContainer::setConfig('jwtUser', (array)$tokenData->data);
 
     $response = $next($request, $response);
     return $response;

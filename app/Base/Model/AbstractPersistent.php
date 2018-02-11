@@ -3,6 +3,8 @@
 namespace App\Base\Model;
 
 use App\Base\DataObject;
+use MongoDB\Client;
+use MongoDB\Collection;
 
 abstract class AbstractPersistent extends DataObject
 {
@@ -90,7 +92,7 @@ abstract class AbstractPersistent extends DataObject
     }
 
     /**
-     * @return mixed
+     * @return Client
      */
     public function getDBClient()
     {
@@ -98,7 +100,7 @@ abstract class AbstractPersistent extends DataObject
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
     public function getResourceCollection()
     {

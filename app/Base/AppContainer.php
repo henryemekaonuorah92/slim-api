@@ -2,6 +2,7 @@
 
 namespace App\Base;
 
+use Monolog\Logger;
 use Slim\App;
 use Slim\Container;
 
@@ -32,6 +33,17 @@ class AppContainer
     {
         return static::getAppInstance([], $appId)->getContainer();
     }
+
+
+    /**
+     * @param int $appId
+     * @return Logger
+     */
+    public static function getLogger($appId = 0)
+    {
+        return static::getContainer($appId)->get('logger');
+    }
+
 
     /**
      * @param $key

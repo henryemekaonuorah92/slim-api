@@ -15,5 +15,5 @@ use App\Base\Model\MongoDB;
 class PostModel extends MongoDB
 {
     /** @var string */
-    protected $collectionNAme = 'posts';
+    protected $collectionNAme = 'post';
 }

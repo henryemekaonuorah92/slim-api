@@ -15,5 +15,5 @@ use App\Base\Model\MongoDB;
 class CategoryModel extends MongoDB
 {
     /** @var string */
-    protected $collectionNAme = 'categorys';
+    protected $collectionNAme = 'category';
 }

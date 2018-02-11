@@ -2,6 +2,7 @@
 
 namespace App\Base\Controller\Traits;
 
+use App\Base\Helper\Event;
 use App\Base\Model\MongoDB;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Collection;
@@ -31,6 +32,8 @@ trait Save
 
         $rs = $this->model->load($objId)
             ->getStoredData();
+
+        Event::emit('rest.entity.created', get_class($this->model), $rs);
 
         return $response->withJson($rs ?: null);
     }

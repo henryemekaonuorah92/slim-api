@@ -2,6 +2,7 @@
 
 namespace App\Base\Controller\Traits;
 
+use App\Base\Helper\Event;
 use App\Base\Model\MongoDB;
 use MongoDB\Collection;
 use Slim\Http\Request;
@@ -24,6 +25,8 @@ trait Delete
         $id = $args['id'] ?? null;
 
         $this->model->delete($id);
+
+        Event::emit('rest.entity.deleted', get_class($this->model), $id);
 
         return $response->withJson(['ok' => '1']);
     }

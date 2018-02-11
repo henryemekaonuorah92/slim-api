@@ -14,7 +14,7 @@ use App\Base\Model\MongoDB;
 class UserModel extends MongoDB
 {
     /** @var string */
-    protected $collectionNAme = 'users';
+    protected $collectionNAme = 'user';
 
     /** @var array */
     protected $_rules = [

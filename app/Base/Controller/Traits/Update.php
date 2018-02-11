@@ -2,6 +2,7 @@
 
 namespace App\Base\Controller\Traits;
 
+use App\Base\Helper\Event;
 use App\Base\Model\MongoDB;
 use MongoDB\Collection;
 use Slim\Http\Request;
@@ -31,6 +32,8 @@ trait Update
 
         $rs = $this->model->load($id)
             ->getStoredData();
+
+        Event::emit('rest.entity.updated', get_class($this->model), $rs);
 
         return $response->withJson($rs ?: null);
     }
