@@ -9,10 +9,22 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
     }
 
     $bypass = \App\Base\AppContainer::config('jwt')['bypass'] ?? [];
+
     $currentPath = $request->getUri()->getPath();
+    $currentMethod = strtolower($request->getMethod());
+
+    if ($currentMethod == 'options') {
+        return $response;
+    }
+
     // skip jwt if route match
     foreach ($bypass as $route) {
-        if ($route == $currentPath) {
+
+        list($method, $path) = explode(' ', $route);
+
+        $method = strtolower($method);
+
+        if ($path == $currentPath && $method == $currentMethod) {
             return $response = $next($request, $response);
         }
     }
@@ -29,5 +41,6 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
     \App\Base\AppContainer::setConfig('jwtUser', (array)$tokenData->data);
 
     $response = $next($request, $response);
+
     return $response;
 });

@@ -7,6 +7,20 @@ php:
   - 7.2
   #- hhvm
 
+env:
+  matrix:
+    - MONGODB=3.4.10
+    - MONGODB=3.6.2
+
+matrix:
+  fast_finish: true
+
+install:
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz
+  - tar xzf mongodb-linux-x86_64-${MONGODB}.tgz
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
+
+
 # This triggers builds to run on the new TravisCI infrastructure.
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
@@ -16,11 +30,9 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-# database service
-services:
-  - mongodb
-
 before_script:
+  - mkdir ${PWD}/mongodb-linux-x86_64-${MONGODB}/data
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/data --logpath ${PWD}/mongodb-linux-x86_64-${MONGODB}/mongodb.log --fork
   - travis_retry pecl -q install -f mongodb-1.4.0
   #- echo "extension=mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - sleep 10
@@ -37,6 +49,7 @@ after_script:
       wget https://scrutinizer-ci.com/ocular.phar
       php ocular.phar code-coverage:upload --format=php-clover coverage.xml
     fi
+  - pkill mongod
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

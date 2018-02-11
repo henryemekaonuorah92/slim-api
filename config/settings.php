@@ -12,15 +12,15 @@ $baseSetting = [
             'header' => 'authorization',
             'query' => 'token',
             'bypass' => [
-                '/api/user/register',
-                '/api/user/login',
-                '/api/ping',
+                'POST /api/user/register',
+                'POST /api/user/login',
+                'GET /api/ping',
             ]
         ],
         // mongodb configuration @link
         'mongodb.default' => [
-            'uri' => 'mongodb://mongo:27017',
-            'database' => 'phonebook',
+            'uri' => 'mongodb://localhost:27017',
+            'database' => 'db',
             'uriOptions' => [],
             'driverOptions' => []
         ],
