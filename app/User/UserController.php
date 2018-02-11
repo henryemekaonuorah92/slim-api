@@ -7,6 +7,7 @@ use App\Base\Controller\RestController;
 use App\Base\Helper\Event;
 use App\Base\Helper\Jwt;
 use App\Base\Helper\Password;
+use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -40,21 +41,59 @@ class UserController extends RestController
         $email = $request->getParsedBodyParam('email');
         $password = $request->getParsedBodyParam('password');
 
-        $dbUser = null;
-        $dbUser = $this->model->findOne(['email' => $email], ['sort' => ['created_at' => -1]]);
-        if (!$dbUser) {
+        $user = null;
+        $user = $this->model->findOne(['email' => $email], ['sort' => ['created_at' => -1]]);
+        if (!$user) {
             throw new \Exception('Username not found', 400);
         }
 
-        $passwordOk = Password::verify($password, $dbUser['password']);
+        $passwordOk = Password::verify($password, $user['password']);
         if (!$passwordOk) {
-            throw new \Exception('The user name or password is incorrect. Try again', 400);
+            throw new \Exception('The Username or Password is incorrect. Try again', 400);
         }
 
-        $rs = Jwt::generateToken($dbUser);
+        $rs = Jwt::generateToken($user);
 
-        Event::emit('user.login', $dbUser);
+        Event::emit('user.login', $user);
 
         return $response->withJson($rs);
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return mixed
+     * @throws \Exception
+     */
+    public function register(Request $request, Response $response, $args)
+    {
+        $data = $request->getParsedBody();
+
+        $email = $data['email'] ?? '';
+
+        // @todo handle validation
+        $existingUsers = $this->model->findOne(['email' => $email]);
+        if (!empty($existingUsers)) {
+            throw new \Exception('The Email is already registered', 400);
+        }
+
+        $data = $request->getParsedBody();
+
+        $objId = new ObjectId();
+        $this->model->setData($data)
+            ->setId($objId)
+            ->save();
+
+        $user = $this->model->load($objId)
+            ->getStoredData();
+
+        Event::emit('user.created', $user);
+
+        $token = Jwt::generateToken($user);
+
+        $return = array_merge((array)$user, $token);
+
+        return $response->withJson($return);
     }
 }

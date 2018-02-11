@@ -25,7 +25,8 @@ class RestTest extends BaseApiCase
 
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($userEmail, $rs['email']);
+        $this->assertArrayHasKey('expire_at', $rs);
+        $this->assertArrayHasKey('token', $rs);
         $userData = $rs;
         $userId = $userData[$idFieldName];
 
@@ -45,7 +46,7 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 400);
         $rs = $this->responseDataArr();
-        $this->assertContains('password is incorrect', $rs['message']);
+        $this->assertContains('Password is incorrect', $rs['message']);
 
 
         // login and save token to assign it for all next requests
@@ -67,7 +68,7 @@ class RestTest extends BaseApiCase
             'GET', '/api/user/' . $userId
         );
 
-        $this->assertSame($response->getStatusCode(), 200);
+        $this->assertEquals($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertContains($userId, $rs[$idFieldName]);
 

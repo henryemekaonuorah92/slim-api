@@ -24,32 +24,25 @@ class UserTest extends BaseApiCase
         $this->assertContains('Password is required', $rs['message']);
         $this->assertContains('Password must be at least', $rs['message']);
 
+        $emailRnd = rand().'email@gmail.com';
         $response = $this->sendHttpRequest(
             'POST', '/api/user/register',
-            ['email' => 'email@gmail.com', 'password' => 'Hello world']
+            ['email' => $emailRnd, 'password' => 'Hello world']
         );
 
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains('email@gmail.com', $rs['email']);
+        $this->assertContains($emailRnd, $rs['email']);
 
-    }
-
-    /**
-     * @throws \Exception
-     * @throws \Slim\Exception\MethodNotAllowedException
-     * @throws \Slim\Exception\NotFoundException
-     */
-    public function testLoginUser()
-    {
         $this->sendHttpRequest(
             'POST', '/api/user/login',
-            ['email' => 'email@gmail.com', 'password' => 'Hello world']
+            ['email' => $emailRnd, 'password' => 'Hello world']
         );
 
         $this->assertThatResponseHasStatus(200);
         $rs = $this->responseDataArr();
         $this->assertArrayHasKey('token', $rs);
+
     }
 
 }

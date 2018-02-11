@@ -82,7 +82,7 @@ class Jwt
         ];
         $rs = [
             'token' => \Firebase\JWT\JWT::encode($payload, $secret, $algorithm),
-            'expires' => $exp,
+            'expire_at' => $exp,
         ];
 
         return $rs;
