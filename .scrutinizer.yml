@@ -5,7 +5,7 @@ filter:
   - config/*
   - public/*
   excluded_paths:
-  - test/*
+  - tests/*
   - storage/*
   dependency_paths:
   - vendor/*
