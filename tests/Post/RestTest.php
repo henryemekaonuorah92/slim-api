@@ -25,7 +25,7 @@ class RestTest extends BaseApiCase
         $rs = $this->responseDataArr();
         $this->assertContains('post name', $rs['name']);
         $this->assertContains('post desc', $rs['description']);
-        $this->assertContains('testKey', $rs['asdas']);
+        $this->assertContains('asdas', $rs['testKey']);
 
         $postId = $rs[$idFieldName];
 
