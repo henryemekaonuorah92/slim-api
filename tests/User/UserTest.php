@@ -15,7 +15,7 @@ class UserTest extends BaseApiCase
     public function testRegisterUser()
     {
         $response = $this->sendHttpRequest(
-            'POST', '/api/my-account/user/register',
+            'POST', '/api/account/user/register',
             ['email' => 'email@', 'password' => '']
         );
 
@@ -26,7 +26,7 @@ class UserTest extends BaseApiCase
 
         $emailRnd = rand().'email@gmail.com';
         $response = $this->sendHttpRequest(
-            'POST', '/api/my-account/user/register',
+            'POST', '/api/account/user/register',
             ['email' => $emailRnd, 'password' => 'Hello world']
         );
 
@@ -35,7 +35,7 @@ class UserTest extends BaseApiCase
         $this->assertContains($emailRnd, $rs['email']);
 
         $this->sendHttpRequest(
-            'POST', '/api/my-account/user/login',
+            'POST', '/api/account/user/login',
             ['email' => $emailRnd, 'password' => 'Hello world']
         );
 

@@ -12,8 +12,8 @@ return [
             'header' => 'x-token',
             'cookie' => 'x-token',
             'bypass' => [
-                '/api/my-account/user/register',
-                '/api/my-account/user/login',
+                '/api/account/user/register',
+                '/api/account/user/login',
                 '/api/ping',
             ]
         ],

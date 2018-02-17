@@ -19,7 +19,7 @@ class RestTest extends BaseApiCase
         $idFieldName = (new UserModel())->getIdFieldName();
         // insert user
         $response = $this->sendHttpRequest(
-            'POST', '/api/my-account/user/register',
+            'POST', '/api/account/user/register',
             ['email' => $userEmail, 'password' => $userPass]
         );
 
@@ -32,7 +32,7 @@ class RestTest extends BaseApiCase
 
         // login wrong email
         $response = $this->sendHttpRequest(
-            'POST', '/api/my-account/user/login',
+            'POST', '/api/account/user/login',
             ['email' => $userEmail . 'wrong', 'password' => $userPass]
         );
         $this->assertSame($response->getStatusCode(), 400);
@@ -41,7 +41,7 @@ class RestTest extends BaseApiCase
 
         // login wrong password
         $response = $this->sendHttpRequest(
-            'POST', '/api/my-account/user/login',
+            'POST', '/api/account/user/login',
             ['email' => $userEmail, 'password' => $userPass . 'wrong']
         );
         $this->assertSame($response->getStatusCode(), 400);
@@ -51,7 +51,7 @@ class RestTest extends BaseApiCase
 
         // login and save token to assign it for all next requests
         $response = $this->sendHttpRequest(
-            'POST', '/api/my-account/user/login',
+            'POST', '/api/account/user/login',
             ['email' => $userEmail, 'password' => $userPass]
         );
 
@@ -65,7 +65,7 @@ class RestTest extends BaseApiCase
 
         // get user
         $response = $this->sendHttpRequest(
-            'GET', '/api/my-account/user/' . $userId
+            'GET', '/api/account/user/' . $userId
         );
 
         $this->assertEquals($response->getStatusCode(), 200);
@@ -74,14 +74,14 @@ class RestTest extends BaseApiCase
 
         // update user
         $response = $this->sendHttpRequest(
-            'PUT', '/api/my-account/user/' . $userId,
+            'PUT', '/api/account/user/' . $userId,
             ['email' => $userEmail, 'password' => $userPass . 'update']
         );
         $this->assertSame($response->getStatusCode(), 200);
 
         // get user
         $response = $this->sendHttpRequest(
-            'GET', '/api/my-account/user/' . $userId
+            'GET', '/api/account/user/' . $userId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
@@ -89,7 +89,7 @@ class RestTest extends BaseApiCase
 
         // update user
         $response = $this->sendHttpRequest(
-            'DELETE', '/api/my-account/user/' . $userId
+            'DELETE', '/api/account/user/' . $userId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
@@ -97,7 +97,7 @@ class RestTest extends BaseApiCase
 
         // get user
         $response = $this->sendHttpRequest(
-            'GET', '/api/my-account/user/' . $userId
+            'GET', '/api/account/user/' . $userId
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
@@ -106,7 +106,7 @@ class RestTest extends BaseApiCase
 
         // get user exception
         $response = $this->sendHttpRequest(
-            'GET', '/api/my-account/user/' . '12312'
+            'GET', '/api/account/user/' . '12312'
         );
         $this->assertSame($response->getStatusCode(), 400);
         $rs = $this->responseDataArr();
@@ -114,7 +114,7 @@ class RestTest extends BaseApiCase
 
         // update user exception
         $response = $this->sendHttpRequest(
-            'PUT', '/api/my-account/user/' . '12312',
+            'PUT', '/api/account/user/' . '12312',
             ['email' => $userEmail]
         );
         $this->assertSame($response->getStatusCode(), 400);
@@ -123,7 +123,7 @@ class RestTest extends BaseApiCase
 
         // test user/me with token
         $this->sendHttpRequest(
-            'GET', '/api/my-account/user/me'
+            'GET', '/api/account/user/me'
         );
 
         // todo conditional based on jwt setting if enabled

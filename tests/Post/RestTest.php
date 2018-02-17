@@ -18,13 +18,14 @@ class RestTest extends BaseApiCase
         // insert post
         $response = $this->sendHttpRequest(
             'POST', '/api/post',
-            ['name' => 'post name', 'description' => 'post desc']
+            ['name' => 'post name', 'description' => 'post desc', 'testKey' => 'asdas']
         );
 
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertContains('post name', $rs['name']);
         $this->assertContains('post desc', $rs['description']);
+        $this->assertContains('testKey', $rs['asdas']);
 
         $postId = $rs[$idFieldName];
 

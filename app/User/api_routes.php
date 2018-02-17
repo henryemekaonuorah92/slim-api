@@ -1,6 +1,6 @@
 <?php
 /** @var \Slim\App $this */
-$this->group('/my-account', function () {
+$this->group('/account', function () {
 
     // get user from jwt
     $this->get('/user/me', \App\User\UserController::class . ":me");

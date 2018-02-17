@@ -12,8 +12,8 @@ $baseSetting = [
             'header' => 'authorization',
             'query' => 'token',
             'bypass' => [
-                'POST /api/my-account/user/register',
-                'POST /api/my-account/user/login',
+                'POST /api/account/user/register',
+                'POST /api/account/user/login',
                 'GET /api/ping',
             ]
         ],
