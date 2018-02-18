@@ -17,6 +17,9 @@ help:
 	@echo "    all                  Install dependencies and run linter and unit tests"
 	@echo ""
 
+mac-install-dep:
+	brew install php72 php72-igbinary php72-mongodb php72-xdebug php72-redis mongodb
+
 server:
 	php -S 0.0.0.0:3500 -t public
 
