@@ -119,10 +119,26 @@ return [
 You can set configuration by renaming the `.config.ini.dist` to `.config.ini`. And then update inside this file update the value of `ENV` to dev, prod. If you set the `ENV` value to `dev` then your application will use the configuration that are defined under `dev`.
 
 ```ini
+; For dev, change this value to dev and for production, change to prod
 ENV = local
-
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; base Configuration        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [local]
-settings.hello = world
+settings.jwt.enabled = true
+settings.jwt.secret = qwertyuiopasdfghjklzxcvbnm123456
+;
+settings.mongodb_default.uri = 'mongodb://mongodb:27017'
+settings.mongodb_default.database = 'contacts_api'
+settings.mongodb_default.driverOptions = '{"db": "admin", "authSource": "admin",  "connectTimeoutMS": 100}'
+;
+[dev:local]
+; Any values to override should go here
+; settings.mongodb_default.database = 'contacts_api'
+[prod:local]
+; Any values to override for prod should go here
+; settings.mongodb_default.database = 'contacts_api'
 ``` 
 
 Now you can access your configuration inside your app like this:
