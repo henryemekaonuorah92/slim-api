@@ -5,8 +5,8 @@
  * @return mixed
  *
  */
-$container['mongodb.default'] = function (\Slim\Container $container) {
-    $config = \App\Base\AppContainer::config('mongodb.default');
+$container['mongodb_default'] = function (\Slim\Container $container) {
+    $config = \App\Base\AppContainer::config('mongodb_default');
 
     $connection = new \App\Base\Db\MongoDBClient($container);
     $connection->addConnection([
@@ -14,9 +14,9 @@ $container['mongodb.default'] = function (\Slim\Container $container) {
         'database' => $config['database'],
         'uriOptions' => $config['uriOptions'],
         'driverOptions' => $config['driverOptions'],
-    ], 'mongodb.default');
+    ], 'mongodb_default');
 
-    return $connection->getConnection('mongodb.default');
+    return $connection->getConnection('mongodb_default');
 };
 
 // Add Event manager to dependency.

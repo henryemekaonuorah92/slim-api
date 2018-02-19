@@ -22,7 +22,7 @@ class MongoDBClient
      * @param string $name
      * @return $this
      */
-    public function addConnection(array $config, $name = 'mongodb.default')
+    public function addConnection(array $config, $name = 'mongodb_default')
     {
         $configKey = $name . '__config';
         $this->container[$configKey] = function () use ($config) {
@@ -35,7 +35,7 @@ class MongoDBClient
      * @param string $name
      * @return Client
      */
-    public function getConnection($name = 'mongodb.default')
+    public function getConnection($name = 'mongodb_default')
     {
         if (isset(self::$instances[$name])) {
             return self::$instances[$name];

@@ -1,6 +1,8 @@
 <?php
 
-$baseSetting = [
+$iniSettings = require __DIR__ . '/ini.settings.php';
+
+$settings = [
     'settings' => [
         // jwt config
         'jwt' => [
@@ -18,7 +20,7 @@ $baseSetting = [
             ]
         ],
         // mongodb configuration @link
-        'mongodb.default' => [
+        'mongodb_default' => [
             'uri' => 'mongodb://localhost:27017',
             'database' => 'db',
             'uriOptions' => [],
@@ -40,11 +42,4 @@ $baseSetting = [
     ]
 ];
 
-// require extra settings -- ignored file to extend your app
-$extraSetting = [];
-$extraSettingFile = __DIR__ . '/ext.settings.php';
-if (file_exists($extraSettingFile)) {
-    require_once $extraSettingFile;
-}
-
-return array_replace_recursive($baseSetting, $extraSetting);
+return array_replace_recursive($settings, $iniSettings);

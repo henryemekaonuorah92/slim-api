@@ -23,7 +23,7 @@ class MongoDB extends AbstractPersistent
     protected $container = null;
 
     /** @var string */
-    protected $_connectionName = 'mongodb.default';
+    protected $_connectionName = 'mongodb_default';
 
     /** @var string */
     protected $databaseName = '';
