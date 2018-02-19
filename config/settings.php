@@ -1,6 +1,8 @@
 <?php
 
-$iniSettings = require __DIR__ . '/ini.settings.php';
+$iniSettings = [
+    'settings' => require __DIR__ . '/ini.settings.php'
+];
 
 $settings = [
     'settings' => [

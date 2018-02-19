@@ -126,19 +126,20 @@ ENV = local
 ;; base Configuration        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [local]
-settings.jwt.enabled = true
-settings.jwt.secret = qwertyuiopasdfghjklzxcvbnm123456
+hello = world
+jwt.enabled = true
+jwt.secret = qwertyuiopasdfghjklzxcvbnm123456
 ;
-settings.mongodb_default.uri = 'mongodb://mongodb:27017'
-settings.mongodb_default.database = 'contacts_api'
-settings.mongodb_default.driverOptions = '{"db": "admin", "authSource": "admin",  "connectTimeoutMS": 100}'
+mongodb_default.uri = 'mongodb://mongodb:27017'
+mongodb_default.database = 'contacts_api'
+mongodb_default.driverOptions = '{"db": "admin", "authSource": "admin",  "connectTimeoutMS": 100}'
 ;
 [dev:local]
 ; Any values to override should go here
-; settings.mongodb_default.database = 'contacts_api'
+; mongodb_default.database = 'contacts_api'
 [prod:local]
 ; Any values to override for prod should go here
-; settings.mongodb_default.database = 'contacts_api'
+; mongodb_default.database = 'contacts_api'
 ``` 
 
 Now you can access your configuration inside your app like this:
@@ -146,6 +147,9 @@ Now you can access your configuration inside your app like this:
 ```php
 echo App\Base\AppContainer::config('hello'); 
 # world
+
+echo App\Base\AppContainer::config('jwt')['enabled'];
+# true 
 ```
 
 #### Creating a New Resource
