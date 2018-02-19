@@ -45,8 +45,4 @@ if (!isset($parsedConfig[$env])) {
     throw new RuntimeException("Configuration group `${env}` missing in the configuration file");
 }
 
-<<<<<<< HEAD
 return $parsedConfig[$env];
-=======
-return $parsedConfig[$env];
->>>>>>> 598ac2cb5d8739cf7bd5b727650272556c3e6c7d
