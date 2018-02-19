@@ -107,10 +107,10 @@ Out of the box slim-api supports MongoDB. So, to set up the connection with Mong
 
 ```php
 return [
-	'mongodb' => [
-	'uri'      => 'mongodb://localhost:27017',
-	'database' => 'blog', // Collection name
-	]
+    'mongodb' => [
+        'uri'      => 'mongodb://localhost:27017',
+        'database' => 'blog', // Collection name
+    ]
 ]
 ```
 
