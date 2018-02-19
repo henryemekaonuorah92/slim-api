@@ -107,10 +107,10 @@ Out of the box slim-api supports MongoDB. So, to set up the connection with Mong
 
 ```php
 return [
-	'mongodb' => [
-	'uri'      => 'mongodb://localhost:27017',
-	'database' => 'blog', // Collection name
-	]
+    'mongodb' => [
+        'uri'      => 'mongodb://localhost:27017',
+        'database' => 'blog', // Collection name
+    ]
 ]
 ```
 
@@ -249,23 +249,23 @@ class PostController extends RestController
 {
     protected $modelClass = PostModel::class;
 	
-	/**
-     * @param Request $request
-     * @param Response $response
-     * @param $args
-     * @return mixed
-     * @throws \Exception
-     */
-	public function insert(Request $request, Response $response, $args) {
-		// Create post and then retrieve it
-		$post = [
-		    "_id" 		  => "523b1153a2aa6a3233a91412",
-		    "description" => "Buzzfeed asked a bunch of people...",
-		    "title"       => "Cronut Mania: Buzzfeed asked a bunch of people...",
-		];
-
-		Event::emit('post.created', $post);
-	}
+    /**
+    * @param Request $request
+    * @param Response $response
+    * @param $args
+    * @return mixed
+    * @throws \Exception
+    */
+    public function insert(Request $request, Response $response, $args) {
+        // Create post and then retrieve it
+	$post = [
+            "_id"         => "523b1153a2aa6a3233a91412",
+            "description" => "Buzzfeed asked a bunch of people...",
+            "title"       => "Cronut Mania: Buzzfeed asked a bunch of people...",
+        ];
+	
+        Event::emit('post.created', $post);
+    }
 }
 ```
 
