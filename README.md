@@ -114,11 +114,13 @@ return [
 ]
 ```
 
-#### Override Configuration
+#### Configuration
 
-You can override the default configuration by creating a new file `.config.override.ini` at the root of the project and inside of it put your configuration like this:
+You can set configuration by renaming the `.config.ini.dist` to `.config.ini`. And then update inside this file update the value of `ENV` to dev, prod. If you set the `ENV` value to `dev` then your application will use the configuration that are defined under `dev`.
 
 ```ini
+ENV = local
+
 [local]
 settings.hello = world
 ``` 
