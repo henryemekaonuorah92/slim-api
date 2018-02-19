@@ -24,6 +24,7 @@
 </p>
 
 ## Features
+
 * API CRUD with MongoDB Collection persistence. " KIS & VS" "Keep It Simple and Very Stupid"
 * JWT Authentication
 * Middleware "CORS, JWT"
@@ -111,6 +112,22 @@ return [
 	'database' => 'blog', // Collection name
 	]
 ]
+```
+
+#### Override Configuration
+
+You can override the default configuration by creating a new file `.config.override.ini` at the root of the project and inside of it put your configuration like this:
+
+```ini
+[local]
+settings.hello = world
+``` 
+
+Now you can access your configuration inside your app like this:
+
+```php
+echo App\Base\AppContainer::config('hello'); 
+# world
 ```
 
 #### Creating a New Resource
