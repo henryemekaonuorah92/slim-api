@@ -3,11 +3,7 @@
 define('ROOT_DIR', __DIR__ . '/..');
 
 $overrideConfigFile = ROOT_DIR . '/.config.override.ini';
-$baseConfigFile     = ROOT_DIR . '/../config-files/all-api.config.ini';
-
-if (!file_exists($baseConfigFile)) {
-    $baseConfigFile = ROOT_DIR . '/.config.ini';
-}
+$baseConfigFile = ROOT_DIR . '/.config.ini';
 
 // Load the original configuration
 $originalConfig = file_get_contents($baseConfigFile);
@@ -17,11 +13,12 @@ if (file_exists($overrideConfigFile)) {
     $originalConfig = $originalConfig . PHP_EOL . file_get_contents($overrideConfigFile);
 }
 
-$parser = new IniParser();
+
+$parser = new \Ini\Parser();
 
 $parser->use_array_object        = false;
 $parser->ini_parse_option        = INI_SCANNER_TYPED;
-$parser->array_literals_behavior = IniParser::PARSE_JSON;
+$parser->array_literals_behavior = \Ini\Parser::PARSE_JSON;
 $parser->treat_ini_string        = true;
 
 $parsedConfig = $parser->parse($originalConfig);
