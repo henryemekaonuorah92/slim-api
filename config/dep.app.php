@@ -39,3 +39,9 @@ $container['event_manager'] = function (\Slim\Container $container) {
 
     return $emitter;
 };
+
+$extraDepFile = __DIR__ . '/ext.dep.php';
+if (file_exists($extraDepFile)) {
+    require_once $extraDepFile;
+}
+
