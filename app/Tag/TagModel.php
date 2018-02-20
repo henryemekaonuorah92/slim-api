@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Category;
+namespace App\Tag;
 
 use App\Base\Model\MongoDB;
 
@@ -12,8 +12,8 @@ use App\Base\Model\MongoDB;
  * @property string $updateAt
  * @package App\Base\Models
  */
-class CategoryModel extends MongoDB
+class TagModel extends MongoDB
 {
     /** @var string */
-    protected $collectionNAme = 'category';
+    protected $collectionNAme = 'tag';
 }
