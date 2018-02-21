@@ -2,7 +2,7 @@
 
 namespace Tests\User;
 
-use App\User\UserModel;
+use App\User\Model\UserModel;
 use Tests\Base\BaseApiCase;
 
 class RestTest extends BaseApiCase
@@ -14,8 +14,8 @@ class RestTest extends BaseApiCase
      */
     public function testUserFlow()
     {
-        $userEmail = rand(0, 1000000) . 'useremail@email.com';
-        $userPass = rand(0, 1000000) . 'usertestpass';
+        $userEmail   = rand(0, 1000000) . 'useremail@email.com';
+        $userPass    = rand(0, 1000000) . 'usertestpass';
         $idFieldName = (new UserModel())->getIdFieldName();
         // insert user
         $response = $this->sendHttpRequest(
@@ -28,7 +28,7 @@ class RestTest extends BaseApiCase
         $this->assertArrayHasKey('expire_at', $rs);
         $this->assertArrayHasKey('token', $rs);
         $userData = $rs;
-        $userId = $userData[$idFieldName];
+        $userId   = $userData[$idFieldName];
 
         // login wrong email
         $response = $this->sendHttpRequest(
@@ -56,10 +56,10 @@ class RestTest extends BaseApiCase
         );
 
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
+        $rs        = $this->responseDataArr();
         $userToken = $rs['token'];
 
-        $origJWTData = self::$jwtData;
+        $origJWTData   = self::$jwtData;
         self::$jwtData = ['token' => $userToken, 'user' => $userData];
 
 

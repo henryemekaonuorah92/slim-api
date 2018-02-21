@@ -2,7 +2,7 @@
 
 namespace Tests\Post;
 
-use App\Post\PostModel;
+use App\Post\Model\PostModel;
 use Tests\Base\BaseApiCase;
 
 class RestTest extends BaseApiCase
