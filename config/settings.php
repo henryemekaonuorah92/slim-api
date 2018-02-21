@@ -15,6 +15,8 @@ $baseSetting = [
                 'POST /api/account/user/register',
                 'POST /api/account/user/login',
                 'GET /api/ping',
+                'GET /api/posts',
+                'GET /api/tags'
             ]
         ],
         // mongodb configuration @link
