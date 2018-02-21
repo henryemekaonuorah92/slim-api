@@ -9,7 +9,7 @@ $this->get('/tags', \App\Tag\TagController::class . ":loadAll");
 $this->get('/tags/count', \App\Tag\TagController::class . ":count");
 
 // insert tag
-$this->map(['POST'], '/tag', \App\Tag\TagController::class . ":saveAndRetrieve");
+$this->map(['POST'], '/tag', \App\Tag\TagController::class . ":createTag");
 // get tag by id
 $this->get('/tag/{id:[A-Z0-9a-z]+}', \App\Tag\TagController::class . ":loadById");
 // update tag by id

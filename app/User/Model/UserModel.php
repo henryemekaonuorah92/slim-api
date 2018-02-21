@@ -1,6 +1,6 @@
 <?php
 
-namespace App\User;
+namespace App\User\Model;
 
 use App\Base\Helper\Password;
 use App\Base\Model\MongoDB;
@@ -14,7 +14,7 @@ use App\Base\Model\MongoDB;
 class UserModel extends MongoDB
 {
     /** @var string */
-    protected $collectionNAme = 'user';
+    protected $collectionName = 'user';
 
     /** @var array */
     protected $_rules = [

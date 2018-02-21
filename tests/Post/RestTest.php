@@ -18,14 +18,13 @@ class RestTest extends BaseApiCase
         // insert post
         $response = $this->sendHttpRequest(
             'POST', '/api/post',
-            ['name' => 'post name', 'description' => 'post desc', 'testKey' => 'asdas']
+            ['title' => 'post name', 'content' => 'post desc']
         );
 
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains('post name', $rs['name']);
-        $this->assertContains('post desc', $rs['description']);
-        $this->assertContains('asdas', $rs['testKey']);
+        $this->assertContains('post name', $rs['title']);
+        $this->assertContains('post desc', $rs['content']);
 
         $postId = $rs[$idFieldName];
 
@@ -38,7 +37,7 @@ class RestTest extends BaseApiCase
         $rs = $this->responseDataArr();
         $this->assertEquals(true, count($rs) >= 1);
         $this->assertEquals(true, is_array($rs[0]));
-        $this->assertEquals(true, is_string($rs[0]['name']));
+        $this->assertEquals(true, is_string($rs[0]['title']));
 
 
         // get post
@@ -48,17 +47,17 @@ class RestTest extends BaseApiCase
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertContains($postId, $rs[$idFieldName]);
-        $this->assertContains('post desc', $rs['description']);
+        $this->assertContains('post desc', $rs['content']);
 
         // update post
         $response = $this->sendHttpRequest(
             'PUT', '/api/post/' . $postId,
-            ['name' => 'post name update', 'description' => 'post desc update']
+            ['title' => 'post name update', 'content' => 'post desc update']
 
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains('post desc', $rs['description']);
+        $this->assertContains('post desc', $rs['content']);
 
         // get post
         $response = $this->sendHttpRequest(
@@ -67,7 +66,7 @@ class RestTest extends BaseApiCase
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertContains($postId, $rs[$idFieldName]);
-        $this->assertContains('post desc update', $rs['description']);
+        $this->assertContains('post desc update', $rs['content']);
 
         // delete post invalid id
         $response = $this->sendHttpRequest(
@@ -104,7 +103,7 @@ class RestTest extends BaseApiCase
         // update post exception
         $response = $this->sendHttpRequest(
             'PUT', '/api/post/' . '12312',
-            ['name' => 'post name update', 'description' => 'post desc update']
+            ['title' => 'post name update', 'content' => 'post desc update']
         );
         $this->assertSame($response->getStatusCode(), 400);
         $rs = $this->responseDataArr();

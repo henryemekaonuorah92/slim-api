@@ -7,6 +7,7 @@ use App\Base\Controller\RestController;
 use App\Base\Helper\Event;
 use App\Base\Helper\Jwt;
 use App\Base\Helper\Password;
+use App\User\Model\UserModel;
 use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -16,21 +17,24 @@ class UserController extends RestController
     protected $modelClass = UserModel::class;
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return mixed
      */
     public function me(Request $request, Response $response, $args)
     {
         $rs = AppContainer::config('jwtUser');
+
         return $response->withJson($rs);
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return mixed
      * @throws \Exception
      * @throws \Psr\Container\ContainerExceptionInterface
@@ -38,7 +42,7 @@ class UserController extends RestController
      */
     public function login(Request $request, Response $response, $args)
     {
-        $email = $request->getParsedBodyParam('email');
+        $email    = $request->getParsedBodyParam('email');
         $password = $request->getParsedBodyParam('password');
 
         $user = null;
@@ -60,9 +64,10 @@ class UserController extends RestController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -82,11 +87,11 @@ class UserController extends RestController
 
         $objId = new ObjectId();
         $this->model->setData($data)
-            ->setId($objId)
-            ->save();
+                    ->setId($objId)
+                    ->save();
 
         $user = $this->model->load($objId)
-            ->getStoredData();
+                            ->getStoredData();
 
         Event::emit('user.created', $user);
 
@@ -95,5 +100,10 @@ class UserController extends RestController
         $return = array_merge((array)$user, $token);
 
         return $response->withJson($return);
+    }
+
+    public static function getUser()
+    {
+        return AppContainer::config('jwtUser');
     }
 }

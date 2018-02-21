@@ -34,19 +34,18 @@ class RestController
     /** @var ContainerInterface */
     public $container = null;
 
-    /**
-     * @var Response
-     */
+    /** @var Response */
     public $response;
     /** @var Request */
+
     public $request;
 
     // constructor receives container instance
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->request = $this->container['request'];
-        $this->response = $this->container['response'];
-        $this->model = new $this->modelClass();
+        $this->request   = $this->container['request'];
+        $this->response  = $this->container['response'];
+        $this->model     = new $this->modelClass();
     }
 }

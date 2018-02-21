@@ -9,7 +9,7 @@ $this->get('/posts', \App\Post\PostController::class . ":loadAll");
 $this->get('/posts/count', \App\Post\PostController::class . ":count");
 
 // insert post
-$this->map(['POST'], '/post', \App\Post\PostController::class . ":saveAndRetrieve");
+$this->map(['POST'], '/post', \App\Post\PostController::class . ":createPost");
 // get post by id
 $this->get('/post/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":loadById");
 // update post by id

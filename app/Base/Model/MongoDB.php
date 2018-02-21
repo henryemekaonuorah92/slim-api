@@ -29,18 +29,18 @@ class MongoDB extends AbstractPersistent
     protected $databaseName = '';
 
     /** @var string */
-    protected $collectionNAme = '';
+    protected $collectionName = '';
 
     /**
      * @param null $connectionName
-     * @param null $collectionNAme
+     * @param null $collectionName
      * @return self|Collection
      */
-    public function __construct($connectionName = null, $collectionNAme = null)
+    public function __construct($connectionName = null, $collectionName = null)
     {
         $this->container = AppContainer::getContainer();
         $connectionName = $connectionName ?? $this->_connectionName;
-        $collectionNAme = $collectionNAme ?? $this->collectionNAme;
+        $collectionName = $collectionName ?? $this->collectionName;
         // init mongodb client
         $this->_dbClient = $this->container[$connectionName];
 
@@ -50,7 +50,7 @@ class MongoDB extends AbstractPersistent
 
         // assign db
         $databaseName = $config['database'];
-        $this->_resourceCollection = $this->_dbClient->{$databaseName}->{$collectionNAme};
+        $this->_resourceCollection = $this->_dbClient->{$databaseName}->{$collectionName};
         return $this;
     }
 
