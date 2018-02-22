@@ -4,7 +4,6 @@ namespace App\Tag;
 
 use App\Base\Controller\RestController;
 use App\Tag\Model\TagModel;
-use App\User\Model\UserTagModel;
 use App\User\UserController;
 use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
@@ -31,14 +30,10 @@ class TagController extends RestController
             'name'        => $request->getParsedBodyParam('name') ?? '',
             'description' => $request->getParsedBodyParam('description') ?? '',
             'color'       => $request->getParsedBodyParam('color') ?? '',
+            'user_id'     => UserController::getUser()['_id'],
         ])->setId($objId)->save();
 
         $tag = $this->model->load($objId)->getStoredData();
-
-        (new UserTagModel())->setData([
-            'user_id' => UserController::getUser()['_id'],
-            'tag_id'  => $tag->_id,
-        ])->save();
 
         return $response->withJson($tag);
     }

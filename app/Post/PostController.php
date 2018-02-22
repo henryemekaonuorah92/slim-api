@@ -5,8 +5,6 @@ namespace App\Post;
 use App\Base\Controller\RestController;
 use App\Post\Model\PostModel;
 use App\Post\Model\PostTagModel;
-use App\User\Model\UserPostModel;
-use App\User\UserController;
 use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -31,14 +29,10 @@ class PostController extends RestController
         $this->model->setData([
             'title'   => $request->getParsedBodyParam('title'),
             'content' => $request->getParsedBodyParam('content'),
+            'user_id' => $request->getParsedBodyParam('user_id')
         ])->setId($objId)->save();
 
         $post = $this->model->load($objId)->getStoredData();
-
-        (new UserPostModel())->setData([
-            'user_id' => UserController::getUser()['_id'],
-            'post_id' => $post->_id,
-        ])->save();
 
         $tags = explode(',', $request->getParsedBodyParam('tags'));
         foreach ($tags as $tagId) {
@@ -49,5 +43,13 @@ class PostController extends RestController
         }
 
         return $response->withJson($post);
+    }
+
+    public function getUserAllPosts(Request $request, Response $response, $args)
+    {
+        $userId = $args['user_id'];
+        $posts  = $this->model->getUserPosts($userId);
+
+        return $response->withJson($posts, 200);
     }
 }

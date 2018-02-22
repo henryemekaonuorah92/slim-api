@@ -16,3 +16,6 @@ $this->get('/post/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":loadBy
 $this->put('/post/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":updateAndRetrieve");
 // delete post by id
 $this->delete('/post/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":deleteById");
+
+// Get user posts
+$this->get('/user/{user_id:[A-Z0-9a-z]+}/posts', \App\Post\PostController::class . ":getUserAllPosts");

@@ -22,4 +22,13 @@ class PostModel extends MongoDB
         'title'   => ['required'],
         'content' => ['required'],
     ];
+
+    public function getUserPosts(string $userId)
+    {
+        $posts = $this->getResourceCollection()->find([
+            'user_id' => $userId,
+        ])->toArray();
+
+        return $posts;
+    }
 }
