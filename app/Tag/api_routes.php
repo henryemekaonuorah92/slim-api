@@ -4,7 +4,7 @@
 
 ### REST API
 // list all tags
-$this->get('/tags', \App\Tag\TagController::class . ":loadAll");
+$this->get('/tags', \App\Tag\TagController::class . ":getAllTags");
 // get count all tags
 $this->get('/tags/count', \App\Tag\TagController::class . ":count");
 

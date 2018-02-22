@@ -89,50 +89,10 @@ class PostModel extends MongoDB
         ])->toArray();
 
         // populate user details inside each post
-        $posts = $this->populateUserDetail($posts);
+        $posts = UserModel::populateUserDetail($posts);
 
         $pagination = new PaginationHelper();
 
         return $pagination->paginate($posts, $total, $limit, $page);
-    }
-
-    /**
-     * @param array $posts
-     *
-     * @return array
-     */
-    public function populateUserDetail(array $posts): array
-    {
-        $userIds = array_column($posts, 'user_id');
-
-        $userObjIds = array_map(function ($userId) {
-            return new ObjectId($userId);
-        }, $userIds);
-
-        $userModel = new UserModel();
-        $users     = $userModel->getResourceCollection()->find([
-            '_id' => [
-                '$in' => $userObjIds,
-            ],
-        ], [
-            'projection' => [
-                '_id'        => 1,
-                'email'      => 1,
-                'first_name' => 1,
-                'last_name'  => 1,
-            ],
-        ])->toArray();
-
-        // transform users key by user_id
-        $usersKeyBy = [];
-        foreach ($users as $user) {
-            $usersKeyBy[$user['_id']] = $user;
-        }
-
-        foreach ($posts as &$post) {
-            $post['user_detail'] = $usersKeyBy[$post['user_id']] ?? [];
-        }
-
-        return $posts;
     }
 }
