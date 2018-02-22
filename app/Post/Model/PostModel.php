@@ -195,9 +195,13 @@ class PostModel extends MongoDB
      *
      * @param string $postId
      */
-    public function getPost(string $postId): array
+    public function getPost(string $postId)
     {
-        $postObjIds = new ObjectId($postId);
+        try {
+            $postObjIds = new ObjectId($postId);
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Not a valid object id.');
+        }
 
         $postDetails = $this->getResourceCollection()->find([
             '_id' => $postObjIds
@@ -206,6 +210,6 @@ class PostModel extends MongoDB
         $postDetails = $this->populateUserDetail($postDetails);
         $postDetails = $this->populateTagDetail($postDetails);
 
-        return $postDetails;
+        return (array)$postDetails;
     }
 }

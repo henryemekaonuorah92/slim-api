@@ -46,8 +46,8 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($postId, $rs[$idFieldName]);
-        $this->assertContains('post desc', $rs['content']);
+        $this->assertContains($postId, $rs[0][$idFieldName]);
+        $this->assertContains('post desc', $rs['0']['content']);
 
         // update post
         $response = $this->sendHttpRequest(
@@ -65,8 +65,8 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertContains($postId, $rs[$idFieldName]);
-        $this->assertContains('post desc update', $rs['content']);
+        $this->assertContains($postId, $rs[0][$idFieldName]);
+        $this->assertContains('post desc update', $rs[0]['content']);
 
         // delete post invalid id
         $response = $this->sendHttpRequest(
@@ -90,15 +90,15 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertEquals(null, $rs);
+        $this->assertTrue(empty($rs));
 
         // get post exception
         $response = $this->sendHttpRequest(
             'GET', '/api/post/' . '12312'
         );
-        $this->assertSame($response->getStatusCode(), 400);
+        $this->assertSame($response->getStatusCode(), 500);
         $rs = $this->responseDataArr();
-        $this->assertEquals('Invalid ID', $rs['message']);
+        $this->assertEquals('Not a valid object id.', $rs['message']);
 
         // update post exception
         $response = $this->sendHttpRequest(

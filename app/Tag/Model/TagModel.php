@@ -74,13 +74,28 @@ class TagModel extends MongoDB
             return new ObjectId($tagId);
         }, $tagIds);
 
-        $tagModel   = new TagModel();
-        $tagDetails = $tagModel->getResourceCollection()->find([
+        $tagDetails = $this->getResourceCollection()->find([
             '_id' => [
                 '$in' => $tagObjIds,
             ],
         ])->toArray();
 
         return $tagDetails;
+    }
+
+    /**
+     * Get all tags that are created by a user.
+     *
+     * @param string $userId
+     *
+     * @return array
+     */
+    public function getUserTags(string $userId): array
+    {
+        $tag = $this->getResourceCollection()->find([
+            'user_id' => $userId,
+        ])->toArray();
+
+        return $tag;
     }
 }
