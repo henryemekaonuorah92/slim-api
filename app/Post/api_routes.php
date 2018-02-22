@@ -4,7 +4,7 @@
 
 ### REST API
 // list all posts
-$this->get('/posts', \App\Post\PostController::class . ":loadAll");
+$this->get('/posts', \App\Post\PostController::class . ":getAllPosts");
 // get count all posts
 $this->get('/posts/count', \App\Post\PostController::class . ":count");
 

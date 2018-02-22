@@ -5,7 +5,6 @@ namespace App\Post;
 use App\Base\Controller\RestController;
 use App\Post\Model\PostModel;
 use App\Post\Model\PostTagModel;
-use MongoDB\BSON\ObjectId;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -25,21 +24,11 @@ class PostController extends RestController
      */
     public function createPost(Request $request, Response $response, $args)
     {
-        $objId = new ObjectId();
-        $this->model->setData([
-            'title'   => $request->getParsedBodyParam('title'),
-            'content' => $request->getParsedBodyParam('content'),
-            'user_id' => $request->getParsedBodyParam('user_id')
-        ])->setId($objId)->save();
-
-        $post = $this->model->load($objId)->getStoredData();
+        $post = $this->model->createPost($request);
 
         $tags = explode(',', $request->getParsedBodyParam('tags'));
         foreach ($tags as $tagId) {
-            (new PostTagModel())->setData([
-                'post_id' => $post->_id,
-                'tag_id'  => trim($tagId),
-            ])->save();
+            (new PostTagModel())->createPostTags($post->_id, $tagId);
         }
 
         return $response->withJson($post);
@@ -51,5 +40,17 @@ class PostController extends RestController
         $posts  = $this->model->getUserPosts($userId);
 
         return $response->withJson($posts, 200);
+    }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     */
+    public function getAllPosts(Request $request, Response $response, $args)
+    {
+        $params = $request->getParams();
+
+        return $response->withJson($this->model->getAllPosts($params));
     }
 }
