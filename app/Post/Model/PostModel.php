@@ -27,7 +27,7 @@ class PostModel extends MongoDB
     /** @var array */
     protected $_rules = [
         'title'   => ['required'],
-        'content' => ['required']
+        'content' => ['required'],
     ];
 
     public function getUserPosts(string $userId)
@@ -100,6 +100,11 @@ class PostModel extends MongoDB
         return $pagination->paginate($posts, $total, $limit, $page);
     }
 
+    /**
+     * @param array $posts
+     *
+     * @return array
+     */
     public function populateTagDetail(array $posts): array
     {
         $postIds = array_column($posts, '_id');
@@ -183,5 +188,24 @@ class PostModel extends MongoDB
         }
 
         return $posts;
+    }
+
+    /**
+     * Get a post by its id.
+     *
+     * @param string $postId
+     */
+    public function getPost(string $postId): array
+    {
+        $postObjIds = new ObjectId($postId);
+
+        $postDetails = $this->getResourceCollection()->find([
+            '_id' => $postObjIds
+        ])->toArray();
+
+        $postDetails = $this->populateUserDetail($postDetails);
+        $postDetails = $this->populateTagDetail($postDetails);
+
+        return $postDetails;
     }
 }

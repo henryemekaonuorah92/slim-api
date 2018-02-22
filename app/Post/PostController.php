@@ -55,4 +55,16 @@ class PostController extends RestController
 
         return $response->withJson($this->model->getAllPosts($params));
     }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     */
+    public function getPost(Request $request, Response $response, $args)
+    {
+        $post = $this->model->getPost($args['post_id']);
+
+        return $response->withJson($post);
+    }
 }

@@ -11,7 +11,7 @@ $this->get('/posts/count', \App\Post\PostController::class . ":count");
 // insert post
 $this->map(['POST'], '/post', \App\Post\PostController::class . ":createPost");
 // get post by id
-$this->get('/post/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":loadById");
+$this->get('/post/{post_id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":getPost");
 // update post by id
 $this->put('/post/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":updateAndRetrieve");
 // delete post by id
