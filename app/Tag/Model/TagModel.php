@@ -5,6 +5,7 @@ namespace App\Tag\Model;
 use App\Base\Helper\PaginationHelper;
 use App\Base\Model\MongoDB;
 use App\User\Model\UserModel;
+use MongoDB\BSON\ObjectId;
 
 /**
  * Class TagModel
@@ -60,5 +61,26 @@ class TagModel extends MongoDB
         $pagination = new PaginationHelper();
 
         return $pagination->paginate($tags, $total, $limit, $page);
+    }
+
+    /**
+     * @param array $tagIds
+     *
+     * @return array
+     */
+    public function getTagByIds(array $tagIds): array
+    {
+        $tagObjIds = array_map(function ($tagId) {
+            return new ObjectId($tagId);
+        }, $tagIds);
+
+        $tagModel   = new TagModel();
+        $tagDetails = $tagModel->getResourceCollection()->find([
+            '_id' => [
+                '$in' => $tagObjIds,
+            ],
+        ])->toArray();
+
+        return $tagDetails;
     }
 }

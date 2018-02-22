@@ -27,8 +27,8 @@ class PostTagModel extends MongoDB
     public function createPostTags(string $postId, string $tagId): void
     {
         $this->setData([
-            'post_id' => $postId,
-            'tag_id'  => trim($tagId),
+            'post_id' => $postId ?? '',
+            'tag_id'  => trim($tagId) ?? '',
         ])->save();
     }
 }

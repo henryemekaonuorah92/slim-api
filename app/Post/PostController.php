@@ -26,9 +26,11 @@ class PostController extends RestController
     {
         $post = $this->model->createPost($request);
 
-        $tags = explode(',', $request->getParsedBodyParam('tags'));
-        foreach ($tags as $tagId) {
-            (new PostTagModel())->createPostTags($post->_id, $tagId);
+        if (!is_null($request->getParsedBodyParam('tags'))) {
+            $tags = explode(',', $request->getParsedBodyParam('tags'));
+            foreach ($tags as $tagId) {
+                (new PostTagModel())->createPostTags($post->_id, $tagId);
+            }
         }
 
         return $response->withJson($post);

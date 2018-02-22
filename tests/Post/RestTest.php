@@ -36,8 +36,8 @@ class RestTest extends BaseApiCase
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
         $this->assertEquals(true, count($rs) >= 1);
-        $this->assertEquals(true, is_array($rs[0]));
-        $this->assertEquals(true, is_string($rs[0]['title']));
+        $this->assertEquals(true, is_array($rs['data'][0]));
+        $this->assertEquals(true, is_string($rs['data'][0]['title']));
 
 
         // get post

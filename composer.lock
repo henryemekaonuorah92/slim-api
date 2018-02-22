@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "13ace56d4c099b953e08aa0cf7706f8a",
+    "content-hash": "6bb2f52ec7f3a579967f00b932d43730",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -132,6 +132,53 @@
                 "listener"
             ],
             "time": "2015-05-21T12:24:47+00:00"
+        },
+        {
+            "name": "me-io/php-lodash",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/me-io/php-lodash.git",
+                "reference": "3c1618b4c0b18bd9cc6be69cf143934a0af5a766"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/me-io/php-lodash/zipball/3c1618b4c0b18bd9cc6be69cf143934a0af5a766",
+                "reference": "3c1618b4c0b18bd9cc6be69cf143934a0af5a766",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "^1",
+                "overtrue/phplint": "^1",
+                "phpunit/phpunit": "^6",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/__.php"
+                ],
+                "psr-4": {
+                    "__\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A full-on PHP manipulation utility-belt that provides support for the usual functional.",
+            "keywords": [
+                "__",
+                "bottomline",
+                "functions",
+                "library",
+                "lodash",
+                "utility"
+            ],
+            "time": "2018-02-18T09:37:50+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -2105,16 +2152,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.2.2",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1"
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4842476c434e375f9d3182ff7b89059583aa8b27",
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27",
                 "shasum": ""
             },
             "require": {
@@ -2124,7 +2171,7 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "bin": [
                 "bin/phpcs",
@@ -2152,7 +2199,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-12-19T21:44:46+00:00"
+            "time": "2018-02-20T21:35:23+00:00"
         },
         {
             "name": "symfony/console",
