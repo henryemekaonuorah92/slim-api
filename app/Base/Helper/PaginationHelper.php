@@ -28,7 +28,7 @@ class PaginationHelper
      *
      * @return array
      */
-    public function paginate(array $items, int $totalItems, int $itemsPerPage, ?int $currentPage = null, array $meta = []): array
+    public function paginate(array $items, int $totalItems, int $itemsPerPage, $currentPage = null, array $meta = []): array
     {
         $this->items        = $items;
         $this->totalItems   = (int)$totalItems;
