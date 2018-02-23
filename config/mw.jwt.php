@@ -1,6 +1,5 @@
 <?php
 
-
 $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, $next) {
 
     $enabled = \App\Base\AppContainer::config('jwt')['enabled'] ?? true;
