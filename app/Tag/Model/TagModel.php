@@ -28,14 +28,9 @@ class TagModel extends MongoDB
         'color' => ['required'],
     ];
 
-    public function getAllTags()
+    public function getAllTags(string $query = null)
     {
-        $limit = (int)($filters['limit'] ?? 10);
-        $page  = (int)($filters['page'] ?? 1);
-        $skip  = ($page - 1) * $limit;
-        $sort  = ['created_at' => -1];
-
-        $searchTerm = $filters['query'] ?? '';
+        $searchTerm = $query ?? '';
 
         $finalFilters = [];
 
@@ -49,18 +44,12 @@ class TagModel extends MongoDB
         }
 
         $total = $this->getResourceCollection()->count($finalFilters);
-        $tags  = $this->getResourceCollection()->find($finalFilters, [
-            'limit' => $limit,
-            'skip'  => $skip,
-            'sort'  => $sort,
-        ])->toArray();
+        $tags  = $this->getResourceCollection()->find($finalFilters)->toArray();
 
         // populate user details inside each post
         $tags = UserModel::populateUserDetail($tags);
 
-        $pagination = new PaginationHelper();
-
-        return $pagination->paginate($tags, $total, $limit, $page);
+        return $tags;
     }
 
     /**

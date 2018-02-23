@@ -45,7 +45,8 @@ class TagController extends RestController
      */
     public function getAllTags(Request $request, Response $response, $args)
     {
-        $tags = $this->model->getAllTags();
+        $query = $request->getParam('q');
+        $tags = $this->model->getAllTags($query);
 
         return $response->withJson($tags, 200);
     }
