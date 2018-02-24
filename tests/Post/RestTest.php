@@ -82,7 +82,7 @@ class RestTest extends BaseApiCase
         );
         $this->assertSame($response->getStatusCode(), 200);
         $rs = $this->responseDataArr();
-        $this->assertEquals(1, $rs['ok']);
+        $this->assertEquals(true, $rs['deleted']);
 
         // get post
         $response = $this->sendHttpRequest(
