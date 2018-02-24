@@ -43,7 +43,6 @@ class TagModel extends MongoDB
             ];
         }
 
-        $total = $this->getResourceCollection()->count($finalFilters);
         $tags  = $this->getResourceCollection()->find($finalFilters)->toArray();
 
         // populate user details inside each post

@@ -19,16 +19,30 @@ class PostTagModel extends MongoDB
     /**
      * Post can contains many tags.
      *
-     * @param string $postId
      * @param string $tagId
      *
      * @throws \Exception
      */
-    public function createPostTags(string $postId, string $tagId): void
+    public function createPostTags($postId, string $tagId): void
     {
         $this->setData([
             'post_id' => $postId ?? '',
-            'tag_id'  => trim($tagId) ?? '',
+            'tag_id'  => $tagId ?? '',
         ])->save();
+    }
+
+    /**
+     * @param $postId
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    public function deletePostTags($postId): bool
+    {
+        $this->getResourceCollection()->deleteMany([
+            'post_id' => $postId,
+        ]);
+
+        return true;
     }
 }
