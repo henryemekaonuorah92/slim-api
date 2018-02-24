@@ -29,7 +29,7 @@ class PostController extends RestController
         if (!is_null($request->getParsedBodyParam('tags'))) {
             $tags = $request->getParsedBodyParam('tags');
             foreach ($tags as $tagId) {
-                (new PostTagModel())->createPostTags($post->_id, $tagId);
+                (new PostTagModel())->createPostTags($post->_id, $tagId['_id']);
             }
         }
 
@@ -90,6 +90,25 @@ class PostController extends RestController
     {
         $post = $this->model->getPost($args['post_id']);
 
-        return $response->withJson($post);
+        return $response->withJson($post, 200);
+    }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     *
+     * @throws \Exception
+     */
+    public function deletePost(Request $request, Response $response, $args)
+    {
+        $postId = $args['post_id'];
+
+        $this->model->deletePost($postId);
+        (new PostTagModel())->deletePostTags($postId);
+
+        return $response->withJson([
+            'deleted' => true,
+        ], 200);
     }
 }

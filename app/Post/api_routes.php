@@ -15,7 +15,7 @@ $this->get('/post/{post_id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":g
 // update post by id
 $this->put('/post/{post_id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":updatePost");
 // delete post by id
-$this->delete('/post/{id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":deleteById");
+$this->delete('/post/{post_id:[A-Z0-9a-z]+}', \App\Post\PostController::class . ":deletePost");
 
 // Get user posts
 $this->get('/user/{user_id:[A-Z0-9a-z]+}/posts', \App\Post\PostController::class . ":getUserAllPosts");

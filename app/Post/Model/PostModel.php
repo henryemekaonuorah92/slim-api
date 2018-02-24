@@ -231,4 +231,15 @@ class PostModel extends MongoDB
 
         return $rs;
     }
+
+    /**
+     * @param $postId
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function deletePost($postId)
+    {
+        return $this->delete($postId);
+    }
 }
