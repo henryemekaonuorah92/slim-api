@@ -135,16 +135,16 @@
         },
         {
             "name": "me-io/php-lodash",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/me-io/php-lodash.git",
-                "reference": "3c1618b4c0b18bd9cc6be69cf143934a0af5a766"
+                "reference": "0cf27ca627de310cdd37066234823f6b347e5469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/me-io/php-lodash/zipball/3c1618b4c0b18bd9cc6be69cf143934a0af5a766",
-                "reference": "3c1618b4c0b18bd9cc6be69cf143934a0af5a766",
+                "url": "https://api.github.com/repos/me-io/php-lodash/zipball/0cf27ca627de310cdd37066234823f6b347e5469",
+                "reference": "0cf27ca627de310cdd37066234823f6b347e5469",
                 "shasum": ""
             },
             "require": {
@@ -178,7 +178,7 @@
                 "lodash",
                 "utility"
             ],
-            "time": "2018-02-18T09:37:50+00:00"
+            "time": "2018-02-25T10:58:10+00:00"
         },
         {
             "name": "mongodb/mongodb",
