@@ -3,6 +3,7 @@
 namespace App\Tag;
 
 use App\Base\Controller\RestController;
+use App\Post\Model\PostTagModel;
 use App\Tag\Model\TagModel;
 use App\User\UserController;
 use MongoDB\BSON\ObjectId;
@@ -45,7 +46,8 @@ class TagController extends RestController
      */
     public function getAllTags(Request $request, Response $response, $args)
     {
-        $tags = $this->model->getAllTags();
+        $query = $request->getParam('q');
+        $tags = $this->model->getAllTags($query);
 
         return $response->withJson($tags, 200);
     }
@@ -60,5 +62,37 @@ class TagController extends RestController
         $tags = $this->model->getUserTags($args['user_id']);
 
         return $response->withJson($tags, 200);
+    }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     */
+    public function getTagPosts(Request $request, Response $response, $args)
+    {
+        $params = $request->getParams();
+        $posts = $this->model->getTagPosts($args['tag_id'], $params);
+
+        return $response->withJson($posts, 200);
+    }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     *
+     * @throws \Exception
+     */
+    public function deleteTag(Request $request, Response $response, $args)
+    {
+        $tagId = $args['tag_id'];
+
+        $this->model->deleteTag($tagId);
+        (new PostTagModel())->deleteTagPosts($tagId);
+
+        return $response->withJson([
+            'deleted' => true,
+        ], 200);
     }
 }

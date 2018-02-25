@@ -12,9 +12,9 @@ $baseSetting = [
             'header' => 'authorization',
             'query' => 'token',
             'bypass' => [
-                'POST /api/account/user/register',
-                'POST /api/account/user/login',
-                'GET /api/ping',
+                'POST /\/api\/account\/user\/register/',
+                'POST /\/api\/account\/user\/login/',
+                'GET /\/api\/ping/',
             ]
         ],
         // mongodb configuration @link

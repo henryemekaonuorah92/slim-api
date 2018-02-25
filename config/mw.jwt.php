@@ -23,7 +23,7 @@ $app->add(function (\Slim\Http\Request $request, \Slim\Http\Response $response, 
 
         $method = strtolower($method);
 
-        if ($path == $currentPath && $method == $currentMethod) {
+        if (preg_match($path, $currentPath) && $method == $currentMethod) {
             return $response = $next($request, $response);
         }
     }

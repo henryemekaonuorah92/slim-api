@@ -170,10 +170,10 @@ class PostModel extends MongoDB
             ],
         ], [
             'projection' => [
-                '_id'        => 1,
-                'email'      => 1,
-                'first_name' => 1,
-                'last_name'  => 1,
+                '_id'       => 1,
+                'email'     => 1,
+                'firstname' => 1,
+                'lastname'  => 1,
             ],
         ])->toArray();
 
@@ -204,12 +204,42 @@ class PostModel extends MongoDB
         }
 
         $postDetails = $this->getResourceCollection()->find([
-            '_id' => $postObjIds
+            '_id' => $postObjIds,
         ])->toArray();
 
         $postDetails = $this->populateUserDetail($postDetails);
         $postDetails = $this->populateTagDetail($postDetails);
 
         return (array)$postDetails;
+    }
+
+    /**
+     * @param string             $postId
+     * @param \Slim\Http\Request $request
+     *
+     * @throws \Exception
+     */
+    public function updatePost($postId, Request $request)
+    {
+        $this->setData([
+            'title'   => $request->getParsedBodyParam('title'),
+            'content' => $request->getParsedBodyParam('content'),
+        ])->update($postId);
+
+        $rs = $this->load($postId)
+                   ->getStoredData();
+
+        return $rs;
+    }
+
+    /**
+     * @param $postId
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function deletePost($postId)
+    {
+        return $this->delete($postId);
     }
 }

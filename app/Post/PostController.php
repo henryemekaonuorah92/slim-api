@@ -27,9 +27,34 @@ class PostController extends RestController
         $post = $this->model->createPost($request);
 
         if (!is_null($request->getParsedBodyParam('tags'))) {
-            $tags = explode(',', $request->getParsedBodyParam('tags'));
+            $tags = $request->getParsedBodyParam('tags');
             foreach ($tags as $tagId) {
-                (new PostTagModel())->createPostTags($post->_id, $tagId);
+                (new PostTagModel())->createPostTags($post->_id, $tagId['_id']);
+            }
+        }
+
+        return $response->withJson($post);
+    }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     *
+     * @throws \Exception
+     */
+    public function updatePost(Request $request, Response $response, $args)
+    {
+        $postId = $args['post_id'];
+        $post   = $this->model->updatePost($postId, $request);
+
+        if (!is_null($request->getParsedBodyParam('tags'))) {
+            $tags = $request->getParsedBodyParam('tags');
+            (new PostTagModel())->deletePostTags($post->_id);
+
+            foreach ($tags as $tagId) {
+                $postModel = new PostTagModel();
+                $postModel->createPostTags($post->_id, $tagId['_id']);
             }
         }
 
@@ -65,6 +90,25 @@ class PostController extends RestController
     {
         $post = $this->model->getPost($args['post_id']);
 
-        return $response->withJson($post);
+        return $response->withJson($post, 200);
+    }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     *
+     * @throws \Exception
+     */
+    public function deletePost(Request $request, Response $response, $args)
+    {
+        $postId = $args['post_id'];
+
+        $this->model->deletePost($postId);
+        (new PostTagModel())->deletePostTags($postId);
+
+        return $response->withJson([
+            'deleted' => true,
+        ], 200);
     }
 }
