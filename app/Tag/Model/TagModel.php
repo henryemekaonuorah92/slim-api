@@ -183,4 +183,15 @@ class TagModel extends MongoDB
 
         return $posts;
     }
+
+    /**
+     * @param string $tagId
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function deleteTag(string $tagId)
+    {
+        return $this->delete($tagId);
+    }
 }

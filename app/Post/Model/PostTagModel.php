@@ -45,4 +45,19 @@ class PostTagModel extends MongoDB
 
         return true;
     }
+
+    /**
+     * @param $postId
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    public function deleteTagPosts($tagId): bool
+    {
+        $this->getResourceCollection()->deleteMany([
+            'tag_id' => $tagId,
+        ]);
+
+        return true;
+    }
 }
