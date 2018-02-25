@@ -62,4 +62,17 @@ class TagController extends RestController
 
         return $response->withJson($tags, 200);
     }
+
+    /**
+     * @param \Slim\Http\Request  $request
+     * @param \Slim\Http\Response $response
+     * @param                     $args
+     */
+    public function getTagPosts(Request $request, Response $response, $args)
+    {
+        $params = $request->getParams();
+        $posts = $this->model->getTagPosts($args['tag_id'], $params);
+
+        return $response->withJson($posts, 200);
+    }
 }

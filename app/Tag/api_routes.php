@@ -18,3 +18,5 @@ $this->put('/tag/{id:[A-Z0-9a-z]+}', \App\Tag\TagController::class . ":updateAnd
 $this->delete('/tag/{id:[A-Z0-9a-z]+}', \App\Tag\TagController::class . ":deleteById");
 
 $this->get('/user/{user_id:[A-Z0-9a-z]+}/tags', \App\Tag\TagController::class . ":getUserAllTags");
+
+$this->get('/tag/{tag_id:[A-Z0-9a-z]+}/posts', \App\Tag\TagController::class . ":getTagPosts");
