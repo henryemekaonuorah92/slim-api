@@ -45,7 +45,7 @@ class RestTest extends BaseApiCase
 
         $postId = $res[$this->idFieldName];
 
-        // Get all post
+        // Get all posts
         $response = $this->sendHttpRequest('GET', '/api/posts');
         $this->assertSame($response->getStatusCode(), 200);
         $res = $this->responseDataArr()['data'][0];
@@ -55,7 +55,7 @@ class RestTest extends BaseApiCase
 
 
         // Get post
-        $response = $this->sendHttpRequest('GET', '/api/post/' . $postId);
+        $response = $this->sendHttpRequest('GET', "/api/post/{$postId}");
         $this->assertSame($response->getStatusCode(), 200);
         $res = $this->responseDataArr()[0];
         $this->assertContains($postId, $res[$this->idFieldName]);
@@ -69,8 +69,8 @@ class RestTest extends BaseApiCase
         $response = $this->sendHttpRequest('PUT', "/api/post/{$postId}", $updatePostData);
         $this->assertSame($response->getStatusCode(), 200);
         $res = $this->responseDataArr();
-        $this->assertEquals('post title update', $res['title']);
-        $this->assertEquals('post content update', $res['content']);
+        $this->assertEquals($updatePostData['title'], $res['title']);
+        $this->assertEquals($updatePostData['content'], $res['content']);
 
         // Get post
         $response = $this->sendHttpRequest('GET', "/api/post/{$postId}");
