@@ -8,106 +8,105 @@ use Tests\Base\BaseApiCase;
 class RestTest extends BaseApiCase
 {
     /**
+     * @var \App\Post\Model\PostModel $model
+     */
+    private $model;
+
+    /**
+     * @var array
+     */
+    private $examplePost = [
+        'title'   => 'post name',
+        'content' => 'post desc',
+
+    ];
+
+    private $idFieldName;
+
+    public function setUp()
+    {
+        $this->model       = new PostModel();
+        $this->idFieldName = $this->model->getIdFieldName();
+    }
+
+    /**
      * @throws \Exception
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
     public function testPostFlow()
     {
-        $idFieldName = (new PostModel())->getIdFieldName();
-        // insert post
-        $response = $this->sendHttpRequest(
-            'POST', '/api/post',
-            ['title' => 'post name', 'content' => 'post desc']
-        );
-
+        // Insert post
+        $response = $this->sendHttpRequest('POST', '/api/post', $this->examplePost);
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
-        $this->assertContains('post name', $rs['title']);
-        $this->assertContains('post desc', $rs['content']);
+        $res = $this->responseDataArr();
+        $this->assertEquals($this->examplePost['title'], $res['title']);
+        $this->assertEquals($this->examplePost['content'], $res['content']);
 
-        $postId = $rs[$idFieldName];
+        $postId = $res[$this->idFieldName];
 
-
-        // get all post
-        $response = $this->sendHttpRequest(
-            'GET', '/api/posts'
-        );
+        // Get all posts
+        $response = $this->sendHttpRequest('GET', '/api/posts');
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
-        $this->assertEquals(true, count($rs) >= 1);
-        $this->assertEquals(true, is_array($rs['data'][0]));
-        $this->assertEquals(true, is_string($rs['data'][0]['title']));
+        $res = $this->responseDataArr()['data'][0];
+        $this->assertTrue(is_array($res));
+        $this->assertEquals($this->examplePost['title'], $res['title']);
+        $this->assertEquals($this->examplePost['content'], $res['content']);
 
 
-        // get post
-        $response = $this->sendHttpRequest(
-            'GET', '/api/post/' . $postId
-        );
+        // Get post
+        $response = $this->sendHttpRequest('GET', "/api/post/{$postId}");
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
-        $this->assertContains($postId, $rs[0][$idFieldName]);
-        $this->assertContains('post desc', $rs['0']['content']);
+        $res = $this->responseDataArr()[0];
+        $this->assertContains($postId, $res[$this->idFieldName]);
+        $this->assertContains('post desc', $res['content']);
 
-        // update post
-        $response = $this->sendHttpRequest(
-            'PUT', '/api/post/' . $postId,
-            ['title' => 'post name update', 'content' => 'post desc update']
-
-        );
+        // Update post
+        $updatePostData = [
+            'title'   => 'post title update',
+            'content' => 'post content update',
+        ];
+        $response = $this->sendHttpRequest('PUT', "/api/post/{$postId}", $updatePostData);
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
-        $this->assertContains('post desc', $rs['content']);
+        $res = $this->responseDataArr();
+        $this->assertEquals($updatePostData['title'], $res['title']);
+        $this->assertEquals($updatePostData['content'], $res['content']);
 
-        // get post
-        $response = $this->sendHttpRequest(
-            'GET', '/api/post/' . $postId
-        );
+        // Get post
+        $response = $this->sendHttpRequest('GET', "/api/post/{$postId}");
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
-        $this->assertContains($postId, $rs[0][$idFieldName]);
-        $this->assertContains('post desc update', $rs[0]['content']);
+        $res = $this->responseDataArr()[0];
+        $this->assertContains($postId, $res[$this->idFieldName]);
+        $this->assertContains($updatePostData['content'], $res['content']);
 
-        // delete post invalid id
-        $response = $this->sendHttpRequest(
-            'DELETE', '/api/post/' . '12312312'
-        );
+        // Delete post invalid id
+        $response = $this->sendHttpRequest('DELETE', '/api/post/12312312');
         $this->assertSame($response->getStatusCode(), 400);
-        $rs = $this->responseDataArr();
-        $this->assertEquals('Invalid ID', $rs['message']);
+        $res = $this->responseDataArr();
+        $this->assertEquals('Invalid ID', $res['message']);
 
-        // delete post
-        $response = $this->sendHttpRequest(
-            'DELETE', '/api/post/' . $postId
-        );
+        // Delete post
+        $response = $this->sendHttpRequest('DELETE', "/api/post/{$postId}");
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
-        $this->assertEquals(true, $rs['deleted']);
+        $res = $this->responseDataArr();
+        $this->assertTrue($res['deleted']);
 
-        // get post
-        $response = $this->sendHttpRequest(
-            'GET', '/api/post/' . $postId
-        );
+        // Get post
+        $response = $this->sendHttpRequest('GET', "/api/post/{$postId}");
         $this->assertSame($response->getStatusCode(), 200);
-        $rs = $this->responseDataArr();
-        $this->assertTrue(empty($rs));
+        $res = $this->responseDataArr();
+        $this->assertTrue(empty($res));
 
-        // get post exception
-        $response = $this->sendHttpRequest(
-            'GET', '/api/post/' . '12312'
-        );
+        // Get post exception
+        $response = $this->sendHttpRequest('GET', '/api/post/12312');
         $this->assertSame($response->getStatusCode(), 500);
-        $rs = $this->responseDataArr();
-        $this->assertEquals('Not a valid object id.', $rs['message']);
+        $res = $this->responseDataArr();
+        $this->assertEquals('Not a valid object id.', $res['message']);
 
-        // update post exception
-        $response = $this->sendHttpRequest(
-            'PUT', '/api/post/' . '12312',
-            ['title' => 'post name update', 'content' => 'post desc update']
-        );
+        // Update post exception
+        $response = $this->sendHttpRequest('PUT', '/api/post/12312', $this->examplePost);
         $this->assertSame($response->getStatusCode(), 400);
-        $rs = $this->responseDataArr();
-        $this->assertEquals('Invalid ID', $rs['message']);
-
+        $res = $this->responseDataArr();
+        $this->assertEquals('Invalid ID', $res['message']);
     }
 }
