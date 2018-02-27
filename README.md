@@ -3,22 +3,22 @@
   <p align="center">a RESTful API boilerplate for Slim framework</p>
   <p align="center">
     <a href="https://travis-ci.org/me-io/slim-api">
-      <img src="https://travis-ci.org/me-io/slim-api.svg?branch=master" alt="Build Status">
+      <img src="https://img.shields.io/travis/me-io/slim-api.svg?branch=master&style=flat-square" alt="Build Status">
     </a>
     <a href="LICENSE.md">
       <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="Software License">
     </a>
     <a class="badge-align" href="https://www.codacy.com/app/Meabed/slim-api">
-      <img src="https://api.codacy.com/project/badge/Grade/266923eec70e41418be8f981a5b4cefe"/>
+      <img src="https://img.shields.io/codacy/grade/266923eec70e41418be8f981a5b4cefe.svg?style=flat-square"/>
     </a>        
     <a href="https://scrutinizer-ci.com/g/me-io/slim-api/?branch=master">
-      <img src="https://scrutinizer-ci.com/g/me-io/slim-api/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality">
+      <img src="https://img.shields.io/scrutinizer/g/me-io/slim-api/master.svg?style=flat-square" alt="Scrutinizer Code Quality">
     </a>
     <a href="https://codecov.io/gh/me-io/slim-api">
-      <img src="https://codecov.io/gh/me-io/slim-api/branch/master/graph/badge.svg" alt="codecov">
+      <img src="https://img.shields.io/codecov/c/github/me-io/slim-api/master.svg?style=flat-square" alt="codecov">
     </a>
     <a href="https://packagist.org/packages/me-io/slim-api/">
-      <img src="https://img.shields.io/packagist/dm/me-io/slim-api.svg" alt="Packagist">
+      <img src="https://img.shields.io/packagist/dm/me-io/slim-api.svg?style=flat-square" alt="Packagist">
     </a>
   </p>
 </p>
