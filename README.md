@@ -20,6 +20,9 @@
     <a href="https://packagist.org/packages/me-io/slim-api/">
       <img src="https://img.shields.io/packagist/dm/me-io/slim-api.svg?style=flat-square" alt="Packagist">
     </a>
+    <a href="https://www.paypal.me/meabed">
+      <img src="https://img.shields.io/badge/paypal-donate-179BD7.svg?style=flat-squares" alt="Donate">
+    </a>
   </p>
 </p>
 
