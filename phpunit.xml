@@ -37,7 +37,4 @@
     <php>
         <env name="APP_ENV" value="testing"/>
     </php>
-    <listeners>
-        <listener class="tests\TestListener" file="./tests/TestListener.php"></listener>
-    </listeners>
 </phpunit>
