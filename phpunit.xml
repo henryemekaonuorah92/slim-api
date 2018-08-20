@@ -21,7 +21,6 @@
         <testsuite name="Integration">
             <directory suffix="Test.php">./tests</directory>
             <exclude>./tests/Base/BaseCase.php</exclude>
-            <exclude>./tests/Base/BaseAppCase.php</exclude>
             <exclude>./tests/Base/BaseApiCase.php</exclude>
         </testsuite>
 
