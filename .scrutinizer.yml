@@ -75,10 +75,6 @@ tools:
     - vendor
 
 build:
-  dependencies:
-      override:
-        - sudo composer selfupdate
-        - make deps-install-dev
   environment:
     timezone: UTC
     mysql: false
