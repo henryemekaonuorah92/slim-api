@@ -13,7 +13,8 @@ class AppContainer
 
     /**
      * @param array $settings
-     * @param int $appId
+     * @param int   $appId
+     *
      * @return mixed
      */
     public static function getAppInstance($settings = [], $appId = 0)
@@ -27,6 +28,7 @@ class AppContainer
 
     /**
      * @param int $appId
+     *
      * @return \Psr\Container\ContainerInterface|Container
      */
     public static function getContainer($appId = 0)
@@ -37,6 +39,7 @@ class AppContainer
 
     /**
      * @param int $appId
+     *
      * @return Logger
      */
     public static function getLogger($appId = 0)
@@ -46,9 +49,10 @@ class AppContainer
 
 
     /**
-     * @param $key
+     * @param      $key
      * @param null $defaultValue
-     * @param int $appId
+     * @param int  $appId
+     *
      * @return null|mixed
      */
     public static function config($key, $defaultValue = null, $appId = 0)
@@ -58,9 +62,10 @@ class AppContainer
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param     $key
+     * @param     $value
      * @param int $appId
+     *
      * @return \Psr\Container\ContainerInterface|Container
      */
     public static function setConfig($key, $value, $appId = 0)
@@ -74,6 +79,7 @@ class AppContainer
 
     /**
      * @param array $settings
+     *
      * @return App
      */
     private static function makeAppInstance($settings = [])

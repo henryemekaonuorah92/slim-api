@@ -10,7 +10,7 @@ class PasswordTest extends BaseCase
     public function testPassword()
     {
         $data = [
-            'plain'  => '',
+            'plain' => '',
             'hashed' => '',
         ];
         $hash = Password::hash($data['plain']);
@@ -18,7 +18,7 @@ class PasswordTest extends BaseCase
         $this->assertEquals(null, $hash);
 
         $data = [
-            'plain'  => 'testpassword',
+            'plain' => 'testpassword',
             'hashed' => '$2y$10$mDjRk9dNMHiGT1WH/ZtoGOGblNIDO37pLByaxjkm6E/gLaaxr1tPm',
         ];
         $hash = Password::hash($data['plain']);

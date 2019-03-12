@@ -49,4 +49,6 @@ coverage.clover
 /report
 !.gitkeep
 
-./config/ext.settings.php
+/config/ext.settings.php
+.phpunit.result.cache
+build

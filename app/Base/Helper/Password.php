@@ -6,6 +6,7 @@ class Password
 {
     /**
      * @param $password
+     *
      * @return bool|string
      */
     public static function hash($password)
@@ -25,6 +26,7 @@ class Password
     /**
      * @param $password
      * @param $hash
+     *
      * @return bool
      */
     public static function verify($password, $hash)

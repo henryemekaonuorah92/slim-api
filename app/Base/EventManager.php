@@ -20,7 +20,7 @@ class EventManager
     /**
      * Class Constructor.
      *
-     * @param array $subscribers  An array containing the application's event(s).
+     * @param array $subscribers An array containing the application's event(s).
      */
     public function __construct(array $subscribers = [])
     {
@@ -34,9 +34,9 @@ class EventManager
     /**
      * Add a listener.
      *
-     * @param string $event The event name.
-     * @param mixed $listener Either \League\Event\ListenerInterface or Callable listener.
-     * @param int $priority Listener priority.
+     * @param string $event    The event name.
+     * @param mixed  $listener Either \League\Event\ListenerInterface or Callable listener.
+     * @param int    $priority Listener priority.
      *
      * @return void
      */
@@ -45,8 +45,8 @@ class EventManager
         // Create an array of event subscribers to pass to the main addition method.
         $subscriber = [
             $event => [
-                [$listener, $priority]
-            ]
+                [$listener, $priority],
+            ],
         ];
         $this->addListeners($subscriber);
     }
@@ -54,8 +54,8 @@ class EventManager
     /**
      * Magic method to call each public method from available emitter.
      *
-     * @param string $method The name of the public method from Emitter class.
-     * @param mixed $parameters The arguments passed to the method.
+     * @param string $method     The name of the public method from Emitter class.
+     * @param mixed  $parameters The arguments passed to the method.
      *
      * @return mixed
      */

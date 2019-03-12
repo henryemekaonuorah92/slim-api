@@ -16,14 +16,14 @@ class RestTest extends BaseApiCase
      * @var array
      */
     private $examplePost = [
-        'title'   => 'post name',
+        'title' => 'post name',
         'content' => 'post desc',
 
     ];
 
     private $idFieldName;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->model       = new PostModel();
         $this->idFieldName = $this->model->getIdFieldName();
@@ -58,15 +58,15 @@ class RestTest extends BaseApiCase
         $response = $this->sendHttpRequest('GET', "/api/post/{$postId}");
         $this->assertSame($response->getStatusCode(), 200);
         $res = $this->responseDataArr()[0];
-        $this->assertContains($postId, $res[$this->idFieldName]);
-        $this->assertContains('post desc', $res['content']);
+        $this->assertStringContainsString($postId, $res[$this->idFieldName]);
+        $this->assertStringContainsString('post desc', $res['content']);
 
         // Update post
         $updatePostData = [
-            'title'   => 'post title update',
+            'title' => 'post title update',
             'content' => 'post content update',
         ];
-        $response = $this->sendHttpRequest('PUT', "/api/post/{$postId}", $updatePostData);
+        $response       = $this->sendHttpRequest('PUT', "/api/post/{$postId}", $updatePostData);
         $this->assertSame($response->getStatusCode(), 200);
         $res = $this->responseDataArr();
         $this->assertEquals($updatePostData['title'], $res['title']);
@@ -76,8 +76,8 @@ class RestTest extends BaseApiCase
         $response = $this->sendHttpRequest('GET', "/api/post/{$postId}");
         $this->assertSame($response->getStatusCode(), 200);
         $res = $this->responseDataArr()[0];
-        $this->assertContains($postId, $res[$this->idFieldName]);
-        $this->assertContains($updatePostData['content'], $res['content']);
+        $this->assertStringContainsString($postId, $res[$this->idFieldName]);
+        $this->assertStringContainsString($updatePostData['content'], $res['content']);
 
         // Delete post invalid id
         $response = $this->sendHttpRequest('DELETE', '/api/post/12312312');

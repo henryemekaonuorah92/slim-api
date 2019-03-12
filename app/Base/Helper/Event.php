@@ -9,7 +9,7 @@ class Event
 {
 
     /**
-     * @param $method
+     * @param       $method
      * @param array ...$parameters
      */
     public static function emit($method, ...$parameters)

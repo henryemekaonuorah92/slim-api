@@ -26,7 +26,7 @@ class TagModel extends MongoDB
 
     /** @var array */
     protected $_rules = [
-        'name'  => ['required'],
+        'name' => ['required'],
         'color' => ['required'],
     ];
 
@@ -39,7 +39,7 @@ class TagModel extends MongoDB
         if (!empty($searchTerm)) {
             $finalFilters['$and'][] = [
                 'name' => [
-                    '$regex'   => $searchTerm,
+                    '$regex' => $searchTerm,
                     '$options' => 'i',
                 ],
             ];
@@ -111,8 +111,8 @@ class TagModel extends MongoDB
             ],
         ], [
             'limit' => $limit,
-            'skip'  => $skip,
-            'sort'  => $sort,
+            'skip' => $skip,
+            'sort' => $sort,
         ])->toArray();
 
         $posts = $this->populateUserDetail($posts);
@@ -164,10 +164,10 @@ class TagModel extends MongoDB
             ],
         ], [
             'projection' => [
-                '_id'       => 1,
-                'email'     => 1,
+                '_id' => 1,
+                'email' => 1,
                 'firstname' => 1,
-                'lastname'  => 1,
+                'lastname' => 1,
             ],
         ])->toArray();
 

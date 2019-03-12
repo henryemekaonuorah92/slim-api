@@ -30,11 +30,11 @@ class BaseApiCase extends BaseCase
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
-        static::$appInstance = AppContainer::getAppInstance();
+        static::$appInstance       = AppContainer::getAppInstance();
         static::$containerInstance = AppContainer::getContainer();
-        static::$jwtData = static::ReqJwtToken();
+        static::$jwtData           = static::ReqJwtToken();
         parent::setUpBeforeClass();
     }
 
@@ -55,9 +55,10 @@ class BaseApiCase extends BaseCase
     }
 
     /**
-     * @param $method
-     * @param $url
+     * @param       $method
+     * @param       $url
      * @param array $requestParameters
+     *
      * @return Request
      */
     public function prepareRequest($method, $url, array $requestParameters)
@@ -78,9 +79,9 @@ class BaseApiCase extends BaseCase
             $env['QUERY_STRING'] = $parts[1];
         }
 
-        $uri = Uri::createFromEnvironment($env);
-        $headers = Headers::createFromEnvironment($env);
-        $cookies = [];
+        $uri          = Uri::createFromEnvironment($env);
+        $headers      = Headers::createFromEnvironment($env);
+        $cookies      = [];
         $serverParams = $env->all();
 
         $body = new RequestBody();
@@ -92,23 +93,24 @@ class BaseApiCase extends BaseCase
     }
 
     /**
-     * @param $method
-     * @param $uir
+     * @param       $method
+     * @param       $uir
      * @param array $options
+     *
      * @return \Psr\Http\Message\ResponseInterface|Response
      * @throws \Exception
      * @throws \Slim\Exception\MethodNotAllowedException
      * @throws \Slim\Exception\NotFoundException
      */
-    public function sendHttpRequest($method, $uir, $options = array())
+    public function sendHttpRequest($method, $uir, $options = [])
     {
         $request = $this->prepareRequest($method, $uir, $options);
 
         $response = new Response();
         unset(static::$containerInstance['request']);
         static::$containerInstance['request'] = $request;
-        $app = static::$appInstance;
-        $this->response = $app->run(true);
+        $app                                  = static::$appInstance;
+        $this->response                       = $app->run(true);
         return $this->response;
     }
 
@@ -125,7 +127,7 @@ class BaseApiCase extends BaseCase
      */
     public function assertThatResponseHasContentType($expectedContentType)
     {
-        $this->assertContains($expectedContentType, $this->response->getHeader('Content-Type'));
+        $this->assertStringContainsString($expectedContentType, $this->response->getHeader('Content-Type'));
     }
 
     /**
@@ -139,6 +141,7 @@ class BaseApiCase extends BaseCase
 
     /**
      * @param array $userData
+     *
      * @return array
      * @throws \Exception
      * @throws \Slim\Exception\MethodNotAllowedException
@@ -146,26 +149,29 @@ class BaseApiCase extends BaseCase
      */
     public static function ReqJwtToken($userData = [])
     {
-        $token = '';
-        $user = [];
+        $token    = '';
+        $user     = [];
         $instance = new static();
 
-        $userData['email'] = $userData['email'] ?? 'testemail@testemail.com';
+        $userData['email']    = $userData['email'] ?? 'testemail@testemail.com';
         $userData['password'] = $userData['password'] ?? 'testpassword';
 
         $response = $instance->sendHttpRequest(
-            'POST', '/api/account/user/login',
+            'POST',
+            '/api/account/user/login',
             $userData
         );
 
         if ($response->getStatusCode() != 200) {
             $response = $instance->sendHttpRequest(
-                'POST', '/api/account/user/register',
+                'POST',
+                '/api/account/user/register',
                 $userData
             );
             if ($response->getStatusCode() == 200) {
                 $response = $instance->sendHttpRequest(
-                    'POST', '/api/account/user/login',
+                    'POST',
+                    '/api/account/user/login',
                     $userData
                 );
             } else {
@@ -174,8 +180,8 @@ class BaseApiCase extends BaseCase
         }
 
         $dataArr = $instance->responseDataArr();
-        $token = $dataArr['token'] ?? '';
-        $user = $userData;
+        $token   = $dataArr['token'] ?? '';
+        $user    = $userData;
         return ['token' => $token, 'user' => $user];
     }
 }

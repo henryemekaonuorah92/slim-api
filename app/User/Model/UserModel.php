@@ -19,7 +19,7 @@ class UserModel extends MongoDB
 
     /** @var array */
     protected $_rules = [
-        'email'    => ['required', 'email'],
+        'email' => ['required', 'email'],
         'password' => ['required', ['lengthMin', 6]],
     ];
 
@@ -55,10 +55,10 @@ class UserModel extends MongoDB
             ],
         ], [
             'projection' => [
-                '_id'        => 1,
-                'email'      => 1,
+                '_id' => 1,
+                'email' => 1,
                 'first_name' => 1,
-                'last_name'  => 1,
+                'last_name' => 1,
             ],
         ])->toArray();
 

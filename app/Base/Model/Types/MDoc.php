@@ -13,6 +13,7 @@ class MDoc extends DataObject implements Unserializable, \Countable
      * Unserialize the document to BSON.
      *
      * @see http://php.net/mongodb-bson-unserializable.bsonunserialize
+     *
      * @param array $data Array data
      */
     public function bsonUnserialize(array $data)
@@ -24,6 +25,7 @@ class MDoc extends DataObject implements Unserializable, \Countable
 
     /**
      * @param $key
+     *
      * @return null|mixed
      */
     public function get($key)
@@ -38,6 +40,7 @@ class MDoc extends DataObject implements Unserializable, \Countable
     /**
      * @param $key
      * @param $value
+     *
      * @return $this
      */
     public function set($key, $value)
@@ -56,6 +59,7 @@ class MDoc extends DataObject implements Unserializable, \Countable
 
     /**
      * @param string $key
+     *
      * @return bool
      */
     public function exists($key)
@@ -65,6 +69,7 @@ class MDoc extends DataObject implements Unserializable, \Countable
 
     /**
      * @param string $key
+     *
      * @return NULL|void
      */
     public function unset($key)

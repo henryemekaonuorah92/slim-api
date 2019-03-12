@@ -23,5 +23,4 @@ $this->group('/account', function () {
     $this->put('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":updateAndRetrieve");
     // delete user by id
     $this->delete('/user/{id:[A-Z0-9a-z]+}', \App\User\UserController::class . ":deleteById");
-
 });
