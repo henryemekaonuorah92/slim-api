@@ -2,15 +2,14 @@ dist: trusty
 language: php
 
 php:
-  - 7.0
-  - 7.1
   - 7.2
+  - 7.3
   #- hhvm
 
 env:
   matrix:
-    - MONGODB=3.6.2
-    - MONGODB=4.0.0
+    - MONGODB=3.6.11
+    - MONGODB=4.0.6
 
 matrix:
   fast_finish: true
