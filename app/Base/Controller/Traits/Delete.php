@@ -14,9 +14,10 @@ use Slim\Http\Response;
 trait Delete
 {
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return Response
      * @throws \Exception
      */

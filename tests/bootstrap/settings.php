@@ -15,14 +15,14 @@ return [
                 '/api/account/user/register',
                 '/api/account/user/login',
                 '/api/ping',
-            ]
+            ],
         ],
         // mongodb configuration @link
         'mongodb' => [
             'uri' => 'mongodb://localhost:27017',
             'database' => 'phonebook_test',
             'uriOptions' => [],
-            'driverOptions' => []
+            'driverOptions' => [],
         ],
 
         'displayErrorDetails' => true, // set to false in production
@@ -36,5 +36,5 @@ return [
             'path' => __DIR__ . '/../../storage/app_test.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
-    ]
+    ],
 ];

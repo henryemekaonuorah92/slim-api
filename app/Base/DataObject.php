@@ -6,14 +6,18 @@ abstract class DataObject implements \ArrayAccess
 {
     /**
      * Return TRUE if key is not empty
+     *
      * @return bool
+     *
      * @param $key string
      **/
     abstract public function exists($key);
 
     /**
      * Bind value to key
+     *
      * @return mixed
+     *
      * @param $key string
      * @param $val mixed
      **/
@@ -21,22 +25,29 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Retrieve contents of key
+     *
      * @return mixed
+     *
      * @param $key string
      **/
     abstract public function get($key);
 
     /**
      * Unset key
+     *
      * @return NULL
+     *
      * @param $key string
      **/
     abstract public function unset($key);
 
     /**
      * Convenience method for checking property value
+     *
      * @return mixed
+     *
      * @param $key string
+     *
      * @return bool
      **/
     public function offsetexists($key)
@@ -46,7 +57,9 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Convenience method for assigning property value
+     *
      * @return mixed
+     *
      * @param $key string
      * @param $val mixed
      **/
@@ -57,7 +70,9 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Convenience method for retrieving property value
+     *
      * @return mixed
+     *
      * @param $key string
      **/
     public function offsetget($key)
@@ -69,6 +84,7 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Convenience method for removing property value
+     *
      * @param $key string
      **/
     public function offsetunset($key)
@@ -78,7 +94,9 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Alias for offsetexists()
+     *
      * @return mixed
+     *
      * @param $key string
      **/
     public function __isset($key)
@@ -88,7 +106,9 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Alias for offsetset()
+     *
      * @return mixed
+     *
      * @param $key string
      * @param $val mixed
      **/
@@ -99,7 +119,9 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Alias for offsetget()
+     *
      * @return mixed
+     *
      * @param $key string
      **/
     public function __get($key)
@@ -110,6 +132,7 @@ abstract class DataObject implements \ArrayAccess
 
     /**
      * Alias for offsetunset()
+     *
      * @param $key string
      **/
     public function __unset($key)

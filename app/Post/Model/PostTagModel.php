@@ -27,7 +27,7 @@ class PostTagModel extends MongoDB
     {
         $this->setData([
             'post_id' => $postId ?? '',
-            'tag_id'  => $tagId ?? '',
+            'tag_id' => $tagId ?? '',
         ])->save();
     }
 

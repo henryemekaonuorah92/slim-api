@@ -50,8 +50,8 @@ class Jwt
 
     public static function decodeJwtToken($token, $secret = null, $leeway = null, $algorithm = null)
     {
-        $secret = $secret ?? static::getSecret();
-        $leeway = $leeway ?? static::getLeeway();
+        $secret    = $secret ?? static::getSecret();
+        $leeway    = $leeway ?? static::getLeeway();
         $algorithm = $algorithm ?? static::getAlgorithm();
 
         \Firebase\JWT\JWT::$leeway = $leeway;
@@ -70,17 +70,17 @@ class Jwt
     public static function generateToken($data, $secret = null, $expirySeconds = null, $algorithm = null)
     {
         $expirySeconds = $expirySeconds ?? static::getExpiresInSeconds();
-        $secret = $secret ?? static::getSecret();
-        $algorithm = $algorithm ?? static::getAlgorithm();
+        $secret        = $secret ?? static::getSecret();
+        $algorithm     = $algorithm ?? static::getAlgorithm();
 
-        $now = time();
-        $exp = $now + $expirySeconds;
+        $now     = time();
+        $exp     = $now + $expirySeconds;
         $payload = [
             "exp" => $exp,
             "nbf" => $now,
             "data" => $data,
         ];
-        $rs = [
+        $rs      = [
             'token' => \Firebase\JWT\JWT::encode($payload, $secret, $algorithm),
             'expire_at' => $exp,
         ];
@@ -95,7 +95,7 @@ class Jwt
      */
     public static function fetchToken(Request $request)
     {
-        $jwtConfig = AppContainer::config('jwt');
+        $jwtConfig  = AppContainer::config('jwt');
         $queryParam = $jwtConfig['query'] ?? '';
         $headerName = $jwtConfig['header'] ?? '';
 
@@ -106,8 +106,8 @@ class Jwt
         // if not exist fetch from header
         if (!$token) {
             $headerVal = $request->getHeader($headerName)[0] ?? '';
-            $tokenArr = explode(' ', $headerVal);
-            $token = $tokenArr[1] ?? $tokenArr[0];
+            $tokenArr  = explode(' ', $headerVal);
+            $token     = $tokenArr[1] ?? $tokenArr[0];
         }
 
         return $token;

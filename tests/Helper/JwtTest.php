@@ -13,12 +13,12 @@ class JwtTest extends BaseApiCase
 
     private $jwtTokenExample;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->user = [
-            'email'    => 'testemail@testemail.com',
+            'email' => 'testemail@testemail.com',
             'password' => 'testpassword',
         ];
 

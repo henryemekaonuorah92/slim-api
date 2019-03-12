@@ -9,12 +9,12 @@ namespace App\Base\Helper;
  */
 class PaginationHelper
 {
-    private $items        = [];
-    private $totalItems   = 0;
+    private $items = [];
+    private $totalItems = 0;
     private $itemsPerPage = 0;
-    private $totalPages   = 0;
-    private $currentPage  = 1;
-    private $lastPage     = 1;
+    private $totalPages = 0;
+    private $currentPage = 1;
+    private $lastPage = 1;
 
     /**
      * Paginate
@@ -38,14 +38,14 @@ class PaginationHelper
         $this->lastPage = $this->totalPages = (int)ceil($this->totalItems / $this->itemsPerPage);
 
         return [
-            'total'          => $totalItems,
-            'per_page'       => $itemsPerPage,
-            'current_page'   => $this->currentPage,
-            'last_page'      => $this->lastPage,
-            'data'           => $this->items,
+            'total' => $totalItems,
+            'per_page' => $itemsPerPage,
+            'current_page' => $this->currentPage,
+            'last_page' => $this->lastPage,
+            'data' => $this->items,
             'has_more_pages' => $this->hasMorePages(),
-            'has_pages'      => $this->hasPages(),
-            'meta'           => $meta,
+            'has_pages' => $this->hasPages(),
+            'meta' => $meta,
         ];
     }
 

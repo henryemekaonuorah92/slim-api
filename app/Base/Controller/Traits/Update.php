@@ -14,9 +14,10 @@ use Slim\Http\Response;
 trait Update
 {
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return Response
      * @throws \Exception
      */
@@ -28,10 +29,10 @@ trait Update
 
         // todo
         $this->model->setData($updateData)
-            ->update($id);
+                    ->update($id);
 
         $rs = $this->model->load($id)
-            ->getStoredData();
+                          ->getStoredData();
 
         Event::emit('rest.entity.updated', get_class($this->model), $rs);
 

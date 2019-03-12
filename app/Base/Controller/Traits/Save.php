@@ -15,9 +15,10 @@ use Slim\Http\Response;
 trait Save
 {
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return Response
      * @throws \Exception
      */
@@ -27,11 +28,11 @@ trait Save
 
         $objId = new ObjectId();
         $this->model->setData($data)
-            ->setId($objId)
-            ->save();
+                    ->setId($objId)
+                    ->save();
 
         $rs = $this->model->load($objId)
-            ->getStoredData();
+                          ->getStoredData();
 
         Event::emit('rest.entity.created', get_class($this->model), $rs);
 

@@ -42,6 +42,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param $value
+     *
      * @return $this
      */
     public function setDataChanges($value)
@@ -52,6 +53,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param null $key
+     *
      * @return null
      */
     public function getOrigData($key = null)
@@ -68,6 +70,7 @@ abstract class AbstractPersistent extends DataObject
     /**
      * @param null $key
      * @param null $data
+     *
      * @return $this
      */
     public function setOrigData($key = null, $data = null)
@@ -82,11 +85,12 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param $field
+     *
      * @return bool
      */
     public function dataHasChangedFor($field)
     {
-        $newData = $this->get($field);
+        $newData  = $this->get($field);
         $origData = $this->getOrigData($field);
         return $newData != $origData;
     }
@@ -136,6 +140,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param null $isDeleted
+     *
      * @return bool
      */
     public function isDeleted($isDeleted = null)
@@ -165,6 +170,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param $name
+     *
      * @return $this
      */
     public function setIdFieldName($name)
@@ -191,6 +197,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param $value
+     *
      * @return $this
      */
     public function setId($value)
@@ -204,14 +211,15 @@ abstract class AbstractPersistent extends DataObject
      */
     public function clearInstance()
     {
-        $this->_data = [];
+        $this->_data      = [];
         $this->storedData = [];
         return $this;
     }
 
     /**
-     * @param $key
+     * @param      $key
      * @param null $value
+     *
      * @return $this
      */
     public function setData($key, $value = null)
@@ -232,6 +240,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param null $key
+     *
      * @return $this
      */
     public function unsetData($key = null)
@@ -254,6 +263,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param $offset
+     *
      * @return null|mixed
      */
     public function get($offset)
@@ -268,12 +278,13 @@ abstract class AbstractPersistent extends DataObject
     /**
      * @param $offset
      * @param $value
+     *
      * @return $this
      */
     public function set($offset, $value)
     {
         if (!empty($this->{$offset}) && $this->{$offset} !== $value) {
-            $this->{$offset} = $value;
+            $this->{$offset}       = $value;
             $this->_hasDataChanges = true;
         } else {
             return $this->_data[$offset] = $value;
@@ -284,6 +295,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param string $offset
+     *
      * @return bool
      */
     public function exists($offset)
@@ -293,6 +305,7 @@ abstract class AbstractPersistent extends DataObject
 
     /**
      * @param string $offset
+     *
      * @return NULL|void
      */
     public function unset($offset)

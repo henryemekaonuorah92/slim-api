@@ -34,30 +34,32 @@ class MongoDB extends AbstractPersistent
     /**
      * @param null $connectionName
      * @param null $collectionName
+     *
      * @return self|Collection
      */
     public function __construct($connectionName = null, $collectionName = null)
     {
         $this->container = AppContainer::getContainer();
-        $connectionName = $connectionName ?? $this->_connectionName;
-        $collectionName = $collectionName ?? $this->collectionName;
+        $connectionName  = $connectionName ?? $this->_connectionName;
+        $collectionName  = $collectionName ?? $this->collectionName;
         // init mongodb client
         $this->_dbClient = $this->container[$connectionName];
 
         // get config
         $configKey = $connectionName . '__config';
-        $config = $this->container[$configKey];
+        $config    = $this->container[$configKey];
 
         // assign db
-        $databaseName = $config['database'];
+        $databaseName              = $config['database'];
         $this->_resourceCollection = $this->_dbClient->{$databaseName}->{$collectionName};
         return $this;
     }
 
 
     /**
-     * @param $modelId
+     * @param      $modelId
      * @param null $field
+     *
      * @return $this
      * @throws \Exception
      */
@@ -80,8 +82,9 @@ class MongoDB extends AbstractPersistent
     }
 
     /**
-     * @param $modelId
+     * @param      $modelId
      * @param null $field
+     *
      * @return $this
      */
     protected function _beforeLoad($modelId, $field = null)
@@ -180,6 +183,7 @@ class MongoDB extends AbstractPersistent
     /**
      * @param $modelId
      * @param $field
+     *
      * @return $this
      * @throws \Exception
      */
@@ -205,6 +209,7 @@ class MongoDB extends AbstractPersistent
     /**
      * @param $modelId
      * @param $field
+     *
      * @return $this
      * @throws \Exception
      */
@@ -269,8 +274,9 @@ class MongoDB extends AbstractPersistent
 
 
     /**
-     * @param $arr
+     * @param        $arr
      * @param string $sep
+     *
      * @return string
      */
     public function textErrorFromArr($arr, $sep = "\n")
@@ -287,6 +293,7 @@ class MongoDB extends AbstractPersistent
 
     /**
      * @param null $flag
+     *
      * @return bool|null
      */
     public function isObjectNew($flag = null)
@@ -304,6 +311,7 @@ class MongoDB extends AbstractPersistent
     /**
      * @param $name
      * @param $args
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -312,5 +320,4 @@ class MongoDB extends AbstractPersistent
         $rs = call_user_func_array([$this->getResourceCollection(), $name], $args);
         return $rs;
     }
-
 }

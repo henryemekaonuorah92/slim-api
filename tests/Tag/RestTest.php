@@ -16,14 +16,14 @@ class RestTest extends BaseApiCase
      * @var array
      */
     private $exampleTag = [
-        'name'        => 'Tag name',
+        'name' => 'Tag name',
         'description' => 'Tag description',
-        'color'       => '#000',
+        'color' => '#000',
     ];
 
     private $idFieldName;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->model       = new TagModel();
         $this->idFieldName = $this->model->getIdFieldName();
@@ -65,11 +65,11 @@ class RestTest extends BaseApiCase
 
         // Update tag
         $updateTagData = [
-            'name'        => 'Tag name update',
+            'name' => 'Tag name update',
             'description' => 'Tag description update',
-            'color'       => '#424242',
+            'color' => '#424242',
         ];
-        $response = $this->sendHttpRequest('PUT', "/api/tag/{$tagId}", $updateTagData);
+        $response      = $this->sendHttpRequest('PUT', "/api/tag/{$tagId}", $updateTagData);
         $this->assertSame($response->getStatusCode(), 200);
         $res = $this->responseDataArr();
         $this->assertEquals($updateTagData['name'], $res['name']);

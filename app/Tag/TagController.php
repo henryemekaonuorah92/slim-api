@@ -28,10 +28,10 @@ class TagController extends RestController
     {
         $objId = new ObjectId();
         $this->model->setData([
-            'name'        => $request->getParsedBodyParam('name') ?? '',
+            'name' => $request->getParsedBodyParam('name') ?? '',
             'description' => $request->getParsedBodyParam('description') ?? '',
-            'color'       => $request->getParsedBodyParam('color') ?? '',
-            'user_id'     => UserController::getUser()['_id'],
+            'color' => $request->getParsedBodyParam('color') ?? '',
+            'user_id' => UserController::getUser()['_id'],
         ])->setId($objId)->save();
 
         $tag = $this->model->load($objId)->getStoredData();
@@ -47,7 +47,7 @@ class TagController extends RestController
     public function getAllTags(Request $request, Response $response, $args)
     {
         $query = $request->getParam('q');
-        $tags = $this->model->getAllTags($query);
+        $tags  = $this->model->getAllTags($query);
 
         return $response->withJson($tags, 200);
     }
@@ -72,7 +72,7 @@ class TagController extends RestController
     public function getTagPosts(Request $request, Response $response, $args)
     {
         $params = $request->getParams();
-        $posts = $this->model->getTagPosts($args['tag_id'], $params);
+        $posts  = $this->model->getTagPosts($args['tag_id'], $params);
 
         return $response->withJson($posts, 200);
     }

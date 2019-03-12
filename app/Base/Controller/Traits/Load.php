@@ -13,9 +13,10 @@ use Slim\Http\Response;
 trait Load
 {
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return Response
      * @throws \Exception
      */
@@ -27,9 +28,10 @@ trait Load
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param $args
+     * @param          $args
+     *
      * @return Response
      * @throws \Exception
      */
@@ -37,7 +39,7 @@ trait Load
     {
         $id = $args['id'] ?? null;
         $rs = $this->model->load($id)
-            ->getStoredData();
+                          ->getStoredData();
 
         // return null if not exist | [] empty object
         return $response->withJson($rs ?: null);

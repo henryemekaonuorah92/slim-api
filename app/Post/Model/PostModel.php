@@ -26,7 +26,7 @@ class PostModel extends MongoDB
 
     /** @var array */
     protected $_rules = [
-        'title'   => ['required'],
+        'title' => ['required'],
         'content' => ['required'],
     ];
 
@@ -49,7 +49,7 @@ class PostModel extends MongoDB
         $objId = new ObjectId();
 
         $this->setData([
-            'title'   => $request->getParsedBodyParam('title'),
+            'title' => $request->getParsedBodyParam('title'),
             'content' => $request->getParsedBodyParam('content'),
             'user_id' => UserController::getUser()['_id'],
         ])->setId($objId)->save();
@@ -78,7 +78,7 @@ class PostModel extends MongoDB
         if (!empty($searchTerm)) {
             $finalFilters['$and'][] = [
                 'title' => [
-                    '$regex'   => $searchTerm,
+                    '$regex' => $searchTerm,
                     '$options' => 'i',
                 ],
             ];
@@ -87,8 +87,8 @@ class PostModel extends MongoDB
         $total = $this->getResourceCollection()->count($finalFilters);
         $posts = $this->getResourceCollection()->find($finalFilters, [
             'limit' => $limit,
-            'skip'  => $skip,
-            'sort'  => $sort,
+            'skip' => $skip,
+            'sort' => $sort,
         ])->toArray();
 
         // populate user details inside each post
@@ -117,7 +117,7 @@ class PostModel extends MongoDB
         ], [
             'projection' => [
                 'post_id' => 1,
-                'tag_id'  => 1,
+                'tag_id' => 1,
             ],
         ])->toArray();
 
@@ -137,7 +137,6 @@ class PostModel extends MongoDB
 
             $tags = [];
             foreach ($postTagIds as $postTagId) {
-
                 $detail = $tagsKeyByTagId[$postTagId['tag_id']];
                 if (!empty($detail)) {
                     $tags[] = (array)$detail;
@@ -170,10 +169,10 @@ class PostModel extends MongoDB
             ],
         ], [
             'projection' => [
-                '_id'       => 1,
-                'email'     => 1,
+                '_id' => 1,
+                'email' => 1,
                 'firstname' => 1,
-                'lastname'  => 1,
+                'lastname' => 1,
             ],
         ])->toArray();
 
@@ -222,7 +221,7 @@ class PostModel extends MongoDB
     public function updatePost($postId, Request $request)
     {
         $this->setData([
-            'title'   => $request->getParsedBodyParam('title'),
+            'title' => $request->getParsedBodyParam('title'),
             'content' => $request->getParsedBodyParam('content'),
         ])->update($postId);
 

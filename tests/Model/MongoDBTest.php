@@ -25,23 +25,23 @@ class MongoDBTest extends BaseCase
         'email' => 'email@email.com',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         $mongoDbModel = new MongoDB(null, 'test_mongodb_model');
         // drop before start
         $this->collection = $mongoDbModel->getResourceCollection();
         $this->collection->drop();
 
-        $this->_mongoId = $mongoId = new ObjectId();
+        $this->_mongoId       = $mongoId = new ObjectId();
         $this->_mongoDateTime = $mongoDateTime = new UTCDateTime();
         // assign nested object with array
-        $nestedObject = new \stdClass();
-        $nestedObject->test0 = 'testval0';
-        $nestedObject->test1 = 'testval1';
-        $nestedObject->test2 = 'testval2';
-        $nestedObject->test3 = 'testval3';
-        $nestedObject->testObjectId = $mongoId;
-        $nestedObject->testDateTime = $mongoDateTime;
+        $nestedObject                     = new \stdClass();
+        $nestedObject->test0              = 'testval0';
+        $nestedObject->test1              = 'testval1';
+        $nestedObject->test2              = 'testval2';
+        $nestedObject->test3              = 'testval3';
+        $nestedObject->testObjectId       = $mongoId;
+        $nestedObject->testDateTime       = $mongoDateTime;
         $nestedObject->testMongoTypeInArr = [$mongoId, $mongoDateTime];
 
 
@@ -53,13 +53,13 @@ class MongoDBTest extends BaseCase
             'val3',
         ];
 
-        $nestedObject->testArr = $nestedArr;
+        $nestedObject->testArr          = $nestedArr;
         $nestedArr['nestedObjectInArr'] = $nestedObject;
 
         $nestedArr['val4'] = $nestedArr;
 
         $this->exampleUser['nestedObject'] = $nestedObject;
-        $this->exampleUser['nestedArray'] = $nestedArr;
+        $this->exampleUser['nestedArray']  = $nestedArr;
         parent::setUp();
     }
 
@@ -119,7 +119,6 @@ class MongoDBTest extends BaseCase
             unset($rs['lastname']);
             $this->assertEquals(null, $rs->lastname, 'find one lastname unset object email is correct');
             $this->assertEquals(false, isset($rs->lastname), 'find one lastname isset object email is correct');
-
         } catch (MongoException $ex) {
             $this->fail($ex->getMessage());
         } catch (\Exception $ex) {
@@ -127,9 +126,8 @@ class MongoDBTest extends BaseCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->collection->drop();
     }
-
 }

@@ -9,13 +9,13 @@ class AppContainerTest extends BaseCase
     public function testInstance()
     {
         $appId = 10;
-        $app = AppContainer::getAppInstance(['settings' =>
+        $app   = AppContainer::getAppInstance(['settings' =>
             [
                 'httpVersion' => 2,
                 'determineRouteBeforeAppMiddleware' => true,
                 'routerCacheFile' => true,
-                'displayErrorDetails' => true
-            ]
+                'displayErrorDetails' => true,
+            ],
         ], $appId);
 
         $container = AppContainer::getContainer($appId);
